@@ -1,0 +1,2936 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.69.0" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x196.png" sizes="96x196">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png"sizes="192x192">
+
+<script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "WebSite",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/osmatrix.github.io"
+      },
+      "articleSection" : "docs",
+      "name" : "Create Reusable Components",
+      "headline" : "Create Reusable Components",
+      "description" : "A detailed tutorial on creating components that you can use in various pipelines",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "0001",
+      "datePublished": "0001-01-01 00:00:00 \x2b0000 UTC",
+      "dateModified" : "0001-01-01 00:00:00 \x2b0000 UTC",
+      "url" : "http:\/\/osmatrix.github.io\/docs\/pipelines\/sdk\/component-development\/",
+      "wordCount" : "2183",
+      "keywords" : [ "Kubeflow" ]
+  }
+  </script>
+<title>Create Reusable Components | Kubeflow</title><meta property="og:title" content="Create Reusable Components" />
+<meta property="og:description" content="A detailed tutorial on creating components that you can use in various pipelines" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://osmatrix.github.io/docs/pipelines/sdk/component-development/" />
+<meta property="article:modified_time" content="2020-03-10T17:38:23+08:00" /><meta property="og:site_name" content="Kubeflow" />
+<meta itemprop="name" content="Create Reusable Components">
+<meta itemprop="description" content="A detailed tutorial on creating components that you can use in various pipelines">
+<meta itemprop="dateModified" content="2020-03-10T17:38:23&#43;08:00" />
+<meta itemprop="wordCount" content="2183">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Create Reusable Components"/>
+<meta name="twitter:description" content="A detailed tutorial on creating components that you can use in various pipelines"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" as="style">
+<link href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+    <title>Create Reusable Components | Kubeflow</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+	<a class="navbar-brand" href="/">
+		<span class="navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 276.93 274.55"><g data-name="Layer 2"><g data-name="Layer 1"><path d="M95.9 62.15l4.1 102.1 73.75-94.12a6.79 6.79.0 019.6-1.11l46 36.92-15-65.61z" fill="#4279f4"/><path fill="#0028aa" d="M102.55 182.98h65.42l-40.17-32.23-25.25 32.23z"/><path fill="#014bd1" d="M180.18 83.92l-44 56.14 46.88 37.61 44.47-55.76-47.35-37.99z"/><path fill="#bedcff" d="M83.56 52.3l.01-.01 38.69-48.52-62.39 30.05-15.41 67.51 39.1-49.03z"/><path fill="#6ca1ff" d="M45.32 122.05l41.44 51.96-3.95-98.98-37.49 47.02z"/><path fill="#a1c3ff" d="M202.31 28.73 142.65.0l-37.13 46.56 96.79-17.83z"/><path d="M1.6 272v-44.78h5.74v23.41l20.48-23.41h6.4l-17.39 19.7 19 25.07H29.1l-15.92-20.8-5.84 6.65V272zm40.02-9.79V240h5.43v22.39a4.67 4.67.0 002.35 4.19 11 11 0 0011 0 4.69 4.69.0 002.33-4.19V240h5.43v22.19a9.08 9.08.0 01-4.1 7.87 16.2 16.2.0 01-18.37.0 9.07 9.07.0 01-4.07-7.85zM77.46 272v-48h5.43v16.81a29.29 29.29.0 019.32-1.73 13.1 13.1.0 016.2 1.41 10.71 10.71.0 014.18 3.74 18.07 18.07.0 012.23 5.06 21.26 21.26.0 01.73 5.58q0 8.43-4.38 12.79T87.35 272zm5.43-4.87h4.55q6.77.0 9.72-2.95t3-9.51a14.21 14.21.0 00-2-7.52 6.55 6.55.0 00-6-3.22 24.73 24.73.0 00-9.25 1.54zm29.47-11.19q0-7.71 4.09-12.3a13.75 13.75.0 0110.8-4.59q13.35.0 13.36 18.86h-22.82a12.3 12.3.0 002.9 7.07q2.59 3.11 7.9 3.1a24.92 24.92.0 0010.55-2v5a27.74 27.74.0 01-9.86 1.87 19.83 19.83.0 01-7.7-1.37 13.31 13.31.0 01-5.28-3.76 16.21 16.21.0 01-3-5.38 20.84 20.84.0 01-.94-6.5zm5.62-2.12h17.26a14.91 14.91.0 00-2.37-7.12 6.44 6.44.0 00-5.62-2.78 8.2 8.2.0 00-6.21 2.72 12.07 12.07.0 00-3.04 7.18z" fill="#4279f4" stroke="#4279f4" stroke-miterlimit="10" stroke-width="3.2"/><path d="M147.32 244.89V240h5v-7.59a8.14 8.14.0 012.31-6.05 7.79 7.79.0 015.69-2.28h7.86V229h-5c-2.21.0-3.67.45-4.37 1.34s-1.06 2.55-1.06 5V240h8.46v4.87h-8.46V272h-5.44v-27.1zM175.26 272v-48h5.43v48zm19.15-3.95a17.86 17.86.0 1112.33 4.9 16.57 16.57.0 01-12.33-4.9zm3.84-20.65a13.16 13.16.0 000 17.2 12.07 12.07.0 0017 0 13.09 13.09.0 000-17.2 12.07 12.07.0 00-17 0zm30.2-7.4h5.75l7.3 25.32 7.43-25.32h5.36l7.34 25.34L269 240h5.74l-10.04 32h-6.12l-6.83-24.58L245 272h-6.47z" fill="#0028aa" stroke="#0028aa" stroke-miterlimit="10" stroke-width="3.2"/></g></g></svg> </span><span class="brand-name text-uppercase font-weight-bold">Kubeflow</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/docs/about/kubeflow/" ><span>What is Kubeflow?</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/docs/" ><span>Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://medium.com/kubeflow" target="_blank" ><span>Blog</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://github.com/kubeflow/" target="_blank" ><span>GitHub</span></a>
+			</li>
+			
+			
+      <li class="nav-item dropdown d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	v1.0
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="https://master.kubeflow.org">master</a>
+	
+	<a class="dropdown-item" href="https://v0-2.kubeflow.org">v0.2</a>
+	
+	<a class="dropdown-item" href="https://v0-3.kubeflow.org">v0.3</a>
+	
+	<a class="dropdown-item" href="https://v0-4.kubeflow.org">v0.4</a>
+	
+	<a class="dropdown-item" href="https://v0-5.kubeflow.org">v0.5</a>
+	
+	<a class="dropdown-item" href="https://v0-6.kubeflow.org">v0.6</a>
+	
+	<a class="dropdown-item" href="https://v0-7.kubeflow.org">v0.7</a>
+	
+</div>
+
+			</li>
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/zh/docs/pipelines/sdk/component-development/">简体中文</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+ <input type="search" class="form-control td-search-input" placeholder="&#xf002 Search this site…" aria-label="Search this site…" autocomplete="off">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/zh/docs/pipelines/sdk/component-development/">简体中文</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Documentation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/about/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">About</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsabout">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutkubeflow" href="/docs/about/kubeflow/">Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutuse-cases" href="/docs/about/use-cases/">Use Cases</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutcontributing" href="/docs/about/contributing/">Contributing to Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutcommunity" href="/docs/about/community/">Community</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutevents" href="/docs/about/events/">Events Calendar</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutdocs" href="/docs/about/docs/">Docs</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutstyle-guide" href="/docs/about/style-guide/">Style Guide for the Kubeflow Docs</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Getting Started</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstarted">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedkubeflow-overview" href="/docs/started/kubeflow-overview/">Kubeflow Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedgetting-started" href="/docs/started/getting-started/">Installing Kubeflow</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/cloud/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Cloud Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedcloud">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-aws" href="/docs/started/cloud/getting-started-aws/">AWS for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-azure" href="/docs/started/cloud/getting-started-azure/">Azure for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-gke" href="/docs/started/cloud/getting-started-gke/">Google Cloud for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-icp" href="/docs/started/cloud/getting-started-icp/">IBM Cloud for Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/k8s/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubernetes Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedk8s">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8soverview" href="/docs/started/k8s/overview/">Overview of Deployment on Existing Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-k8s-istio" href="/docs/started/k8s/kfctl-k8s-istio/">Kubeflow Deployment with kfctl_k8s_istio</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-existing-arrikto" href="/docs/started/k8s/kfctl-existing-arrikto/">Multi-user, auth-enabled Kubeflow with kfctl_existing_arrikto</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-istio-dex" href="/docs/started/k8s/kfctl-istio-dex/">Multi-user, auth-enabled Kubeflow with kfctl_istio_dex</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/workstation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Workstation Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedworkstation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-linux" href="/docs/started/workstation/getting-started-linux/">Kubeflow on Linux</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-macos" href="/docs/started/workstation/getting-started-macos/">Kubeflow on macOS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-windows" href="/docs/started/workstation/getting-started-windows/">Kubeflow on Windows</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationminikf-gcp" href="/docs/started/workstation/minikf-gcp/">Deploy using MiniKF on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Components of Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponents">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/central-dash/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Central Dashboard</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentscentral-dash">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentscentral-dashoverview" href="/docs/components/central-dash/overview/">Central Dashboard</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentscentral-dashregistration-flow" href="/docs/components/central-dash/registration-flow/">Registration Flow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmetadata" href="/docs/components/metadata/">Metadata</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsjupyter" href="/docs/components/jupyter/">Jupyter Notebooks</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/training/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Frameworks for Training</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentstraining">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingchainer" href="/docs/components/training/chainer/">Chainer Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingmpi" href="/docs/components/training/mpi/">MPI Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingmxnet" href="/docs/components/training/mxnet/">MXNet Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingpytorch" href="/docs/components/training/pytorch/">PyTorch Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingtftraining" href="/docs/components/training/tftraining/">TensorFlow Training (TFJob)</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/hyperparameter-tuning/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Hyperparameter Tuning</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentshyperparameter-tuning">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuningoverview" href="/docs/components/hyperparameter-tuning/overview/">Introduction to Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuninghyperparameter" href="/docs/components/hyperparameter-tuning/hyperparameter/">Getting started with Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuningexperiment" href="/docs/components/hyperparameter-tuning/experiment/">Running an experiment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentspipelinespipelines" href="/docs/components/pipelines/pipelines/">Pipelines</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/serving/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tools for Serving</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsserving">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingoverview" href="/docs/components/serving/overview/">Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingkfserving" href="/docs/components/serving/kfserving/">KFServing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingseldon" href="/docs/components/serving/seldon/">Seldon Core Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtrtinferenceserver" href="/docs/components/serving/trtinferenceserver/">NVIDIA TensorRT Inference Server</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtfserving_new" href="/docs/components/serving/tfserving_new/">TensorFlow Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtfbatchpredict" href="/docs/components/serving/tfbatchpredict/">TensorFlow Batch Prediction</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/multi-tenancy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Multi-Tenancy in Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsmulti-tenancy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancyoverview" href="/docs/components/multi-tenancy/overview/">Introduction to Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancydesign" href="/docs/components/multi-tenancy/design/">Design for Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancygetting-started" href="/docs/components/multi-tenancy/getting-started/">Getting Started with Multi-user Isolation</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/misc/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Miscellaneous</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsmisc">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmiscnuclio" href="/docs/components/misc/nuclio/">Nuclio functions</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/notebooks/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Jupyter Notebooks</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsnotebooks">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookswhy-use-jupyter-notebook" href="/docs/notebooks/why-use-jupyter-notebook/">Overview of Jupyter Notebooks in Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssetup" href="/docs/notebooks/setup/">Set Up Your Notebooks</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookscustom-notebook" href="/docs/notebooks/custom-notebook/">Create a Custom Jupyter Image</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssubmit-kubernetes" href="/docs/notebooks/submit-kubernetes/">Submit Kubernetes Resources</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssubmit-docker-image" href="/docs/notebooks/submit-docker-image/">Build a Docker Image on GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookstroubleshoot" href="/docs/notebooks/troubleshoot/">Troubleshooting Guide</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinespipelines-quickstart" href="/docs/pipelines/pipelines-quickstart/">Pipelines Quickstart</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/installation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Installing Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesinstallation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesinstallationoverview" href="/docs/pipelines/installation/overview/">Installation Options for Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesinstallationstandalone-deployment" href="/docs/pipelines/installation/standalone-deployment/">Kubeflow Pipelines Standalone Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/overview/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Understanding Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesoverview">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewpipelines-overview" href="/docs/pipelines/overview/pipelines-overview/">Overview of Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewinterfaces" href="/docs/pipelines/overview/interfaces/">Introduction to the Pipelines Interfaces</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/overview/concepts/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Concepts</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesoverviewconcepts">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptspipeline" href="/docs/pipelines/overview/concepts/pipeline/">Pipeline</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptscomponent" href="/docs/pipelines/overview/concepts/component/">Component</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsgraph" href="/docs/pipelines/overview/concepts/graph/">Graph</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsexperiment" href="/docs/pipelines/overview/concepts/experiment/">Experiment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsrun" href="/docs/pipelines/overview/concepts/run/">Run and Recurring Run</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsrun-trigger" href="/docs/pipelines/overview/concepts/run-trigger/">Run Trigger</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsstep" href="/docs/pipelines/overview/concepts/step/">Step</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsoutput-artifact" href="/docs/pipelines/overview/concepts/output-artifact/">Output Artifact</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/sdk/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Building Pipelines with the SDK</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docspipelinessdk">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdksdk-overview" href="/docs/pipelines/sdk/sdk-overview/">Introduction to the Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkinstall-sdk" href="/docs/pipelines/sdk/install-sdk/">Install the Kubeflow Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkbuild-component" href="/docs/pipelines/sdk/build-component/">Build Components and Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docspipelinessdkcomponent-development" href="/docs/pipelines/sdk/component-development/">Create Reusable Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdklightweight-python-components" href="/docs/pipelines/sdk/lightweight-python-components/">Build Lightweight Python Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkbest-practices" href="/docs/pipelines/sdk/best-practices/">Best Practices for Designing Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkparameters" href="/docs/pipelines/sdk/parameters/">Pipeline Parameters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkpython-based-visualizations" href="/docs/pipelines/sdk/python-based-visualizations/">Python Based Visualizations</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkoutput-viewer" href="/docs/pipelines/sdk/output-viewer/">Visualize Results in the Pipelines UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkpipelines-metrics" href="/docs/pipelines/sdk/pipelines-metrics/">Pipeline Metrics</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkstatic-type-checking" href="/docs/pipelines/sdk/static-type-checking/">DSL Static Type Checking</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkdsl-recursion" href="/docs/pipelines/sdk/dsl-recursion/">DSL Recursion</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkenviroment_variables" href="/docs/pipelines/sdk/enviroment_variables/">Using environment variables in pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkgcp" href="/docs/pipelines/sdk/gcp/">GCP-specific Uses of the SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkmanipulate-resources" href="/docs/pipelines/sdk/manipulate-resources/">Manipulate Kubernetes Resources as Part of a Pipeline</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesupgrade" href="/docs/pipelines/upgrade/">Upgrading and Reinstalling</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Samples and Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinestutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialsapi-pipelines" href="/docs/pipelines/tutorials/api-pipelines/">Experiment with the Kubeflow Pipelines API</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialsbuild-pipeline" href="/docs/pipelines/tutorials/build-pipeline/">Experiment with the Pipelines Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialscloud-tutorials" href="/docs/pipelines/tutorials/cloud-tutorials/">Run a Cloud-specific Pipelines Tutorial</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestroubleshooting" href="/docs/pipelines/troubleshooting/">Troubleshooting</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferencecomponent-spec" href="/docs/pipelines/reference/component-spec/">Component Specification</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferenceapikubeflow-pipeline-api-spec" href="/docs/pipelines/reference/api/kubeflow-pipeline-api-spec/">Pipelines API Reference</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferencesdk" href="/docs/pipelines/reference/sdk/"> Pipelines SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairing">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingfairing-overview" href="/docs/fairing/fairing-overview/">Overview of Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinginstall-fairing" href="/docs/fairing/install-fairing/">Install Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingconfigure-fairing" href="/docs/fairing/configure-fairing/">Configure Kubeflow Fairing</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingazure">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/gcp/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairinggcp">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcpconfigure-gcp" href="/docs/fairing/gcp/configure-gcp/">Configure Kubeflow Fairing with Access to GCP</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/gcp/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">GCP Samples and Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairinggcptutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcptutorialsgcp-local-notebook" href="/docs/fairing/gcp/tutorials/gcp-local-notebook/">Train and Deploy on GCP from a Local Notebook</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcptutorialsgcp-kubeflow-notebook" href="/docs/fairing/gcp/tutorials/gcp-kubeflow-notebook/">Train and Deploy on GCP from a Kubeflow Notebook</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingtutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingtutorialsother-tutorials" href="/docs/fairing/tutorials/other-tutorials/">Other Samples and Tutorials</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingreferencesdk" href="/docs/fairing/reference/sdk/"> Kubeflow Fairing SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/aws/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on AWS</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsaws">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/aws/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsawsdeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsdeployinstall-kubeflow" href="/docs/aws/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsdeployuninstall-kubeflow" href="/docs/aws/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawscustomizing-aws" href="/docs/aws/customizing-aws/">Customizing Kubeflow on AWS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsiam-for-sa" href="/docs/aws/iam-for-sa/">AWS IAM Role for Service Account</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawslogging" href="/docs/aws/logging/">Logging</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsprivate-access" href="/docs/aws/private-access/">Private Access</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsauthentication" href="/docs/aws/authentication/">Authentication and Authorization</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawscustom-domain" href="/docs/aws/custom-domain/">Custom Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsstorage" href="/docs/aws/storage/">Storage Options</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawstroubleshooting-aws" href="/docs/aws/troubleshooting-aws/">Troubleshooting Deployments on Amazon EKS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsfeatures" href="/docs/aws/features/">Kubeflow on AWS Features</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsaws-e2e" href="/docs/aws/aws-e2e/">End-to-end Kubeflow on AWS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsazure">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/azure/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsazuredeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployinstall-kubeflow" href="/docs/azure/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployexisting-cluster" href="/docs/azure/deploy/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployuninstall-kubeflow" href="/docs/azure/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazureazureendtoend" href="/docs/azure/azureendtoend/">End-to-End Pipeline Example on Azure</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazureauthentication" href="/docs/azure/authentication/">Access Control for Azure Deployment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuretroubleshooting-azure" href="/docs/azure/troubleshooting-azure/">Troubleshooting Deployments on Azure AKS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgke">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deploying Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgkedeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployproject-setup" href="/docs/gke/deploy/project-setup/">Set up a GCP Project</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployoauth-setup" href="/docs/gke/deploy/oauth-setup/">Set up OAuth for Cloud IAP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydeploy-ui" href="/docs/gke/deploy/deploy-ui/">Deploy using UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydeploy-cli" href="/docs/gke/deploy/deploy-cli/">Deploy using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploymonitor-iap-setup" href="/docs/gke/deploy/monitor-iap-setup/">Monitor Cloud IAP Setup</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydelete-cli" href="/docs/gke/deploy/delete-cli/">Delete using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydelete-ui" href="/docs/gke/deploy/delete-ui/">Delete using GCP Console</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployreasons" href="/docs/gke/deploy/reasons/">Features of Kubeflow on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeanthos" href="/docs/gke/anthos/">Kubeflow On-premises on Anthos GKE</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgkepipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesauthentication-pipelines" href="/docs/gke/pipelines/authentication-pipelines/">Authenticating Pipelines to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesupgrade" href="/docs/gke/pipelines/upgrade/">Upgrading and Reinstalling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesenable-gpu-and-tpu" href="/docs/gke/pipelines/enable-gpu-and-tpu/">Enabling GPU and TPU</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinespreemptible" href="/docs/gke/pipelines/preemptible/">Using Preemptible VMs and GPUs on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecustomizing-gke" href="/docs/gke/customizing-gke/">Customizing Kubeflow on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecustom-domain" href="/docs/gke/custom-domain/">Using Your Own Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeauthentication" href="/docs/gke/authentication/">Authenticating Kubeflow to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecloud-filestore" href="/docs/gke/cloud-filestore/">Using Cloud Filestore</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeprivate-clusters" href="/docs/gke/private-clusters/">Securing Your Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgketroubleshooting-gke" href="/docs/gke/troubleshooting-gke/">Troubleshooting Deployments on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkegcp-e2e" href="/docs/gke/gcp-e2e/">Tutorial: End-to-end Kubeflow on GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkemonitoring" href="/docs/gke/monitoring/">Logging and monitoring</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/ibm/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on IBM Cloud</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsibm">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibminstall-kubeflow" href="/docs/ibm/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibmexisting-cluster" href="/docs/ibm/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibmuninstall-kubeflow" href="/docs/ibm/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/openshift/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on OpenShift</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsopenshift">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsopenshiftinstall-kubeflow" href="/docs/openshift/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsopenshiftuninstall-kubeflow" href="/docs/openshift/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/examples/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tutorials, Samples, and Shared Resources</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsexamples">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexampleskubeflow-samples" href="/docs/examples/kubeflow-samples/">Kubeflow Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplescodelabs-tutorials" href="/docs/examples/codelabs-tutorials/">Codelabs, Workshops, and Tutorials</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesblog-posts" href="/docs/examples/blog-posts/">Blog Posts</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesvideos" href="/docs/examples/videos/">Videos</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesshared-resources" href="/docs/examples/shared-resources/">Shared Resources and Components</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/other-guides/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Further Setup and Troubleshooting</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsother-guides">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/other-guides/virtual-dev/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Virtual Developer Environments</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsother-guidesvirtual-dev">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesvirtual-devgetting-started-multipass" href="/docs/other-guides/virtual-dev/getting-started-multipass/">Microk8s for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesvirtual-devgetting-started-minikf" href="/docs/other-guides/virtual-dev/getting-started-minikf/">MiniKF</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guideskustomize" href="/docs/other-guides/kustomize/">Configuring Kubeflow with kfctl and kustomize</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guideskubeflow-on-multinode-cluster" href="/docs/other-guides/kubeflow-on-multinode-cluster/">Kubeflow On-prem in a Multi-node Kubernetes Cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesusage-reporting" href="/docs/other-guides/usage-reporting/">Usage Reporting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesistio-in-kubeflow" href="/docs/other-guides/istio-in-kubeflow/">Istio Usage in Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesjob-scheduling" href="/docs/other-guides/job-scheduling/">Job Scheduling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidestroubleshooting" href="/docs/other-guides/troubleshooting/">Troubleshooting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesfreq-ask-questions" href="/docs/other-guides/freq-ask-questions/">Frequently Asked Questions</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidessupport" href="/docs/other-guides/support/">Support</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/upgrading/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Upgrading Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsupgrading">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsupgradingupgrade" href="/docs/upgrading/upgrade/">Upgrading a Kubeflow Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceoverview" href="/docs/reference/overview/">Reference Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceversion-policy" href="/docs/reference/version-policy/">Kubeflow Versioning Policies</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceimages" href="/docs/reference/images/">Dockerfile Locations</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/katib/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencekatib">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/katib/v1alpha3/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib v1alpha3</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencekatibv1alpha3">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencekatibv1alpha3katib" href="/docs/reference/katib/v1alpha3/katib/">Katib</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/notebook/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencenotebook">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/notebook/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD V1 Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencenotebookv1">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencepytorchjobv1pytorch" href="/docs/reference/pytorchjob/v1/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencepytorchjobv1beta2pytorch" href="/docs/reference/pytorchjob/v1beta2/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1common" href="/docs/reference/tfjob/v1/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1tensorflow" href="/docs/reference/tfjob/v1/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1beta2common" href="/docs/reference/tfjob/v1beta2/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1beta2tensorflow" href="/docs/reference/tfjob/v1beta2/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+
+<a href="https://github.com/huhongjun/website-kubeflow/edit/master/content/en/docs%5cpipelines%5csdk%5ccomponent-development.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
+<a href="https://github.com/huhongjun/website-kubeflow/issues/new?title=Create%20Reusable%20Components&amp;body=https://www.kubeflow.org/docs/pipelines/sdk/component-development/" target="_blank"><i class="fab fa-github fa-fw"></i> Create documentation issue</a>
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#components-and-data-passing">Components and data passing</a></li>
+    <li><a href="#passing-the-data-to-and-from-the-containerized-program">Passing the data to and from the containerized program</a>
+      <ul>
+        <li><a href="#producing-data">Producing data</a></li>
+        <li><a href="#consuming-data">Consuming data</a></li>
+      </ul>
+    </li>
+    <li><a href="#writing-the-program-code">Writing the program code</a>
+      <ul>
+        <li><a href="#programpy">program.py</a></li>
+      </ul>
+    </li>
+    <li><a href="#writing-a-dockerfile-to-containerize-your-application">Writing a Dockerfile to containerize your application</a>
+      <ul>
+        <li><a href="#example-dockerfile">Example Dockerfile</a></li>
+        <li><a href="#example-build_imagesh">Example build_image.sh:</a></li>
+      </ul>
+    </li>
+    <li><a href="#writing-your-component-definition-file">Writing your component definition file</a></li>
+    <li><a href="#build-your-component-into-a-pipeline-with-the-kubeflow-pipelines-sdk">Build your component into a pipeline with the Kubeflow Pipelines SDK</a></li>
+    <li><a href="#organizing-the-component-files">Organizing the component files</a></li>
+    <li><a href="#next-steps">Next steps</a></li>
+  </ul>
+</nav>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/docs/">Documentation</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/docs/pipelines/">Pipelines</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/docs/pipelines/sdk/">Building Pipelines with the SDK</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="http://osmatrix.github.io/docs/pipelines/sdk/component-development/">Create Reusable Components</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>Create Reusable Components</h1>
+	<div class="lead">A detailed tutorial on creating components that you can use in various pipelines</div>
+	<p>This page describes how to author a reusable component that you can
+load and use as part of a pipeline.</p>
+<p>If you&rsquo;re new to
+pipelines, see the conceptual guides to <a href="/docs/pipelines/concepts/pipeline/">pipelines</a>
+and <a href="/docs/pipelines/concepts/component/">components</a>.</p>
+<p>This tutorial describes the manual way of writing a full component program (in any language) and a component definition for it.
+For quickly building component from a python function see <a href="/docs/pipelines/sdk/lightweight-python-components/">Build component from Python function</a> and <a href="https://github.com/kubeflow/pipelines/blob/master/samples/tutorials/Data%20passing%20in%20python%20components.ipynb">Data Passing in Python components</a>.</p>
+<h2 id="summary">Summary</h2>
+<p>Below is a summary of the steps involved in creating and using a component:</p>
+<ol>
+<li>Write the program that contains your component&rsquo;s logic. The program must
+use files and command-line arguments to pass data to and from the component.</li>
+<li>Containerize the program.</li>
+<li>Write a component specification in YAML format that describes the
+component for the Kubeflow Pipelines system.</li>
+<li>Use the Kubeflow Pipelines SDK to load your component, use it in a pipeline and run that pipeline.</li>
+</ol>
+<p>The rest of this page gives some explanation about input and output data, 
+followed by detailed descriptions of the above steps.</p>
+<h2 id="components-and-data-passing">Components and data passing</h2>
+<p>The concept of component is very similar to the concept of a function.
+Every component can have inputs and outputs (which must be declared in the component specification).
+The component code takes the data passed to its inputs and produces the data for its outputs.
+A pipeline then connects component instances together by passing data from outputs of some components to inputs of other components.
+That&rsquo;s very similar to how a function calls other functions and passes the results between them.
+The Pipelines system handles the actual data passing while the components are responsible for consuming the input data and producing the output data.</p>
+<h2 id="passing-the-data-to-and-from-the-containerized-program">Passing the data to and from the containerized program</h2>
+<p>When creating a component you need to think about how the component
+will communicate with upstream and downstream components. That is, how it will consume
+the input data and produce the output data.</p>
+<h3 id="producing-data">Producing data</h3>
+<p>To output any piece of data, the component program must write the output data to some location and inform the system
+about that location so that the system can pass the data between steps.
+The program should accept the paths for the output data as command-line arguments. That is, you should not hardcode the paths.</p>
+<h4 id="advanced-producing-data-in-an-external-system">Advanced: Producing data in an external system</h4>
+<p>In some scenarios, the goal of the component is to create some data object in an external service (for example a BigQuery table).
+In this case the component program should do that and then output some identifier of the produced data location (for example BigQuery table name) instead of the data itself.
+This scenario should be limited to cases where the data must be put into external system instead of keeping it inside the Kubeflow Pipelines system.
+The class of components where this behavior is common is exporters (for example &ldquo;upload data to GCS&rdquo;).
+Note that the Pipelines system cannot provide consistency and reproducibility guarantees for the data outside of its control.</p>
+<h3 id="consuming-data">Consuming data</h3>
+<p>There are two main ways a command-line program usually consumes data:</p>
+<ul>
+<li>Small pieces of data are usually passed as command-line arguments: <code>program.py --param1 100</code>.</li>
+<li>Bigger data or binary data is usually stored in files and then the file paths are passed to the program: <code>program.py --data1 /inputs/data1.txt</code>. The system needs to be aware about the need to put some data into files and pass their paths to the program.</li>
+</ul>
+<h2 id="writing-the-program-code">Writing the program code</h2>
+<p>This section describes an example program that has two inputs (for small and 
+large pieces of data) and one output. The programming language in this example
+is Python 3.</p>
+<h3 id="programpy">program.py</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic">#!/usr/bin/env python3</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">argparse</span>
+<span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">pathlib</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Path</span>
+
+<span style="color:#8f5902;font-style:italic"># Function doing the actual work (Outputs first N lines from a text file)</span>
+<span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">do_work</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input1_file</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">output1_file</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">param1</span><span style="color:#000;font-weight:bold">):</span>
+  <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">x</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">param1</span><span style="color:#000;font-weight:bold">):</span>
+    <span style="color:#000">line</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">next</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input1_file</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87;font-weight:bold">not</span> <span style="color:#000">line</span><span style="color:#000;font-weight:bold">:</span>
+      <span style="color:#204a87;font-weight:bold">break</span>
+    <span style="color:#000">_</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">output1_file</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">line</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Defining and parsing the command-line arguments</span>
+<span style="color:#000">parser</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">argparse</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ArgumentParser</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">description</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;My program description&#39;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">parser</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">add_argument</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;--input1-path&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;Path of the local file containing the Input 1 data.&#39;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic"># Paths should be passed in, not hardcoded</span>
+<span style="color:#000">parser</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">add_argument</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;--param1&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">default</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;Parameter 1.&#39;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">parser</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">add_argument</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;--output1-path&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;Path of the local file where the Output 1 data should be written.&#39;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic"># Paths should be passed in, not hardcoded</span>
+<span style="color:#000">args</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">parser</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">parse_args</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#8f5902;font-style:italic"># Creating the directory where the output file will be created (the directory may or may not exist).</span>
+<span style="color:#000">Path</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">output1_path</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">parent</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">mkdir</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">parents</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#3465a4">True</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">exist_ok</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#3465a4">True</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#204a87;font-weight:bold">with</span> <span style="color:#204a87">open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">input1_path</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;r&#39;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">input1_file</span><span style="color:#000;font-weight:bold">:</span>
+    <span style="color:#204a87;font-weight:bold">with</span> <span style="color:#204a87">open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">output1_path</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;w&#39;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">output1_file</span><span style="color:#000;font-weight:bold">:</span>
+        <span style="color:#000">do_work</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input1_file</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">output1_file</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">param1</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>The command line invocation of this program is:</p>
+<pre><code>python3 program.py --input1-path &lt;local file path to Input 1 data&gt; \
+                   --param1 &lt;value of Param1 input&gt; \
+                   --output1-path &lt;local file path for the Output 1 data&gt;
+</code></pre><h2 id="writing-a-dockerfile-to-containerize-your-application">Writing a Dockerfile to containerize your application</h2>
+<p>You need a <a href="https://docs.docker.com/get-started/">Docker</a> container image that 
+packages your program.</p>
+<p>The instructions on creating container images are not specific to Kubeflow
+Pipelines. To make things easier for you, this section provides some guidelines
+on standard container creation. You can use any procedure
+of your choice to create the Docker containers.</p>
+<p>Your <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a> must
+contain all program code, including the wrapper, and the dependencies (operating
+system packages, Python packages etc).</p>
+<p>Ensure you have write access to a container registry where you can push
+the container image. Examples include 
+<a href="https://cloud.google.com/container-registry/docs/">Google Container Registry</a> 
+and <a href="https://hub.docker.com/">Docker Hub</a>.</p>
+<p>Think of a name for your container image. This guide uses the name
+`gcr.io/my-org/my-image&rsquo;.</p>
+<h3 id="example-dockerfile">Example Dockerfile</h3>
+<pre><code>FROM python:3.7
+RUN python3 -m pip install keras
+COPY ./src /pipelines/component/src
+</code></pre><p>Create a <code>build_image.sh</code> script (see example below) to build the container
+image based on the Dockerfile and push the container image to some container
+repository.</p>
+<p>Run the <code>build_image.sh</code> script to build the container image based on the Dockerfile
+and push it to your chosen container repository.</p>
+<p>Best practice: After pushing the image, get the strict image name with digest,
+and use the strict image name for reproducibility.</p>
+<h3 id="example-build_imagesh">Example build_image.sh:</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#8f5902;font-style:italic">#!/bin/bash -e
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">image_name</span><span style="color:#ce5c00;font-weight:bold">=</span>gcr.io/my-org/my-image <span style="color:#8f5902;font-style:italic"># Specify the image name here</span>
+<span style="color:#000">image_tag</span><span style="color:#ce5c00;font-weight:bold">=</span>latest
+<span style="color:#000">full_image_name</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">image_name</span><span style="color:#4e9a06">}</span>:<span style="color:#4e9a06">${</span><span style="color:#000">image_tag</span><span style="color:#4e9a06">}</span>
+
+<span style="color:#204a87">cd</span> <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>dirname <span style="color:#4e9a06">&#34;</span><span style="color:#000">$0</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span> 
+docker build -t <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">full_image_name</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> .
+docker push <span style="color:#4e9a06">&#34;</span><span style="color:#000">$full_image_name</span><span style="color:#4e9a06">&#34;</span>
+
+<span style="color:#8f5902;font-style:italic"># Output the strict image name (which contains the sha256 image digest)</span>
+docker inspect --format<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;{{index .RepoDigests 0}}&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">IMAGE_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</code></pre></div><p>Make your script executable:</p>
+<pre><code>chmod +x build_image.sh
+</code></pre><h2 id="writing-your-component-definition-file">Writing your component definition file</h2>
+<p>To create a component from your containerized program you need to write component specification in YAML format that describes the
+component for the Kubeflow Pipelines system.</p>
+<p>For the complete definition of a Kubeflow Pipelines component, see the
+<a href="/docs/pipelines/reference/component-spec/">component specification</a>.
+However, for this tutorial you don&rsquo;t need to know the full schema of the 
+component specification. The tutorial provides enough information for the 
+relevant the components.</p>
+<p>Start writing the component definition (<code>component.yaml</code>) by specifying your
+container image in the component&rsquo;s implementation section:</p>
+<pre><code>implementation:
+  container:
+    image: gcr.io/my-org/my-image@sha256:a172..752f # Name of a container image that you've pushed to a container repo.
+</code></pre><p>Complete the component&rsquo;s implementation section based on your program:</p>
+<pre><code>implementation:
+  container:
+    image: gcr.io/my-org/my-image@sha256:a172..752f
+    # command is a list of strings (command-line arguments). 
+    # The YAML language has two syntaxes for lists and you can use either of them. 
+    # Here we use the &quot;flow syntax&quot; - comma-separated strings inside square brackets.
+    command: [
+      python3, /kfp/component/src/program.py, # Path of the program inside the container
+      --input1-path, &lt;local file path for the Input 1 data&gt;,
+      --param1, &lt;value of Param1 input&gt;,
+      --output1-path, &lt;local file path for the Output 1 data&gt;,
+    ]
+</code></pre><p>The <code>command</code> section still contains some dummy placeholders (in angle
+brackets). Let&rsquo;s replace them with real placeholders. A <em>placeholder</em> represents
+a command-line argument that is replaced with some value or path before the
+program is executed. In <code>component.yaml</code>, you specify the placeholders using
+YAML&rsquo;s mapping syntax to distinguish them from the verbatim strings. There are
+three placeholders available:</p>
+<ul>
+<li><code>{inputValue: Some input name}</code><br>
+This placeholder is replaced with the <strong>value</strong> of the argument to the
+specified input. This is useful for small pieces of input data.</li>
+<li><code>{inputPath: Some input name}</code><br>
+This placeholder is replaced with the auto-generated <strong>local path</strong> where the
+system will put the input data passed to the component during the pipeline run.
+This placeholder instructs the system to write the input argument data to a file and pass the path of that data file to the component program.</li>
+<li><code>{outputPath: Some output name}</code><br>
+This placeholder is replaced with the auto-generated <strong>local path</strong> where the
+program should write its output data. This instructs the system to read the
+content of the file and store it as the value of the specified output.</li>
+</ul>
+<p>In addition to putting real placeholders in the command line, you need to add
+corresponding input and output specifications to the inputs and outputs
+sections. The input/output specification contains the input name, type,
+description and default value. Only the name is required. The input and output
+names are free-form strings, but be careful with the YAML syntax and use quotes
+if necessary. The input/output names do not need to be the same as the
+command-line flags which are usually quite short.</p>
+<p>Replace the placeholders as follows:</p>
+<ul>
+<li>Replace <code>&lt;local file path for the Input 1 data&gt;</code> with <code>{inputPath: Input 1}</code> and
+add <code>Input 1</code> to the <code>inputs</code> section.
+them in as command-line arguments.</li>
+<li>Replace <code>&lt;value of Param1 input&gt;</code> with <code>{inputValue: Parameter 1}</code> and add
+<code>Parameter 1</code> to the <code>inputs</code> section. Integers are small, so we&rsquo;re passing
+them in as command-line arguments.</li>
+<li>Replace <code>&lt;local file path for the Output 1 data&gt;</code> with <code>{outputPath: Output 1}</code>
+and add <code>Output 1</code> to the <code>outputs</code> section.</li>
+</ul>
+<p>After replacing the placeholders and adding inputs/outputs, your
+<code>component.yaml</code> looks like this:</p>
+<pre><code>inputs: #List of input specs. Each input spec is a map.
+- {name: Input 1}
+- {name: Parameter 1}
+outputs:
+- {name: Output 1}
+implementation:
+  container:
+    image: gcr.io/my-org/my-image@sha256:a172..752f
+    command: [
+      python3, /pipelines/component/src/program.py,
+
+      --input1-path,
+      {inputPath: Input 1}, # Refers to the &quot;Input 1&quot; input
+
+      --param1,
+      {inputValue: Parameter 1}, # Refers to the &quot;Parameter 1&quot; input
+
+      --output1-path,
+      {outputPath: Output 1}, # Refers to the &quot;Output 1&quot; output
+    ]
+</code></pre><p>The above component specification is sufficient, but you should add more
+metadata to make it more useful. The example below includes the following
+additions:</p>
+<ul>
+<li>Component name and description.</li>
+<li>For each input and output: description, default value, and type.</li>
+</ul>
+<p>Final version of <code>component.yaml</code>:</p>
+<pre><code>name: Do dummy work
+description: Performs some dummy work.
+inputs:
+- {name: Input 1, type: GCSPath, description='Data for Input 1'}
+- {name: Parameter 1, type: Integer, default='100', description='Parameter 1 description'} # The default values must be specified as YAML strings.
+outputs:
+- {name: Output 1, description='Output 1 data'}
+implementation:
+  container:
+    image: gcr.io/my-org/my-image@sha256:a172..752f
+    command: [
+      python3, /pipelines/component/src/program.py,
+      --input1-path,  {inputPath:  Input 1},
+      --param1,       {inputValue: Parameter 1},
+      --output1-path, {outputPath: Output 1},
+    ]
+</code></pre><h2 id="build-your-component-into-a-pipeline-with-the-kubeflow-pipelines-sdk">Build your component into a pipeline with the Kubeflow Pipelines SDK</h2>
+<p>Here is a sample pipeline that shows how to load a component and use it to
+compose a pipeline.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">kfp</span>
+<span style="color:#8f5902;font-style:italic"># Load the component by calling load_component_from_file or load_component_from_url</span>
+<span style="color:#8f5902;font-style:italic"># To load the component, the pipeline author only needs to have access to the component.yaml file.</span>
+<span style="color:#8f5902;font-style:italic"># The Kubernetes cluster executing the pipeline needs access to the container image specified in the component.</span>
+<span style="color:#000">dummy_op</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">kfp</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">components</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">load_component_from_file</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">path</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">join</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">component_root</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;component.yaml&#39;</span><span style="color:#000;font-weight:bold">))</span> 
+<span style="color:#8f5902;font-style:italic"># dummy_op = kfp.components.load_component_from_url(&#39;http://....../component.yaml&#39;)</span>
+
+<span style="color:#8f5902;font-style:italic"># Load two more components for importing and exporting the data:</span>
+<span style="color:#000">download_from_gcs_op</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">kfp</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">components</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">load_component_from_url</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;http://....../component.yaml&#39;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">upload_to_gcs_op</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">kfp</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">components</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">load_component_from_url</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;http://....../component.yaml&#39;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># dummy_op is now a &#34;factory function&#34; that accepts the arguments for the component&#39;s inputs</span>
+<span style="color:#8f5902;font-style:italic"># and produces a task object (e.g. ContainerOp instance).</span>
+<span style="color:#8f5902;font-style:italic"># Inspect the dummy_op function in Jupyter Notebook by typing &#34;dummy_op(&#34; and pressing Shift+Tab</span>
+<span style="color:#8f5902;font-style:italic"># You can also get help by writing help(dummy_op) or dummy_op? or dummy_op??</span>
+<span style="color:#8f5902;font-style:italic"># The signature of the dummy_op function corresponds to the inputs section of the component.</span>
+<span style="color:#8f5902;font-style:italic"># Some tweaks are performed to make the signature valid and pythonic:</span>
+<span style="color:#8f5902;font-style:italic"># 1) All inputs with default values will come after the inputs without default values</span>
+<span style="color:#8f5902;font-style:italic"># 2) The input names are converted to pythonic names (spaces and symbols replaced</span>
+<span style="color:#8f5902;font-style:italic">#    with underscores and letters lowercased).</span>
+
+<span style="color:#8f5902;font-style:italic"># Define a pipeline and create a task from a component:</span>
+<span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">my_pipeline</span><span style="color:#000;font-weight:bold">():</span>
+    <span style="color:#000">dummy1_task</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dummy_op</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#8f5902;font-style:italic"># Input name &#34;Input 1&#34; is converted to pythonic parameter name &#34;input_1&#34;</span>
+        <span style="color:#000">input_1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;one</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">two</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">three</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">four</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">five</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">six</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">seven</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">eight</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">nine</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">ten&#34;</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#000">parameter_1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;5&#39;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#8f5902;font-style:italic"># The outputs of the dummy1_task can be referenced using the</span>
+    <span style="color:#8f5902;font-style:italic"># dummy1_task.outputs dictionary: dummy1_task.outputs[&#39;output_1&#39;]</span>
+    <span style="color:#8f5902;font-style:italic"># ! The output names are converted to pythonic (&#34;snake_case&#34;) names.</span>
+
+<span style="color:#8f5902;font-style:italic"># This pipeline can be compiled, uploaded and submitted for execution.</span>
+<span style="color:#000">kfp</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Client</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_run_from_pipeline_func</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">my_pipeline</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">arguuments</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000;font-weight:bold">{})</span>
+</code></pre></div><h2 id="organizing-the-component-files">Organizing the component files</h2>
+<p>This section provides a recommended way to organize the component files. There
+is no requirement that you must organize the files in this way. However, using
+the standard organization makes it possible to reuse the same scripts for
+testing, image building and component versioning.<br>
+See this
+<a href="https://github.com/kubeflow/pipelines/tree/master/components/sample/keras/train_classifier">sample component</a>
+for a real-life component example.</p>
+<pre><code>components/&lt;component group&gt;/&lt;component name&gt;/
+
+    src/*            #Component source code files
+    tests/*          #Unit tests
+    run_tests.sh     #Small script that runs the tests
+    README.md        #Documentation. Move to docs/ if multiple files needed
+
+    Dockerfile       #Dockerfile to build the component container image
+    build_image.sh   #Small script that runs docker build and docker push
+
+    component.yaml   #Component definition in YAML format
+</code></pre><h2 id="next-steps">Next steps</h2>
+<ul>
+<li>Consolidate what you&rsquo;ve learned by reading the 
+<a href="/docs/pipelines/sdk/best-practices">best practices</a> for designing and 
+writing components.</li>
+<li>For quick iteration, 
+<a href="/docs/pipelines/sdk/lightweight-python-components/">build lightweight components</a>
+directly from Python functions.</li>
+<li>See how to <a href="/docs/pipelines/metrics/pipelines-metrics/">export metrics from your 
+pipeline</a>.</li>
+<li>Visualize the output of your component by
+<a href="/docs/pipelines/metrics/output-viewer/">adding metadata for an output 
+viewer</a>.</li>
+<li>Explore the <a href="/docs/examples/shared-resources/">reusable components and other shared 
+resources</a>.</li>
+</ul>
+
+	
+		<style>
+  .feedback--answer {
+    display: inline-block;
+  }
+  .feedback--answer-no {
+    margin-left: 1em;
+  }
+  .feedback--response {
+    display: none;
+    margin-top: 1em;
+  }
+  .feedback--response__visible {
+    display: block;
+  }
+</style>
+<h2 class="feedback--title">Feedback</h2>
+<p class="feedback--question">Was this page helpful?</p>
+<button class="feedback--answer feedback--answer-yes">Yes</button>
+<button class="feedback--answer feedback--answer-no">No</button>
+<p class="feedback--response feedback--response-yes">
+  Glad to hear it! Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<p class="feedback--response feedback--response-no">
+  Sorry to hear that. Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<script>
+  const yesButton = document.querySelector('.feedback--answer-yes');
+  const noButton = document.querySelector('.feedback--answer-no');
+  const yesResponse = document.querySelector('.feedback--response-yes');
+  const noResponse = document.querySelector('.feedback--response-no');
+  const disableButtons = () => {
+    yesButton.disabled = true;
+    noButton.disabled = true;
+  };
+  const sendFeedback = (value) => {
+    if (typeof ga !== 'function') return;
+    const args = {
+      command: 'send',
+      hitType: 'event',
+      category: 'Helpful',
+      action: 'click',
+      label: window.location.pathname,
+      value: value
+    };
+    ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+  };
+  yesButton.addEventListener('click', () => {
+    yesResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(1);
+  });
+  noButton.addEventListener('click', () => {
+    noResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(0);
+  });
+</script>
+
+		<br />
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">Last modified March 10, 2020: <a  href="https://github.com/huhongjun/website-kubeflow/commit/6c961064bf65f15cd2dbada826c963310ee25fc2">content i18n for zh (6c961064)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Twitter" aria-label="Twitter">
+    <a class="text-white" target="_blank" href="https://twitter.com/kubeflow">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/kubeflow/kubeflow">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://kubeflow.slack.com/join/shared_invite/enQtNDg5MTM4NTQyNjczLTdkNTVhMjg1ZTExOWI0N2QyYTQ2MTIzNTJjMWRiOTFjOGRlZWEzODc1NzMwNTMwM2EzNjY1MTFhODczNjk4MTk">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Mailing list" aria-label="Mailing list">
+    <a class="text-white" target="_blank" href="https://groups.google.com/forum/#!forum/kubeflow-discuss">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Calendar" aria-label="Calendar">
+    <a class="text-white" target="_blank" href="https://calendar.google.com/calendar/embed?src=kubeflow.org_7l5vnbn8suj2se10sen81d9428%40group.calendar.google.com&amp;ctz=America%2FLos_Angeles">
+      <i class="fa fa-calendar"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">Copyright &copy; 2018-2020 The Kubeflow Authors. <br>Documentation Distributed under CC BY 4.0</small>
+        <small class="ml-1"><a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a></small>
+        
+          <p class="mt-2"><a href="/docs/about/">About</a></p>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script src="/js/main.min.5131af9caf0f09b490ccd29511e63feec338dd3cf4fea64957b950d03f865074.js" integrity="sha256-UTGvnK8PCbSQzNKVEeY/7sM43Tz0/qZJV7lQ0D&#43;GUHQ=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

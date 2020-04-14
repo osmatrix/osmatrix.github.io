@@ -1,0 +1,196 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Tutorials, Samples, and Shared Resources</title>
+    <link>http://osmatrix.github.io/docs/examples/</link>
+    <description>Recent content in Tutorials, Samples, and Shared Resources on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/examples/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Kubeflow Samples</title>
+      <link>http://osmatrix.github.io/docs/examples/kubeflow-samples/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/examples/kubeflow-samples/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This section introduces the examples in the &lt;a href=&#34;https://github.com/kubeflow/examples&#34;&gt;kubeflow/examples&lt;/a&gt; repository.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Codelabs, Workshops, and Tutorials</title>
+      <link>http://osmatrix.github.io/docs/examples/codelabs-tutorials/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/examples/codelabs-tutorials/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;agile-stacks-kubeflow-pipelines-tutorials&#34;&gt;Agile Stacks Kubeflow Pipelines tutorials&lt;/h2&gt;
+&lt;p&gt;Run Kubeflow Pipelines tutorials on AWS, GCP, or on-prem hardware using &lt;a href=&#34;https://www.agilestacks.com/&#34;&gt;Agile Stacks&lt;/a&gt;.
+Pipeline templates provide step-by-step examples for working with object storage filesystem, Kaniko, Keras, and Seldon.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.agilestacks.com/article/gkyq26pzmr-creating-an-ml-pipeline&#34;&gt;ML Pipeline Templates: End-to-end Tutorial&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;google-codelabs&#34;&gt;Google codelabs&lt;/h2&gt;
+&lt;p&gt;Google Developers Codelabs provide a guided, tutorial, hands-on coding experience.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/kubeflow-introduction/index.html&#34;&gt;Introduction to Kubeflow on GKE&lt;/a&gt;: Run MNIST with Kubeflow on Google Kubernetes Engine (GKE).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/cloud-kubeflow-e2e-gis/&#34;&gt;Kubeflow End to End - GitHub Issue Summarization&lt;/a&gt;: Run GitHub Issue Summarization with Kubeflow on GKE.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/cloud-kubeflow-pipelines-gis/index.html&#34;&gt;Kubeflow Pipelines - GitHub Issue
+Summarization&lt;/a&gt;: Run GitHub Issue Summarization with Kubeflow Pipelines on GKE.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://codelabs.developers.google.com/codelabs/cloud-kubeflow-minikf-kale/index.html&#34;&gt;From Notebook to Kubeflow Pipelines with MiniKF and Kale&lt;/a&gt;: Run an end-to-end ML workflow all the way from a Notebook to a reproducible multi-step pipeline with Kale on MiniKF.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;katacoda-scenarios&#34;&gt;Katacoda scenarios&lt;/h2&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;https://www.katacoda.com/kubeflow&#34;&gt;Katacoda tutorials&lt;/a&gt; to deploy Kubeflow and run a machine learning model.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.katacoda.com/kubeflow/scenarios/deploying-github-issue-summarization&#34;&gt;Deploying GitHub Issue Summarization with
+Kubeflow&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.katacoda.com/kubeflow/scenarios/deploying-kubeflow&#34;&gt;Deploying
+Kubeflow&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.katacoda.com/kubeflow/scenarios/deploying-kubeflow-with-ksonnet&#34;&gt;Deploying Kubeflow with
+ksonnet&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.katacoda.com/kubeflow/scenarios/deploy-pytorch-with-kubeflow&#34;&gt;Deploying Pytorch with
+Kubeflow&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;openshift-kubeflow-workshops&#34;&gt;OpenShift Kubeflow workshops&lt;/h2&gt;
+&lt;p&gt;Run Kubeflow on &lt;a href=&#34;https://www.openshift.com/&#34;&gt;Red Hat OpenShift&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/AICoE/openshift_kubeflow_workshop&#34;&gt;Kubeflow on OpenShift Workshop&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Blog Posts</title>
+      <link>http://osmatrix.github.io/docs/examples/blog-posts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/examples/blog-posts/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The following blog posts provide detailed examples and use cases. Be aware that a blog post describes the interfaces at the time of publication of the post. Some interfaces are under rapid development and therefore may change frequently.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Videos</title>
+      <link>http://osmatrix.github.io/docs/examples/videos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/examples/videos/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The following tutorials and overviews published in video format. Be aware that a video describes the interfaces at the time of publication of the video. Some interfaces are under rapid development and therefore may change frequently.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Shared Resources and Components</title>
+      <link>http://osmatrix.github.io/docs/examples/shared-resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/examples/shared-resources/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page links to websites where you can find machine learning 
+(ML) resources shared by various communities and organizations.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Check the provider of any resource that you use&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;ai-hub&#34;&gt;AI Hub&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://aihub.cloud.google.com/&#34;&gt;AI Hub&lt;/a&gt; is a platform for discovering and 
+deploying ML products.&lt;/p&gt;
+&lt;p&gt;AI Hub includes the following shared resources that you can use within your 
+Kubeflow deployment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://aihub.cloud.google.com/s?category=pipeline&#34;&gt;Pipelines and components&lt;/a&gt; 
+that you can use with Kubeflow Pipelines.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://aihub.cloud.google.com/s?category=notebook&#34;&gt;Jupyter notebooks&lt;/a&gt; that 
+you can upload to the notebooks server in your Kubeflow cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reusable-components-for-kubeflow-pipelines&#34;&gt;Reusable components for Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;A Kubeflow Pipelines &lt;em&gt;component&lt;/em&gt; is a self-contained set of code that performs 
+one step in the pipeline, such as data preprocessing, data transformation, model
+training, and so on. Each component is packaged as a Docker image.
+You can add existing components to your pipeline. These may be components that
+you create yourself, or that someone else has created and made available.&lt;/p&gt;
+&lt;p&gt;The Kubeflow Pipelines repository on GitHub includes a number of 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/components&#34;&gt;reusable components&lt;/a&gt;
+that you can add to your pipeline.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,179 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Upgrading Kubeflow</title>
+    <link>http://osmatrix.github.io/docs/upgrading/</link>
+    <description>Recent content in Upgrading Kubeflow on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/upgrading/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Upgrading a Kubeflow Deployment</title>
+      <link>http://osmatrix.github.io/docs/upgrading/upgrade/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/upgrading/upgrade/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;upgrading-from-kubeflow-v070-or-later&#34;&gt;Upgrading from Kubeflow v0.7.0 or later&lt;/h2&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;a href=&amp;quot;https://github.com/kubeflow/kubeflow/issues&amp;quot;&amp;gt;feedback&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;about the usability of the feature.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Upgrading your Kubeflow deployment is supported if your deployment is v0.7.0 or later.&lt;/p&gt;
+&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Download the latest kfctl binary from the
+&lt;a href=&#34;https://github.com/kubeflow/kfctl/releases/tag/v1.0&#34;&gt;Kubeflow releases page&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ensure that your Kubeflow namespace is annotated with the
+&lt;code&gt;control-plane: kubeflow&lt;/code&gt; label. You can verify this by doing:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get namespace $NAMESPACE -o yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You should see something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;metadata:
+  labels:
+    control-plane: kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If the label is not present, you can patch the namespace by doing&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl label namespace $NAMESPACE control-plane=kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You must have a local Kubeflow application directory matching your current
+deployment. We&amp;rsquo;ll call this &lt;code&gt;${KF_DIR}&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This should be present if you deployed Kubeflow using the kfctl tool.&lt;/li&gt;
+&lt;li&gt;If you deployed Kubeflow using some other method (e.g. the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui/&#34;&gt;Deployment UI&lt;/a&gt;),
+you will need to first create a local deployment directory:
+&lt;ol&gt;
+&lt;li&gt;Follow the instructions for &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#prepare-your-environment&#34;&gt;environment preparations&lt;/a&gt;.
+&lt;ul&gt;
+&lt;li&gt;Make sure that the &lt;code&gt;${PROJECT}&lt;/code&gt;, &lt;code&gt;${ZONE}&lt;/code&gt;, and &lt;code&gt;${KF_NAME}&lt;/code&gt;
+variables match exactly with your deployment.&lt;/li&gt;
+&lt;li&gt;For &lt;code&gt;${CONFIG_URI}&lt;/code&gt;, use the appropriate &lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/#configuration-quick-reference&#34;&gt;YAML configuration 
+file&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Create your local deployment files:
+&lt;pre&gt;&lt;code&gt;mkdir -p ${KF_DIR}
+cd ${KF_DIR}
+kfctl build -V -f ${CONFIG_URI}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;upgrade-instructions&#34;&gt;Upgrade instructions&lt;/h3&gt;
+&lt;p&gt;Prepare your upgrade specification:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create an upgrade specification in the parent directory of your &lt;code&gt;${KF_DIR}&lt;/code&gt;. For example, to upgrade
+a v0.7.0 deployment to v0.7.1, use
+&lt;a href=&#34;https://github.com/kubeflow/manifests/blob/v0.7-branch/kfdef/kfctl_upgrade_gcp_iap_0.7.1.yaml&#34;&gt;this specification&lt;/a&gt;.
+Your directory structure should look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;${PARENT_DIR}
+|----${KF_DIR}
+|----kfctl_upgrade_spec.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Modify the contents of the upgrade specification for your deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: kfupgrade.apps.kubeflow.org/v1alpha1
+kind: KfUpgrade
+metadata:
+  name: kf-upgrade-v0.7.1
+spec:
+  currentKfDef:
+    # Replace with the name of your Kubeflow app
+    name: kubeflow-app
+    version: v0.7.0
+  newKfDef:
+    # Replace with the name of your kubeflow app
+    name: kubeflow-app
+    version: v0.7.1
+  # Replace this with the path to the KfDef that you are upgrading to
+  baseConfigPath: https://raw.githubusercontent.com/kubeflow/manifests/v0.7-branch/kfdef/kfctl_gcp_iap.0.7.1.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you don&amp;rsquo;t need to change any kustomize parameter values in your configuration, run the &lt;code&gt;apply&lt;/code&gt;
+command now to upgrade your deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -f ${UPGRADE_SPEC} -V
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Alternatively you can follow these steps to change the configuration before applying the upgrade:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Run a &lt;code&gt;build&lt;/code&gt; command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl build -f ${UPGRADE_SPEC} -V
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The above command creates a new Kubeflow application in the same directory, with a name
+in the form of a 7-character long hash value. The directory structure should look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;${PARENT_DIR}
+|----${KF_DIR}
+|----${UPGRADE_DIR}
+|----kfctl_upgrade_spec.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can examine and change the kustomize parameter values in
+&lt;code&gt;${UPGRADE_DIR}&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;apply&lt;/code&gt; command to upgrade the deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -f ${UPGRADE_SPEC} -V
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;upgrades-from-earlier-versions-of-kubeflow&#34;&gt;Upgrades from earlier versions of Kubeflow&lt;/h2&gt;
+&lt;p&gt;For earlier versions, Kubeflow makes no promises of backwards compatibility or 
+upgradeability. Nonetheless, here are some instructions for updating your deployment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Check your Kubeflow configuration directory (&lt;code&gt;${KF_DIR}&lt;/code&gt;) into source control
+as a backup.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Delete your existing Kubeflow cluster:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kfctl delete -V 
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download the kfctl v1.0 release from the
+&lt;a href=&#34;https://github.com/kubeflow/kfctl/releases/tag/v1.0&#34;&gt;Kubeflow releases 
+page&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Unpack the tar ball:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;tar -xvf kfctl_&amp;lt;release tag&amp;gt;_&amp;lt;platform&amp;gt;.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;Update your kustomize manifests:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=&amp;lt;the path to your Kubeflow config file&amp;gt;
+kfctl build -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;The `${CONFIG_FILE}` environment variable must contain the path to the 
+Kubeflow configuration file in your `${KF_DIR}` directory. For example,
+`${KF_DIR}/kfctl_k8s_istio.v1.0.0.yaml` or `${KF_DIR}/kfctl_istio_dex.yaml`
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Re-apply any customizations that you need.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update the deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;upgrading-kubeflow-pipelines&#34;&gt;Upgrading Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;See the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/upgrade/&#34;&gt;Kubeflow Pipelines upgrade guide&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

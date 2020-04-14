@@ -1,0 +1,264 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Workstation Installation</title>
+    <link>http://osmatrix.github.io/docs/started/workstation/</link>
+    <description>Recent content in Workstation Installation on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/started/workstation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Kubeflow on Linux</title>
+      <link>http://osmatrix.github.io/docs/started/workstation/getting-started-linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/workstation/getting-started-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;For Linux systems you have options for servers (physical or virtual) and desktops.
+The server options apply to the desktop as well.&lt;/p&gt;
+&lt;h2 id=&#34;linux-server&#34;&gt;Linux server&lt;/h2&gt;
+&lt;p&gt;For Linux servers you can install Kubeflow natively. This is perfect for
+Linux hosts and virtual machines, such as VMs in OpenStack, VMware or public clouds like
+GCP, AWS and Azure.&lt;/p&gt;
+&lt;h3 id=&#34;microk8s&#34;&gt;MicroK8s&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://microk8s.io&#34;&gt;MicroK8s&lt;/a&gt; runs natively on most Linux distributions.&lt;/p&gt;
+&lt;p&gt;Follow the installation guide for &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/&#34;&gt;Kubeflow with MicroK8s&lt;/a&gt; to set up MicroK8s and enable Kubeflow.&lt;/p&gt;
+&lt;h2 id=&#34;linux-desktop&#34;&gt;Linux desktop&lt;/h2&gt;
+&lt;h3 id=&#34;kubeflow-appliance&#34;&gt;Kubeflow appliance&lt;/h3&gt;
+&lt;p&gt;A Kubeflow appliance is a virtual machine that has Kubeflow already installed. Once the
+necessary supporting software is installed no further installation steps are required.&lt;/p&gt;
+&lt;h4 id=&#34;minikf&#34;&gt;MiniKF&lt;/h4&gt;
+&lt;p&gt;MiniKF is a predefined virtual machine that installs onto VirtualBox through Vagrant.
+The only following applications are required to use MiniKF:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;Virtual Box&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The full set of instructions are available on the
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-minikf/&#34;&gt;MiniKF getting started&lt;/a&gt; page.&lt;/p&gt;
+&lt;h3 id=&#34;linux-appliance&#34;&gt;Linux appliance&lt;/h3&gt;
+&lt;p&gt;A Linux appliance is a virtual machine that holds the linux operating system. From there
+you have complete choice over Kubernetes and Kubeflow, which offers the greatest degree
+of flexibility. You only need to install a single application to follow this path:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://multipass.run/#install&#34;&gt;Multipass&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The instructions on &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/&#34;&gt;Multipass and MicroK8s getting started&lt;/a&gt;
+page will complete this path.&lt;/p&gt;
+&lt;h3 id=&#34;kubernetes-appliance&#34;&gt;Kubernetes appliance&lt;/h3&gt;
+&lt;p&gt;Similar to the Kubeflow appliance, the Kubernetes appliance is a virtual machine has a
+Kubernetes cluster already installed. After starting the virtual machine you will need
+to install Kubeflow. This option gives you full control over your Kubeflow setup.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Kubeflow on macOS</title>
+      <link>http://osmatrix.github.io/docs/started/workstation/getting-started-macos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/workstation/getting-started-macos/</guid>
+      <description>
+        
+        
+        &lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;For macOS systems you have multiple options for getting started. The options range
+from fully-assembled Kubeflow stacks, to stacks that require some assembly.&lt;/p&gt;
+&lt;h2 id=&#34;kubeflow-appliance&#34;&gt;Kubeflow appliance&lt;/h2&gt;
+&lt;p&gt;A Kubeflow appliance is a virtual machine that has Kubeflow already installed. Once the
+necessary supporting software is installed no further installation steps are required.&lt;/p&gt;
+&lt;h3 id=&#34;minikf&#34;&gt;MiniKF&lt;/h3&gt;
+&lt;p&gt;MiniKF is a predefined virtual machine that installs onto VirtualBox through Vagrant.
+The only following applications are required to use MiniKF:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;Virtual Box&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The full set of instructions are available on the
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-minikf/&#34;&gt;MiniKF getting started&lt;/a&gt; page.&lt;/p&gt;
+&lt;h2 id=&#34;linux-appliance&#34;&gt;Linux appliance&lt;/h2&gt;
+&lt;p&gt;A Linux appliance is a virtual machine that holds the linux operating system. From there
+you have complete choice over Kubernetes and Kubeflow, which offers the greatest degree
+of flexibility. You only need to install a single application to follow this path:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://multipass.run/#install&#34;&gt;Multipass&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The instructions on &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/&#34;&gt;Multipass and MicroK8s getting started&lt;/a&gt;
+page will complete this path.&lt;/p&gt;
+&lt;h2 id=&#34;kubernetes-appliance&#34;&gt;Kubernetes appliance&lt;/h2&gt;
+&lt;p&gt;Similar to the Kubeflow appliance, the Kubernetes appliance is a virtual machine that
+has a Kubernetes cluster already installed. After starting the virtual machine you
+will need to install Kubeflow. This option gives you full control over your Kubeflow
+setup.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Kubeflow on Windows</title>
+      <link>http://osmatrix.github.io/docs/started/workstation/getting-started-windows/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/workstation/getting-started-windows/</guid>
+      <description>
+        
+        
+        &lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;For Windows systems you have multiple options for getting started. The options range
+from fully-assembled Kubeflow stacks, to stacks that require some assembly.
+In addition, with the recent announcement of
+&lt;a href=&#34;https://devblogs.microsoft.com/commandline/announcing-wsl-2/&#34;&gt;Windows WSL 2&lt;/a&gt;,
+some of the &lt;a href=&#34;http://osmatrix.github.io/docs/started/workstation/getting-started-linux&#34;&gt;linux installation options&lt;/a&gt;
+for Kubeflow will be available on Windows, once WSL2 is formally released.&lt;/p&gt;
+&lt;h2 id=&#34;kubeflow-appliance&#34;&gt;Kubeflow appliance&lt;/h2&gt;
+&lt;p&gt;A Kubeflow appliance is a virtual machine that has Kubeflow already installed. Once the
+necessary supporting software is installed no further installation steps are required.&lt;/p&gt;
+&lt;h3 id=&#34;minikf&#34;&gt;MiniKF&lt;/h3&gt;
+&lt;p&gt;MiniKF is a predefined virtual machine that installs onto VirtualBox through Vagrant.
+The following applications are required to use MiniKF:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;Virtual Box&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The full set of instructions are available on the
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-minikf/&#34;&gt;MiniKF getting started&lt;/a&gt; page.&lt;/p&gt;
+&lt;h2 id=&#34;multipass-ubuntu&#34;&gt;Multipass Ubuntu&lt;/h2&gt;
+&lt;p&gt;Windows users can get Kubeflow with &lt;a href=&#34;https://multipass.run/#install&#34;&gt;Multipass&lt;/a&gt; by following the instructions on the &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/&#34;&gt;Multipass and MicroK8s getting started&lt;/a&gt;
+page.&lt;/p&gt;
+&lt;h2 id=&#34;kubernetes-appliance&#34;&gt;Kubernetes appliance&lt;/h2&gt;
+&lt;p&gt;Similar to the Kubeflow appliance, the Kubernetes appliance is a virtual machine has a
+Kubernetes cluster already installed. After starting the virtual machine you will need
+to install Kubeflow. This option gives you full control over your Kubeflow setup.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Deploy using MiniKF on GCP</title>
+      <link>http://osmatrix.github.io/docs/started/workstation/minikf-gcp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/workstation/minikf-gcp/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide describes how to launch a MiniKF virtual machine (VM) on GCP. MiniKF
+is a single VM solution on the Google Cloud Marketplace, and installs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Kubernetes (using Minikube)&lt;/li&gt;
+&lt;li&gt;Kubeflow&lt;/li&gt;
+&lt;li&gt;Kale, a tool to convert general purpose Jupyter Notebooks to Kubeflow
+Pipelines workflows (&lt;a href=&#34;https://github.com/kubeflow-kale&#34;&gt;GitHub&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Arrikto&amp;rsquo;s Rok, a data management software for data versioning and
+reproducibility&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MiniKF installs Kubeflow 0.7.0 and supports NVIDIA GPUs.&lt;/p&gt;
+&lt;h3 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h3&gt;
+&lt;p&gt;Before installing MiniKF, make sure that your GCP project meets the minimum
+requirements described below:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select or create a project on the &lt;a href=&#34;https://console.cloud.google.com/cloud-resource-manager&#34;&gt;GCP Console&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure that you have the &lt;a href=&#34;https://cloud.google.com/iam/docs/understanding-roles#primitive_role_definitions&#34;&gt;editor role&lt;/a&gt;
+role for the project. You can add a member to a project and
+&lt;a href=&#34;https://cloud.google.com/iam/docs/granting-changing-revoking-access#using_the&#34;&gt;grant them a Cloud IAM role&lt;/a&gt; using the Cloud Console.&lt;/li&gt;
+&lt;li&gt;Make sure that billing is enabled for your project. For more info, see the
+&lt;a href=&#34;https://cloud.google.com/billing/docs/how-to/modify-project&#34;&gt;Modify a Project&amp;rsquo;s Billing Settings&lt;/a&gt; guide.&lt;/li&gt;
+&lt;li&gt;If you are using the &lt;a href=&#34;https://cloud.google.com/free/docs/gcp-free-tier&#34;&gt;GCP Free Tier&lt;/a&gt; or the 12-month trial period with $300
+credit, note that you can’t run the default GCP installation of MiniKF,
+because the free tier does not offer enough resources. You need to &lt;a href=&#34;https://cloud.google.com/free/docs/gcp-free-tier#how-to-upgrade&#34;&gt;upgrade to a paid account&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Read the GCP guide to &lt;a href=&#34;https://cloud.google.com/compute/quotas&#34;&gt;resource quotas&lt;/a&gt; to understand the quotas on
+resource usage that Compute Engine enforces, and to learn how to check your
+quota and how to request an increase in quota.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;installing-minikf-on-gcp&#34;&gt;Installing MiniKF on GCP&lt;/h3&gt;
+&lt;p&gt;To install MiniKF on GCP, follow the steps below:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://console.cloud.google.com/marketplace/details/arrikto-public/minikf?q=minikf&amp;amp;id=1f5eac28-1808-4969-b6fa-2cc231a23f45&#34;&gt;MiniKF page&lt;/a&gt; on
+Google Cloud Marketplace.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click on the &lt;strong&gt;Launch on Compute Engine&lt;/strong&gt; button&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the &lt;strong&gt;Configure &amp;amp; Deploy&lt;/strong&gt; window, choose:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt;: a name for your MiniKF instance&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;zone&lt;/strong&gt;: the GCP zone that you will deploy MiniKF&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;machine type&lt;/strong&gt;: a machine type with at least 2 vCPUs and 16 GB of RAM. If
+in doubt, use the default machine type, n1–standard-8, which has 8 vCPUs and
+30 GB of RAM.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;boot disk&lt;/strong&gt;: A boot disk. This is the disk that holds the images that MiniKF
+needs. Use the default value of 200 GB SSD Persistent Disk.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;data disk&lt;/strong&gt;: A data disk. This is the disk that holds your snapshots. Use
+an SSD Persistent Disk of at least 500 GB capacity.&lt;/p&gt;
+&lt;p&gt;Then click &lt;strong&gt;Deploy&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Now wait for the VM to boot.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When the VM is up, &lt;strong&gt;ensure that MiniKF is up and running&lt;/strong&gt;. Before visiting
+the MiniKF dashboard, ensure that Minikube, Kubeflow, and Rok (Snapshot
+Store) are up and running. To do so, click on the &lt;strong&gt;SSH&lt;/strong&gt; button to connect
+to the MiniKF VM and follow the on-screen instructions.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;MiniKF dashboard, username, and password&lt;/strong&gt;. Now that Minikube, Kubeflow,
+and Rok are up-and-running, close the SSH browser window, as you will not
+need it anymore. On your current view, please find the &lt;strong&gt;MiniKF dashboard&lt;/strong&gt;
+URL, &lt;strong&gt;MiniKF username&lt;/strong&gt;, and &lt;strong&gt;MiniKF password&lt;/strong&gt;. You will need them to log
+in to Kubeflow and Rok. You should see a table like the one below:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Log in to Kubeflow&lt;/strong&gt;. Visit the MiniKF dashboard URL and log in to Kubeflow
+using the MiniKF username and password.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Log in to Snapshot Store (Rok)&lt;/strong&gt;. After logging in to Kubeflow, navigate to
+the &lt;strong&gt;Snapshot Store&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;And log in to Snapshot Store (Arrikto&amp;rsquo;s Rok) using the MiniKF username and
+password.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Congratulations! You have successfully deployed MiniKF on GCP. You can now
+create notebooks, write your ML code, and run Kubeflow Pipelines.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

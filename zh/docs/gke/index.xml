@@ -1,0 +1,1590 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow中文文档 – 部署到GCP</title>
+    <link>http://osmatrix.github.io/zh/docs/gke/</link>
+    <description>Recent content in 部署到GCP on Kubeflow中文文档</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/zh/docs/gke/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Deploying Kubeflow</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/deploy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/deploy/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Kubeflow On-premises on Anthos GKE</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/anthos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/anthos/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://cloud.google.com/anthos&#34;&gt;Anthos&lt;/a&gt; is a hybrid and multi-cloud 
+application platform developed and supported by Google. Anthos is built on
+open source technologies, including Kubernetes, Istio, and Knative.&lt;/p&gt;
+&lt;p&gt;Using Anthos, you can create a consistent setup across your on-premises and 
+cloud environments, helping you to automate policy and security at scale.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in running Kubeflow on Anthos GKE, email the Kubeflow team
+at 
+&lt;a href=&#34;mailto:google-kubeflow-support@google.com&#34;&gt;google-kubeflow-support@google.com&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;While waiting for a response from the support team, you may like to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deploy
+Kubeflow on GKE&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Pipelines on GCP</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/pipelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/pipelines/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Customizing Kubeflow on GKE</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/customizing-gke/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/customizing-gke/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide describes how to customize your deployment of Kubeflow on Google 
+Kubernetes Engine (GKE) in Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;customizing-kubeflow-before-deployment&#34;&gt;Customizing Kubeflow before deployment&lt;/h2&gt;
+&lt;p&gt;The Kubeflow deployment process is divided into two steps, &lt;strong&gt;build&lt;/strong&gt; and 
+&lt;strong&gt;apply&lt;/strong&gt;, so that you can modify your configuration before deploying your 
+Kubeflow cluster.&lt;/p&gt;
+&lt;p&gt;Follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;.
+When you reach the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#set-up-and-deploy&#34;&gt;setup and deploy step&lt;/a&gt;,
+&lt;strong&gt;skip the &lt;code&gt;kfctl apply&lt;/code&gt; command&lt;/strong&gt; and run the &lt;strong&gt;&lt;code&gt;kfctl build&lt;/code&gt;&lt;/strong&gt; command 
+instead, as  described in that step. Now you can edit the configuration files 
+before deploying Kubeflow.&lt;/p&gt;
+&lt;h2 id=&#34;customizing-an-existing-deployment&#34;&gt;Customizing an existing deployment&lt;/h2&gt;
+&lt;p&gt;You can also customize an existing Kubeflow deployment. In that case, this 
+guide assumes that you have already followed the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt; and have deployed
+Kubeflow to a GKE cluster.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide assumes the following settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_DIR}&lt;/code&gt; environment variable contains the path to
+your Kubeflow application directory, which holds your Kubeflow configuration 
+files. For example, &lt;code&gt;/opt/my-kubeflow/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_DIR=&amp;lt;path to your Kubeflow application directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; environment variable contains the path to your 
+Kubeflow configuration file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_NAME}&lt;/code&gt; environment variable contains the name of your Kubeflow 
+deployment. You can find the name in your
+&lt;code&gt;${CONFIG_FILE}&lt;/code&gt; configuration file, as the value for the &lt;code&gt;metadata.name&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_NAME=&amp;lt;the name of your Kubeflow deployment&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${PROJECT}&lt;/code&gt; environment variable contains the ID of your GCP project. 
+You can find the project ID in your
+&lt;code&gt;${CONFIG_FILE}&lt;/code&gt; configuration file, as the value for the &lt;code&gt;project&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT=&amp;lt;your GCP project ID&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For further background about the above settings, see the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deploying Kubeflow with the CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;customizing-gcp-resources&#34;&gt;Customizing GCP resources&lt;/h2&gt;
+&lt;p&gt;To customize GCP resources, such as your Kubernetes Engine cluster, you can 
+modify the Deployment Manager configuration settings in &lt;code&gt;${KF_DIR}/gcp_config&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After modifying your existing configuration, run the following command to apply
+the changes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Alternatively, you can use Deployment Manager directly:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/gcp_config
+gcloud deployment-manager --project=${PROJECT} deployments update ${KF_NAME} --config=cluster-kubeflow.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Some changes (such as the VM service account for Kubernetes Engine) can only be set at creation time; in this case you need
+to tear down your deployment before recreating it:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl delete -f ${CONFIG_FILE}
+kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;customizing-kubernetes-resources&#34;&gt;Customizing Kubernetes resources&lt;/h2&gt;
+&lt;p&gt;You can use &lt;a href=&#34;https://kustomize.io/&#34;&gt;kustomize&lt;/a&gt; to customize Kubeflow.
+To customize the Kubernetes resources running within the cluster, you can modify 
+the kustomize manifests in &lt;code&gt;${KF_DIR}/kustomize&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, to modify settings for the Jupyter web app:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open &lt;code&gt;${KF_DIR}/kustomize/jupyter-web-app.yaml&lt;/code&gt; in a text editor.&lt;/li&gt;
+&lt;li&gt;Find and replace the parameter values:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: v1
+data:
+  ROK_SECRET_NAME: secret-rok-{username}
+  UI: default
+  clusterDomain: cluster.local
+  policy: Always
+  prefix: jupyter
+kind: ConfigMap
+metadata:
+  labels:
+    app: jupyter-web-app
+    kustomize.component: jupyter-web-app
+  name: jupyter-web-app-parameters
+  namespace: kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;Redeploy Kubeflow using kfctl:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;Or use kubectl directly:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/kustomize
+kubectl apply -f jupyter-web-app.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;common-customizations&#34;&gt;Common customizations&lt;/h2&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;add-gpu-nodes-to-your-cluster&#34;&gt;Add GPU nodes to your cluster&lt;/h3&gt;
+&lt;p&gt;To add GPU accelerators to your Kubeflow cluster, you have the following
+options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pick a GCP zone that provides NVIDIA Tesla K80 Accelerators 
+(&lt;code&gt;nvidia-tesla-k80&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Or disable node-autoprovisioning in your Kubeflow cluster.&lt;/li&gt;
+&lt;li&gt;Or change your node-autoprovisioning configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To see which accelerators are available in each zone, run the following
+command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud compute accelerator-types list
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To disable node-autoprovisioning, run &lt;code&gt;kfctl build&lt;/code&gt; as described above.
+Then edit &lt;code&gt;${KF_DIR}/gcp_config/cluster-kubeflow.yaml&lt;/code&gt; and set 
+&lt;a href=&#34;https://github.com/kubeflow/manifests/blob/4d2939d6c1a5fd862610382fde130cad33bfef75/gcp/deployment_manager_configs/cluster-kubeflow.yaml#L73&#34;&gt;&lt;code&gt;enabled&lt;/code&gt;&lt;/a&gt; 
+to &lt;code&gt;false&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    ...
+    gpu-type: nvidia-tesla-k80
+    autoprovisioning-config:
+      enabled: false
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You must also set 
+&lt;a href=&#34;https://github.com/kubeflow/manifests/blob/4d2939d6c1a5fd862610382fde130cad33bfef75/gcp/deployment_manager_configs/cluster-kubeflow.yaml#L58&#34;&gt;&lt;code&gt;gpu-pool-initialNodeCount&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;add-gpu-node-pool-to-an-existing-kubeflow-cluster&#34;&gt;Add GPU node pool to an existing kubeflow cluster&lt;/h3&gt;
+&lt;p&gt;You can add a GPU node pool to your kubeflow cluster using the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export GPU_POOL_NAME=&amp;lt;name of the new gpu pool&amp;gt;
+
+gcloud container node-pools create ${GPU_POOL_NAME} \
+--accelerator type=nvidia-tesla-k80,count=1 \
+--zone us-central1-a --cluster ${KF_NAME} \
+--num-nodes=1 --machine-type=n1-standard-4 --min-nodes=0 --max-nodes=5 --enable-autoscaling
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After adding GPU nodes to your cluster, you need to install NVIDIA&amp;rsquo;s device drivers to the nodes. Google provides a DaemonSet that automatically installs the drivers for you.&lt;/p&gt;
+&lt;p&gt;To deploy the installation DaemonSet, run the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;add-cloud-tpus-to-your-cluster&#34;&gt;Add Cloud TPUs to your cluster&lt;/h3&gt;
+&lt;p&gt;Set &lt;a href=&#34;https://github.com/kubeflow/manifests/blob/4d2939d6c1a5fd862610382fde130cad33bfef75/gcp/deployment_manager_configs/cluster-kubeflow.yaml#L80&#34;&gt;&lt;code&gt;enable_tpu:true&lt;/code&gt;&lt;/a&gt;
+in &lt;code&gt;${KF_DIR}/gcp_config/cluster-kubeflow.yaml&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;specify-a-minimum-cpu&#34;&gt;Specify a minimum CPU&lt;/h3&gt;
+&lt;p&gt;Certain instruction sets or hardware features are only available on specific CPUs, so to ensure your cluster utilizes the appropriate hardware you need to set a minimum CPU value.&lt;/p&gt;
+&lt;p&gt;In brief, inside &lt;code&gt;gcp_config/cluster.jinja&lt;/code&gt; change the &lt;code&gt;minCpuPlatform&lt;/code&gt; property for the CPU node pool. For example, &lt;code&gt;Intel Broadwell&lt;/code&gt; becomes &lt;code&gt;Intel Skylake&lt;/code&gt;. Setting a minimum CPU needs to occur during cluster/node creation; it cannot be applied to an existing cluster/node.&lt;/p&gt;
+&lt;p&gt;More detailed instructions follow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Choose a zone you want to deploy in that has your required CPU. Zones are listed in the &lt;a href=&#34;https://cloud.google.com/compute/docs/regions-zones/&#34;&gt;Regions and Zones documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Deploy Kubeflow normally as specified in the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;&amp;ldquo;Deploy using CLI&amp;rdquo; documentation&lt;/a&gt;, but stop at section &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#set-up-and-deploy-kubeflow&#34;&gt;&amp;ldquo;Set up and deploy Kubeflow&amp;rdquo;&lt;/a&gt;. Instead, navigate to section &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#alternatively-set-up-your-configuration-for-later-deployment&#34;&gt;&amp;ldquo;Alternatively, set up your configuration for later deployment&amp;rdquo;&lt;/a&gt;. Then follow the steps until you are instructed to edit configuration files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Navigate to the &lt;code&gt;gcp_config directory&lt;/code&gt; and open the &lt;code&gt;cluster.jinja&lt;/code&gt; file. Change the cluster property &lt;code&gt;minCpuPlatform&lt;/code&gt;. For example, from &lt;code&gt;Intel Broadwell&lt;/code&gt; to &lt;code&gt;Intel Skylake&lt;/code&gt;. Note: you may notice there are two minCpuPlatform properties in the file. One of them is for GPU node pools. Not all CPU/GPU combinations are compatible, so leave the GPU minCpuPlatform property untouched.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the remaining steps of &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#alternatively-set-up-your-configuration-for-later-deployment&#34;&gt;&amp;ldquo;Alternatively, set up your configuration for later deployment&amp;rdquo;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;add-vms-with-more-cpus-or-ram&#34;&gt;Add VMs with more CPUs or RAM&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Change the machineType.&lt;/li&gt;
+&lt;li&gt;There are two node pools defined in the GCP Deployment Manager:
+&lt;ul&gt;
+&lt;li&gt;one for CPU only machines, in &lt;a href=&#34;https://github.com/kubeflow/manifests/tree/v1.0-branch/gcp/deployment_manager_configs/cluster.jinja#L114&#34;&gt;&lt;code&gt;cluster.jinja&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;one for GPU machines, in &lt;a href=&#34;https://github.com/kubeflow/manifests/tree/v1.0-branch/gcp/deployment_manager_configs/cluster.jinja#L140&#34;&gt;&lt;code&gt;cluster.jinja&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;When making changes to the node pools you also need to bump the &lt;code&gt;pool-version&lt;/code&gt; in &lt;a href=&#34;https://github.com/kubeflow/manifests/tree/v1.0-branch/gcp/deployment_manager_configs/cluster-kubeflow.yaml#L46&#34;&gt;&lt;code&gt;cluster-kubeflow.yaml&lt;/code&gt;&lt;/a&gt; before you update the deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;add-users-to-kubeflow&#34;&gt;Add users to Kubeflow&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;To grant users access to Kubeflow, add the “IAP-secured Web App User” role on the &lt;a href=&#34;https://console.cloud.google.com/iam-admin/iam&#34;&gt;IAM page in the GCP console&lt;/a&gt;. Make sure you are in the same project as your Kubeflow deployment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can confirm the update by inspecting the IAM policy for your project:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;gcloud projects get-iam-policy ${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;In the output from the above command, users able to access Kubeflow have the following role: &lt;code&gt;roles/iap.httpsResourceAccessor&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;more-customizations&#34;&gt;More customizations&lt;/h2&gt;
+&lt;p&gt;Refer to the navigation panel on the left of these docs for more customizations,
+including &lt;a href=&#34;http://osmatrix.github.io/docs/gke/custom-domain&#34;&gt;using your own domain&lt;/a&gt;, 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/cloud-filestore&#34;&gt;setting up Cloud Filestore&lt;/a&gt;, and more.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Using Your Own Domain</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/custom-domain/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/custom-domain/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide describes how to use a custom domain with Kubeflow on Google Cloud
+Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide assumes you have already set up Kubeflow on GCP. If you haven&amp;rsquo;t done
+so, follow the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;getting started with Kubeflow on GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;using-your-own-domain&#34;&gt;Using your own domain&lt;/h2&gt;
+&lt;p&gt;If you want to use your own domain instead of &lt;strong&gt;${KF_NAME}.endpoints.${PROJECT}.cloud.goog&lt;/strong&gt;, follow these instructions after running &lt;code&gt;kfctl build&lt;/code&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Replace &lt;code&gt;hostname&lt;/code&gt; in &lt;code&gt;kustomize/iap-ingress/base/params.env&lt;/code&gt; with your own domain.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+hostname=&amp;lt;enter your domain here&amp;gt;
+ingressName=envoy-ingress
+ipName=kf-test-ip
+oauthSecretName=kubeflow-oauth
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Apply the changes.&lt;/p&gt;
+&lt;p&gt;Using &lt;code&gt;kfctl&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Or using &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -k kustomize/iap-ingress
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Remove the &lt;code&gt;cloud-endpoints&lt;/code&gt; component.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl delete -k kustomize/cloud-endpoints
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Delete the endpoint created by the &lt;code&gt;cloud-endpoints-controller&lt;/code&gt;, if any.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud endpoints services delete ${KF_NAME}.endpoints.${PROJECT}.cloud.goog
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check Ingress to verify that your domain was properly configured.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system describe ingresses
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Get the address of the static IP address created.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;IPNAME=${KF_NAME}-ip
+gcloud compute addresses describe ${IPNAME} --global --format=&amp;quot;value(address)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use your DNS provider to map the fully qualified domain specified in the first step to the above IP address.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Authenticating Kubeflow to GCP</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/authentication/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/authentication/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page describes in-cluster and local authentication for Kubeflow GCP deployments.&lt;/p&gt;
+&lt;h2 id=&#34;in-cluster-authentication&#34;&gt;In-cluster authentication&lt;/h2&gt;
+&lt;p&gt;Starting from Kubeflow v0.6, you consume Kubeflow from custom namespaces (that is, namespaces other than &lt;code&gt;kubeflow&lt;/code&gt;).
+The &lt;code&gt;kubeflow&lt;/code&gt; namespace is only for running Kubeflow system components. Individual jobs and model deployments 
+run in separate namespaces. To do this, install GCP credentials into the new namespace.&lt;/p&gt;
+&lt;h3 id=&#34;starting-in-kubeflow-v07-google-kubernetes-engine-gke-workload-identity&#34;&gt;Starting in Kubeflow v0.7: Google Kubernetes Engine (GKE) workload identity&lt;/h3&gt;
+&lt;p&gt;Starting in v0.7, Kubeflow uses the new GKE feature: &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity&#34;&gt;workload identity&lt;/a&gt;.
+This is the recommended way to access GCP APIs from your GKE cluster.
+You no longer have to download GCP service account key. Instead, you can configure a Kubernetes service account (KSA) to act as a GCP service account (GSA).&lt;/p&gt;
+&lt;p&gt;If you deployed Kubeflow following the GCP instructions, then the profiler controller automatically binds the &amp;ldquo;default-editor&amp;rdquo; service account for every profile namespace to a default GCP service account created during kubeflow deployment. 
+The Kubeflow deployment process also creates a default profile for the cluster admin.&lt;/p&gt;
+&lt;p&gt;For more info about profiles see the &lt;a href=&#34;http://osmatrix.github.io/docs/components/multi-tenancy/&#34;&gt;Multi-user isolation&lt;/a&gt; page.&lt;/p&gt;
+&lt;p&gt;Here is an example profile spec:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: kubeflow.org/v1beta1
+kind: Profile
+spec:
+  plugins:
+  - kind: WorkloadIdentity
+    spec:
+      gcpServiceAccount: ${SANAME}@${PROJECT}.iam.gserviceaccount.com
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can verify that there is a KSA called default-editor and that it has an annotation of the corresponding GSA:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n ${PROFILE_NAME} describe serviceaccount default-editor
+
+...
+Name:        default-editor
+Annotations: iam.gke.io/gcp-service-account: ${KFNAME}-user@${PROJECT}.iam.gserviceaccount.com
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can double check that GSA is also properly set up:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud --project=${PROJECT} iam service-accounts get-iam-policy ${KFNAME}-user@${PROJECT}.iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When a pod uses KSA default-editor, it can access GCP APIs with the role granted to the GSA.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Provisioning custom Google service accounts in namespaces&lt;/strong&gt;:
+When creating a profile, you can specify a custom GCP service account for the namespace to control which GCP resources are accessible.&lt;/p&gt;
+&lt;p&gt;Prerequisite: you must have permission to edit your GCP project&amp;rsquo;s IAM policy and to create a profile custom resource (CR) in your Kubeflow cluster.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;if you don&amp;rsquo;t already have a GCP service account you want to use, create a new one. For example: &lt;code&gt;user1-gcp@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com&lt;/code&gt;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;gcloud iam service-accounts create user1-gcp@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;You can bind roles to the GCP service account to allow access to the desired GCP resources. For example to run BigQuery job, you can grant access like so:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;gcloud projects add-iam-policy-binding &amp;lt;project-id&amp;gt; \
+      --member=&#39;serviceAccount:user1-gcp@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com&#39; \
+      --role=&#39;roles/bigquery.jobUser&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/iam/service-accounts/add-iam-policy-binding&#34;&gt;Grant &lt;code&gt;owner&lt;/code&gt; permission&lt;/a&gt; of service account &lt;code&gt;user1-gcp@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com&lt;/code&gt; to cluster account &lt;code&gt;&amp;lt;cluster-name&amp;gt;-admin@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com&lt;/code&gt;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;gcloud iam service-accounts add-iam-policy-binding \
+      user1-gcp@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com \
+      --member=&#39;serviceAccount:&amp;lt;cluster-name&amp;gt;-admin@&amp;lt;project-id&amp;gt;.iam.gserviceaccount.com&#39; --role=&#39;roles/owner&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Manually create a profile for user1 and specify the GCP service account to bind in &lt;code&gt;plugins&lt;/code&gt; field:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;apiVersion&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;kubeflow.org/v1beta1&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;kind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;Profile&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;metadata&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;profileName&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;   &lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# replace with the name of the profile (the user&amp;#39;s namespace name)&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;spec&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;owner&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;kind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;User&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;user1@email.com&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;   &lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# replace with the email of the user&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;plugins&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;kind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;WorkloadIdentity&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;spec&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;gcpServiceAccount&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;user1-gcp@project-id.iam.gserviceaccount.com&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;
+The profile controller currently doesn&amp;rsquo;t perform any access control checks to see whether the user creating the profile should be able to use the GCP service account. 
+As a result, any user who can create a profile can get access to any service account for which the admin controller has owner permissions. We will improve this in subsequent releases.&lt;/p&gt;
+&lt;p&gt;You can find more details on workload identity in the &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity&#34;&gt;GKE documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;kubeflow-v06-and-before-gcp-service-account-key-as-secret&#34;&gt;Kubeflow v0.6 and before: GCP service account key as secret&lt;/h3&gt;
+&lt;p&gt;When you &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy&#34;&gt;set up Kubeflow for GCP&lt;/a&gt;, it automatically
+&lt;a href=&#34;https://www.kubeflow.org/docs/gke/deploy/deploy-cli/#gcp-service-accounts&#34;&gt;provisions three service accounts&lt;/a&gt;
+with different privileges in the &lt;code&gt;kubeflow&lt;/code&gt; namespace. In particular, the &lt;code&gt;${KF_NAME}-user&lt;/code&gt; service account is
+meant to grant your user services access to GCP. The credentials to this service account can be accessed within
+the cluster as a &lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/secret/&#34;&gt;Kubernetes secret&lt;/a&gt; called &lt;code&gt;user-gcp-sa&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The secret has basic access to a limited set of GCP services by default, but more roles can be granted through the
+&lt;a href=&#34;https://console.cloud.google.com/iam-admin/&#34;&gt;GCP IAM console&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can create a PodDefault object to attach the credentials to certain pods.&lt;/p&gt;
+&lt;h5 id=&#34;credentials&#34;&gt;Credentials&lt;/h5&gt;
+&lt;p&gt;You can add credentials to the new namespace by either copying them from an existing Kubeflow namespace or by
+creating a new service account.&lt;/p&gt;
+&lt;p&gt;To copy credentials from one namespace to another namespace use the following CLI commands (&lt;strong&gt;Note&lt;/strong&gt;: there is an
+&lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3640&#34;&gt;issue&lt;/a&gt; filed to automate these commands):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NAMESPACE=&amp;lt;new kubeflow namespace&amp;gt;
+SOURCE=kubeflow
+NAME=user-gcp-sa
+SECRET=$(kubectl -n ${SOURCE} get secrets ${NAME} -o jsonpath=&amp;quot;{.data.${NAME}\.json}&amp;quot; | base64 -d)
+kubectl create -n ${NAMESPACE} secret generic ${NAME} --from-literal=&amp;quot;${NAME}.json=${SECRET}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To create a new service account instead of copying credentials, use the following steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a service account with the desired roles:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT_ID=&amp;lt;GCP project id&amp;gt;
+export NAMESPACE=&amp;lt;new kubeflow namespace&amp;gt;
+export SA_NAME=&amp;lt;service account name&amp;gt;
+export GCPROLES=roles/editor
+gcloud --project=${PROJECT_ID} iam service-accounts create $SA_NAME
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member serviceAccount:$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com \
+    --role $GCPROLES
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Download the JSON service account key, set &lt;code&gt;KEYPATH&lt;/code&gt; to the correct path, and create the key:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;export KEYPATH=some/path/${SA_NAME}.gcp.json
+gcloud --project=${PROJECT_ID} iam service-accounts keys create ${KEYPATH} \
+   --iam-account $SA_NAME@$PROJECT_ID.iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Upload the JSON service account key to cluster as a secret:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kubectl create secret generic user-gcp-sa -n $NAMESPACE \ --from-file=user-gcp-sa.json=${KEYPATH}
+&lt;/code&gt;&lt;/pre&gt;&lt;h5 id=&#34;poddefault-object&#34;&gt;PodDefault object&lt;/h5&gt;
+&lt;p&gt;The PodDefault object is a way to centrally manage configurations that should be added to all pods.&lt;/p&gt;
+&lt;p&gt;The PodDefault will match all pods with the specified selector and modify the pods to inject the volumes,
+secrets, and environment variables listed in the pod manifest.&lt;/p&gt;
+&lt;p&gt;Create a pod default in a file called &lt;code&gt;add-gcp-secret.yaml&lt;/code&gt; and apply it using &lt;code&gt;kubectl apply -f add-gcp-secret.yaml -n $NAMESPACE&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: &amp;quot;kubeflow.org/v1alpha1&amp;quot;
+kind: PodDefault
+metadata:
+  name: add-gcp-secret
+spec:
+ selector:
+  matchLabels:
+    addgcpsecret: &amp;quot;true&amp;quot;
+ desc: &amp;quot;add gcp credential&amp;quot;
+ env:
+ - name: GOOGLE_APPLICATION_CREDENTIALS
+   value: /secret/gcp/user-gcp-sa.json
+ volumeMounts:
+ - name: secret-volume
+   mountPath: /secret/gcp
+ volumes:
+ - name: secret-volume
+   secret:
+    secretName: user-gcp-sa
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;authentication-from-a-pod&#34;&gt;Authentication from a Pod&lt;/h3&gt;
+&lt;p&gt;You must do two things to access a GCP service account from a Pod:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Mount the secret as a file.&lt;/strong&gt; This gives your Pod access to your GCP account, 
+so be careful which Pods you grant access to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Set the &lt;code&gt;GOOGLE_APPLICATION_CREDENTIALS&lt;/code&gt; environment variable&lt;/strong&gt; to point to the service account.
+GCP libraries use this environment variable to find the service account and authenticate with GCP.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following YAML describes a Pod that has access to the &lt;code&gt;${KF_NAME}-user&lt;/code&gt; service account:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mypod
+    image: myimage
+    env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: &amp;quot;/var/secrets/user-sa.json&amp;quot;
+    volumeMounts:
+    - name: gcp-secret
+      mountPath: &amp;quot;/var/secrets/user-sa.json&amp;quot;
+      readOnly: true
+  volumes:
+  - name: gcp-secret
+    secret:
+      secretName: myappname-user
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;authentication-from-kubeflow-pipelines&#34;&gt;Authentication from Kubeflow Pipelines&lt;/h3&gt;
+&lt;p&gt;Refer to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/authentication-pipelines/&#34;&gt;Authenticating Pipelines to GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;local-authentication&#34;&gt;Local authentication&lt;/h2&gt;
+&lt;h3 id=&#34;gcloud&#34;&gt;gcloud&lt;/h3&gt;
+&lt;p&gt;Use the &lt;a href=&#34;https://cloud.google.com/sdk/gcloud/&#34;&gt;&lt;code&gt;gcloud&lt;/code&gt; tool&lt;/a&gt; to interact with Google Cloud Platform (GCP) on the command line. 
+You can use the &lt;code&gt;gcloud&lt;/code&gt; command to &lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/container/clusters/create&#34;&gt;set up Google Kubernetes Engine (GKE) clusters&lt;/a&gt;, 
+and interact with other Google services.&lt;/p&gt;
+&lt;h5 id=&#34;logging-in&#34;&gt;Logging in&lt;/h5&gt;
+&lt;p&gt;You have two options for authenticating the &lt;code&gt;gcloud&lt;/code&gt; command:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;You can use a &lt;strong&gt;user account&lt;/strong&gt; to authenticate using a Google account (typically Gmail). 
+You can register a user account using &lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/auth/login&#34;&gt;&lt;code&gt;gcloud auth login&lt;/code&gt;&lt;/a&gt;, 
+which brings up a browser window to start the familiar Google authentication flow.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can create a &lt;strong&gt;service account&lt;/strong&gt; within your GCP project. You can then
+&lt;a href=&#34;https://cloud.google.com/iam/docs/creating-managing-service-account-keys&#34;&gt;download a &lt;code&gt;.json&lt;/code&gt; key file&lt;/a&gt; 
+associated with the account, and run the 
+&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account&#34;&gt;&lt;code&gt;gcloud auth activate-service-account&lt;/code&gt;&lt;/a&gt;
+command to authenticate your &lt;code&gt;gcloud&lt;/code&gt; session.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can find more information in the &lt;a href=&#34;https://cloud.google.com/sdk/docs/authorizing&#34;&gt;GCP docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h5 id=&#34;listing-active-accounts&#34;&gt;Listing active accounts&lt;/h5&gt;
+&lt;p&gt;You can run the following command to verify you are authenticating with the expected account:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud auth list
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In the output of the command, an asterisk denotes your active account.&lt;/p&gt;
+&lt;h5 id=&#34;viewing-iam-roles&#34;&gt;Viewing IAM roles&lt;/h5&gt;
+&lt;p&gt;Permissions are handled in GCP using &lt;a href=&#34;https://cloud.google.com/iam/docs/understanding-roles&#34;&gt;IAM Roles&lt;/a&gt;. 
+These roles define which resources your account can read or write to. Provided you have the 
+&lt;a href=&#34;https://cloud.google.com/iam/docs/understanding-custom-roles#required_permissions_and_roles_&#34;&gt;necessary permissions&lt;/a&gt;,
+you can check which roles were assigned to your account using the following gcloud command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;PROJECT_ID=your-gcp-project-id-here
+
+gcloud projects get-iam-policy $PROJECT_ID --flatten=&amp;quot;bindings[].members&amp;quot; \
+    --format=&#39;table(bindings.role)&#39; \
+    --filter=&amp;quot;bindings.members:$(gcloud config list account --format &#39;value(core.account)&#39;)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can view and modify roles through the 
+&lt;a href=&#34;https://console.cloud.google.com/iam-admin/&#34;&gt;GCP IAM console&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can find more information about IAM in the 
+&lt;a href=&#34;https://cloud.google.com/iam/docs/granting-changing-revoking-access&#34;&gt;GCP docs&lt;/a&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;kubectl&#34;&gt;kubectl&lt;/h3&gt;
+&lt;p&gt;The &lt;a href=&#34;https://kubernetes.io/docs/reference/kubectl/overview/&#34;&gt;&lt;code&gt;kubectl&lt;/code&gt; tool&lt;/a&gt; is used for interacting with a Kubernetes cluster through the command line.&lt;/p&gt;
+&lt;h5 id=&#34;connecting-to-a-cluster-using-a-gcp-account&#34;&gt;Connecting to a cluster using a GCP account&lt;/h5&gt;
+&lt;p&gt;If you set up your Kubernetes cluster using GKE, you can authenticate with the cluster using a GCP account. 
+The following commands fetch the credentials for your cluster and save them to your local 
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/&#34;&gt;&lt;code&gt;kubeconfig&lt;/code&gt; file&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CLUSTER_NAME=your-gke-cluster
+ZONE=your-gcp-zone
+
+gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can find more information in the 
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl&#34;&gt;GCP docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h5 id=&#34;changing-active-clusters&#34;&gt;Changing active clusters&lt;/h5&gt;
+&lt;p&gt;If you work with multiple Kubernetes clusters, you may have multiple contexts saved in your local 
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/&#34;&gt;&lt;code&gt;kubeconfig&lt;/code&gt; file&lt;/a&gt;.
+You can view the clusters you have saved by run the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl config get-contexts
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can view which cluster is currently being controlled by &lt;code&gt;kubectl&lt;/code&gt; with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CONTEXT_NAME=your-new-context
+
+kubectl config set-context $CONTEXT_NAME
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can find more information in the 
+&lt;a href=&#34;https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/&#34;&gt;Kubernetes docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h5 id=&#34;checking-rbac-permissions&#34;&gt;Checking RBAC permissions&lt;/h5&gt;
+&lt;p&gt;Like GKE IAM, Kubernetes permissions are typically handled with a &amp;ldquo;role-based authorization control&amp;rdquo; (RBAC) system.
+Each Kubernetes service account has a set of authorized roles associated with it. If your account doesn&amp;rsquo;t have the 
+right roles assigned to it, certain tasks fail.&lt;/p&gt;
+&lt;p&gt;You can check if an account has the proper permissions to run a command by building a query structured as
+&lt;code&gt;kubectl auth can-i [VERB] [RESOURCE] --namespace [NAMESPACE]&lt;/code&gt;. For example, the following command verifies
+that your account has permissions to create deployments in the &lt;code&gt;kubeflow&lt;/code&gt; namespace:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl auth can-i create deployments --namespace kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can find more information in the 
+&lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/authorization/&#34;&gt;Kubernetes docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h5 id=&#34;adding-rbac-permissions&#34;&gt;Adding RBAC permissions&lt;/h5&gt;
+&lt;p&gt;If you find you are missing a permission you need, you can grant the missing roles to your service account using
+Kubernetes resources.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Roles&lt;/strong&gt; describe the permissions you want to assign. For example, &lt;code&gt;verbs: [&amp;quot;create&amp;quot;], resources:[&amp;quot;deployments&amp;quot;]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RoleBindings&lt;/strong&gt; define a mapping between the &lt;code&gt;Role&lt;/code&gt;, and a specific service account&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By default, &lt;code&gt;Roles&lt;/code&gt; and &lt;code&gt;RoleBindings&lt;/code&gt; apply only to resources in a specific namespace, but there are also
+&lt;code&gt;ClusterRoles&lt;/code&gt; and &lt;code&gt;ClusterRoleBindings&lt;/code&gt; that can grant access to resources cluster-wide&lt;/p&gt;
+&lt;p&gt;You can find more information in the 
+&lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/rbac/#role-and-clusterrole&#34;&gt;Kubernetes docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;See the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke/&#34;&gt;troubleshooting guide&lt;/a&gt; for help with diagnosing and fixing issues you may encounter with Kubeflow on GCP&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Using Cloud Filestore</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/cloud-filestore/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/cloud-filestore/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide describes how to set up and use Cloud Filestore with Kubeflow on 
+Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;about-cloud-filestore&#34;&gt;About Cloud Filestore&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/filestore/docs/&#34;&gt;Cloud File Store&lt;/a&gt; is a fully managed NFS offering.
+Cloud Filestore is very useful for creating a shared filesystem that can be mounted into pods such as Jupyter.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide assumes you have already set up Kubeflow on GCP. If you haven&amp;rsquo;t done
+so, follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This guide assumes the following settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_DIR}&lt;/code&gt; environment variable contains the path to
+your Kubeflow application directory, which holds your Kubeflow configuration 
+files. For example, &lt;code&gt;/opt/my-kubeflow/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_DIR=&amp;lt;path to your Kubeflow application directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; environment variable contains the path to your 
+Kubeflow configuration file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_NAME}&lt;/code&gt; environment variable contains the name of your Kubeflow 
+deployment. You can find the name in your &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; 
+configuration file, as the value for the &lt;code&gt;metadata.name&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_NAME=&amp;lt;the name of your Kubeflow deployment&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${PROJECT}&lt;/code&gt; environment variable contains the ID of your GCP project. 
+You can find the project ID in 
+your &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; configuraiton file, as the value for the &lt;code&gt;project&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT=&amp;lt;your GCP project ID&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${ZONE}&lt;/code&gt; environment variable contains the GCP zone where your
+Kubeflow resources are deployed.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export ZONE=&amp;lt;your GCP zone&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For further background about the above settings, see the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deploying Kubeflow with the CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;create-a-cloud-filestore-instance&#34;&gt;Create a Cloud Filestore instance&lt;/h2&gt;
+&lt;p&gt;Follow these instructions to create a Cloud Filestore instance; if you already have a Cloud Filestore instance you want to
+use you can skip this section.&lt;/p&gt;
+&lt;p&gt;Copy the Cloud Filestore deployment manager configs to the &lt;code&gt;gcp_config&lt;/code&gt; directory:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+cp .cache/manifests/manifests-${VERSION}/deployment/gke/deployment_manager_configs/gcfs.yaml \
+   ./gcp_config/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Edit &lt;code&gt;gcfs.yaml&lt;/code&gt; to match your desired configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Set zone&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set name&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set the value of parent to include your project e.g.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;projects/${PROJECT}/locations/${ZONE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using &lt;a href=&#34;https://github.com/kislyuk/yq&#34;&gt;yq&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+. env.sh
+yq -r &amp;quot;.resources[0].properties.instanceId=\&amp;quot;${KF_NAME}\&amp;quot;&amp;quot; gcp_config/gcfs.yaml &amp;gt; gcp_config/gcfs.yaml.new
+mv gcp_config/gcfs.yaml.new gcp_config/gcfs.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Apply the changes:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/gcp_config
+gcloud --project=${PROJECT} deployment-manager deployments create ${KF_NAME}-nfs --config=gcfs.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you get an error &lt;strong&gt;legacy networks are not supported&lt;/strong&gt; follow the instructions
+in the &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/troubleshooting&#34;&gt;troubleshooting guide&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;create-a-pv-and-pvc-to-mount-the-filestore&#34;&gt;Create a PV and PVC to mount the filestore.&lt;/h2&gt;
+&lt;p&gt;Create a PVC for Cloud Filestore instance.&lt;/p&gt;
+&lt;p&gt;Run the following command to get the ip address of the cloud file store instance&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud --project=${PROJECT} filestore instances list
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The output will be something like the following and give you the IP address of your instance.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;INSTANCE_NAME          ZONE        TIER      CAPACITY_GB  FILE_SHARE_NAME  IP_ADDRESS     STATE  CREATE_TIME
+mykubeflow-nfs  us-east1-d  STANDARD  1024         kubeflow         10.20.148.194  READY  2019-05-15T01:23:53
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now follow the instructions &lt;a href=&#34;https://cloud.google.com/filestore/docs/accessing-fileshares&#34;&gt;Accessing Fileshares from Google Kubernetes&lt;/a&gt; to create a PV and PVC.&lt;/p&gt;
+&lt;h2 id=&#34;using-the-pvc&#34;&gt;Using the PVC&lt;/h2&gt;
+&lt;h3 id=&#34;with-jupyter&#34;&gt;With Jupyter&lt;/h3&gt;
+&lt;p&gt;In the UI to create a jupyter notebook you can specify the PVC as an extra data volume.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Securing Your Clusters</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/private-clusters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/private-clusters/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Alpha version&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This guide describes how to secure Kubeflow using &lt;a href=&#34;https://cloud.google.com/vpc-service-controls/docs/&#34;&gt;VPC Service Controls&lt;/a&gt; and private GKE.&lt;/p&gt;
+&lt;p&gt;Together these two features signficantly increase security
+and mitigate the risk of data exfiltration.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;VPC Service Controls allow you to define a perimeter around
+Google Cloud Platform (GCP) services.&lt;/p&gt;
+&lt;p&gt;Kubeflow uses VPC Service Controls to prevent applications
+running on GKE from writing data to GCP resources outside
+the perimeter.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Private GKE removes public IP addresses from GKE nodes making
+them inaccessible from the public internet.&lt;/p&gt;
+&lt;p&gt;Kubeflow uses IAP to make Kubeflow web apps accessible
+from your browser.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;VPC Service Controls allow you to restrict which Google services are accessible from your
+GKE/Kubeflow clusters. This is an important part of security and in particular
+mitigating the risks of data exfiltration.&lt;/p&gt;
+&lt;p&gt;For more information refer to the &lt;a href=&#34;https://cloud.google.com/vpc-service-controls/docs/overview&#34;&gt;VPC Service Control Docs&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Creating a &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters&#34;&gt;private Kubernetes Engine cluster&lt;/a&gt;
+means the Kubernetes Engine nodes won&amp;rsquo;t have public IP addresses. This can improve security by blocking unwanted outbound/inbound
+access to nodes. Removing IP addresses means external services (such as GitHub, PyPi, and DockerHub) won&amp;rsquo;t be accessible
+from the nodes. Google services (such as BigQuery and Cloud Storage) are still accessible.&lt;/p&gt;
+&lt;p&gt;Importantly this means you can continue to use your &lt;a href=&#34;https://cloud.google.com/container-registry/docs/&#34;&gt;Google Container Registry (GCR)&lt;/a&gt; to host your Docker images. Other Docker registries (for example, DockerHub) will not be accessible. If you need to use Docker images
+hosted outside GCR you can use the scripts provided by Kubeflow to mirror them to your GCR registry.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;Before installing Kubeflow ensure you have installed the following tools:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34;&gt;kubectl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/sdk/&#34;&gt;gcloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You will need to know your gcloud organization ID and project number; you can get them via gcloud.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT=&amp;lt;your GCP project id&amp;gt;
+export ORGANIZATION_NAME=&amp;lt;name of your organization&amp;gt;
+export ORGANIZATION=$(gcloud organizations list --filter=DISPLAY_NAME=${ORGANIZATION_NAME} --format=&#39;value(name)&#39;)
+export PROJECT_NUMBER=$(gcloud projects describe ${PROJECT} --format=&#39;value(projectNumber)&#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Projects are identified by names, IDs, and numbers. For more info, see &lt;a href=&#34;https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects&#34;&gt;Identifying projects&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;enable-vpc-service-controls-in-your-project&#34;&gt;Enable VPC Service Controls In Your Project&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Enable VPC service controls:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT=&amp;lt;Your project&amp;gt;
+gcloud services enable accesscontextmanager.googleapis.com \
+                       cloudresourcemanager.googleapis.com \
+                       dns.googleapis.com  --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check if you have an access policy object already created:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta access-context-manager policies list \
+    --organization=${ORGANIZATION}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;An &lt;a href=&#34;https://cloud.google.com/vpc-service-controls/docs/overview#terminology&#34;&gt;access policy&lt;/a&gt; is a GCP resource object that defines service perimeters. There can be only one access policy object in an organization, and it is a child of the Organization resource.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you don&amp;rsquo;t have an access policy object, create one:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta access-context-manager policies create \
+--title &amp;quot;default&amp;quot; --organization=${ORGANIZATION}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Save the Access Policy Object ID as an environment variable so that it can be used in subsequent commands:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export POLICYID=$(gcloud beta access-context-manager policies list --organization=${ORGANIZATION} --limit=1 --format=&#39;value(name)&#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a service perimeter:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta access-context-manager perimeters create KubeflowZone \
+    --title=&amp;quot;Kubeflow Zone&amp;quot; --resources=projects/${PROJECT_NUMBER} \
+    --restricted-services=bigquery.googleapis.com,containerregistry.googleapis.com,storage.googleapis.com \
+    --project=${PROJECT} --policy=${POLICYID}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Here we have created a service perimeter with the name KubeflowZone.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The perimeter is created in PROJECT_NUMBER and restricts access to GCS (storage.googleapis.com), BigQuery (bigquery.googleapis.com), and GCR (containerregistry.googleapis.com).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Placing GCS (Google Cloud Storage) and BigQuery in the perimeter means that access to GCS and BigQuery
+resources owned by this project is now restricted. By default, access from outside
+the perimeter will be blocked&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;More than one project can be added to the same perimeter&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create an access level to allow Google Container Builder to access resources inside the perimiter:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Create a members.yaml file with the following contents&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- members:      
+  - serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com
+  - user:&amp;lt;your email&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Google Container Builder is used to mirror Kubeflow images into the perimeter&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Adding your email allows you to access the GCP services
+inside the perimeter from outside the cluster&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is convenient for building and pushing images and data
+from your local machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For more information refer to the &lt;a href=&#34;https://cloud.google.com/access-context-manager/docs/create-access-level#members-example&#34;&gt;docs&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create the access level:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta access-context-manager levels create kubeflow \
+   --basic-level-spec=members.yaml \
+   --policy=${POLICYID} \
+   --title=&amp;quot;Kubeflow ${PROJECT}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;The name for the level can&amp;rsquo;t have any hyphens&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Bind Access Level to a Service Perimeter:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta access-context-manager perimeters update KubeflowZone \
+ --add-access-levels=kubeflow \
+ --policy=${POLICYID}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set up container registry for GKE private clusters (for more info see &lt;a href=&#34;https://cloud.google.com/vpc-service-controls/docs/set-up-gke&#34;&gt;instructions&lt;/a&gt;):&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a managed private zone&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export ZONE_NAME=kubeflow
+export NETWORK=&amp;lt;Network you are using for your cluster&amp;gt;
+gcloud beta dns managed-zones create ${ZONE_NAME} \
+ --visibility=private \
+ --networks=https://www.googleapis.com/compute/v1/projects/${PROJECT}/global/networks/${NETWORK} \
+ --description=&amp;quot;Kubeflow DNS&amp;quot; \
+ --dns-name=gcr.io \
+ --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Start a transaction&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud dns record-sets transaction start \
+ --zone=${ZONE_NAME} \
+ --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Add a CNAME record for *.gcr.io&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud dns record-sets transaction add \
+ --name=*.gcr.io. \
+ --type=CNAME gcr.io. \
+ --zone=${ZONE_NAME} \
+ --ttl=300 \
+ --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Add an A record for the restricted VIP&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; gcloud dns record-sets transaction add \
+   --name=gcr.io. \
+   --type=A 199.36.153.4 199.36.153.5 199.36.153.6 199.36.153.7 \
+   --zone=${ZONE_NAME} \
+   --ttl=300 \
+   --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Commit the transaction&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; gcloud dns record-sets transaction execute \
+  --zone=${ZONE_NAME} \
+  --project=${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;deploy-kubeflow-with-private-gke&#34;&gt;Deploy Kubeflow with Private GKE&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Set user credentials. You only need to run this command once:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud auth application-default login
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy non-GCR hosted images to your GCR registry:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Clone the Kubeflow source&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/kubeflow/kubeflow.git git_kubeflow      
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;a href=&#34;https://cloud.google.com/cloud-build/docs/&#34;&gt;Google Cloud Builder(GCB)&lt;/a&gt; to replicate the images&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd git_kubeflow/scripts/gke
+PROJECT=&amp;lt;PROJECT&amp;gt; make copy-gcb
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;This is needed because your GKE nodes won&amp;rsquo;t be able to pull images from non GCR
+registries because they don&amp;rsquo;t have public internet addresses&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gcloud may return an error even though the job is
+submited successfully and will run successfully
+see &lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3105&#34;&gt;kubeflow/kubeflow#3105&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can use the Cloud console to monitor your GCB job.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;.
+When you reach the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#set-up-and-deploy&#34;&gt;setup and deploy step&lt;/a&gt;, 
+&lt;strong&gt;skip the &lt;code&gt;kfctl apply&lt;/code&gt; command&lt;/strong&gt; and run the &lt;strong&gt;&lt;code&gt;kfctl build&lt;/code&gt;&lt;/strong&gt; command 
+instead, as described in that step. Now you can edit the configuration files
+before deploying Kubeflow. Retain the environment variables that you set
+during the setup, including &lt;code&gt;${KF_NAME}&lt;/code&gt;, &lt;code&gt;${KF_DIR}&lt;/code&gt;, and &lt;code&gt;${CONFIG_FILE}&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enable private clusters by editing &lt;code&gt;${KF_DIR}/gcp_config/cluster-kubeflow.yaml&lt;/code&gt; and updating the following two parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;privatecluster: true
+gkeApiVersion: v1beta1
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Remove components which are not useful in private clusters:&lt;/p&gt;
+&lt;p&gt;Open &lt;code&gt;${KF_DIR}/kfctl_gcp_iap.v1.0.0.yaml&lt;/code&gt; and remove kustomizeConfig &lt;code&gt;cert-manager&lt;/code&gt;, &lt;code&gt;cert-manager-crds&lt;/code&gt;, and &lt;code&gt;cert-manager-kube-system-resources&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create the deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If you get an error &lt;strong&gt;legacy networks not supported&lt;/strong&gt;, follow the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke/#legacy-networks-are-not-supported&#34;&gt;troubleshooting guide&lt;/a&gt; to create a new network.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;You will need to manually create the network as a work around for &lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3071&#34;&gt;kubeflow/kubeflow#3071&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/gcp_config
+gcloud --project=${PROJECT} deployment-manager deployments create ${KF_NAME}-network --config=network.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then edit &lt;code&gt;${KF_DIR}/gcp_config/cluster.jinja&lt;/code&gt; to add a field &lt;strong&gt;network&lt;/strong&gt; in your cluster&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cluster:
+  name: {{ CLUSTER_NAME }}
+  network: &amp;lt;name of the new network&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To get the name of the new network run&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud --project=${PROJECT} compute networks list
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;The name will contain the value ${KF_NAME}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update iap-ingress component parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/kustomize
+gvim iap-ingress.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Find and set the &lt;code&gt;privateGKECluster&lt;/code&gt; parameter to true:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;privateGKECluster: &amp;quot;true&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then apply your changes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f iap-ingress.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Obtain an HTTPS certificate for your ${FQDN} and create a Kubernetes secret with it.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;You can create a self signed cert using &lt;a href=&#34;https://github.com/kelseyhightower/kube-rsa&#34;&gt;kube-rsa&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go get github.com/kelseyhightower/kube-rsa
+kube-rsa ${FQDN}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The fully qualified domain is the host field specified for your ingress; 
+you can get it by running&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}/kustomize
+grep hostname: iap-ingress.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then create your Kubernetes secret&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl create secret tls --namespace=kubeflow envoy-ingress-tls --cert=ca.pem --key=ca-key.pem
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;An alternative option is to upgrade to GKE 1.12 or later and use 
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs#migrating_to_google-managed_certificates_from_self-managed_certificates&#34;&gt;managed certificates&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;See &lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3079&#34;&gt;kubeflow/kubeflow#3079&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update the various kustomize manifests to use &lt;code&gt;gcr.io&lt;/code&gt; images instead of Docker Hub images.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Apply all the Kubernetes resources:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wait for Kubeflow to become accessible and then access it at this URL:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://${FQDN}/
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;${FQDN} is the host associated with your ingress&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You can get it by running &lt;code&gt;kubectl get ingress&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/monitor-iap-setup/&#34;&gt;instructions&lt;/a&gt; to monitor the 
+deployment&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;It can take 10-20 minutes for the endpoint to become fully available&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/authorized-networks&#34;&gt;GKE Authorized Networks&lt;/a&gt; to restrict access to your GKE master&lt;/li&gt;
+&lt;li&gt;Learn more about &lt;a href=&#34;https://cloud.google.com/vpc-service-controls/docs/&#34;&gt;VPC Service Controls&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/delete-cli&#34;&gt;delete&lt;/a&gt; your Kubeflow deployment 
+using the CLI.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke&#34;&gt;Troubleshoot&lt;/a&gt; any issues you may
+find.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Troubleshooting Deployments on GKE</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/troubleshooting-gke/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/troubleshooting-gke/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide helps diagnose and fix issues you may encounter with Kubeflow on
+Google Kubernetes Engine (GKE) and Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide covers troubleshooting specifically for
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;Kubeflow deployments on GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For more help, try the
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/troubleshooting&#34;&gt;general Kubeflow troubleshooting guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This guide assumes the following settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_DIR}&lt;/code&gt; environment variable contains the path to
+your Kubeflow application directory, which holds your Kubeflow configuration
+files. For example, &lt;code&gt;/opt/my-kubeflow/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_DIR=&amp;lt;path to your Kubeflow application directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; environment variable contains the path to your
+Kubeflow configuration file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Or:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_basic_auth.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_NAME}&lt;/code&gt; environment variable contains the name of your Kubeflow
+deployment. You can find the name in your &lt;code&gt;${CONFIG_FILE}&lt;/code&gt;
+configuration file, as the value for the &lt;code&gt;metadata.name&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_NAME=&amp;lt;the name of your Kubeflow deployment&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${PROJECT}&lt;/code&gt; environment variable contains the ID of your GCP project.
+You can find the project ID in
+your &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; configuration file, as the value for the &lt;code&gt;project&lt;/code&gt; key.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PROJECT=&amp;lt;your GCP project ID&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${ZONE}&lt;/code&gt; environment variable contains the GCP zone where your
+Kubeflow resources are deployed.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export ZONE=&amp;lt;your GCP zone&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For further background about the above settings, see the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deploying Kubeflow with the CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;troubleshooting-kubeflow-deployment-on-gcp&#34;&gt;Troubleshooting Kubeflow deployment on GCP&lt;/h2&gt;
+&lt;p&gt;Here are some tips for troubleshooting GCP.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Make sure you are a GCP project owner.&lt;/li&gt;
+&lt;li&gt;Make sure you are using HTTPS.&lt;/li&gt;
+&lt;li&gt;Check project &lt;a href=&#34;https://console.cloud.google.com/iam-admin/quotas&#34;&gt;quota page&lt;/a&gt; to see if any service&amp;rsquo;s current usage reached quota limit, increase them as needed.&lt;/li&gt;
+&lt;li&gt;Check &lt;a href=&#34;https://console.cloud.google.com/deployments&#34;&gt;deployment manager page&lt;/a&gt; and see if there’s a failed deployment.&lt;/li&gt;
+&lt;li&gt;Check if endpoint is up: do &lt;a href=&#34;https://mxtoolbox.com/DNSLookup.aspx&#34;&gt;DNS lookup&lt;/a&gt; against your Cloud Identity-Aware Proxy (Cloud IAP) URL and see if it resolves to the correct IP address.&lt;/li&gt;
+&lt;li&gt;Check if certificate succeeded: &lt;code&gt;kubectl describe certificates -n istio-system&lt;/code&gt; should give you certificate status.&lt;/li&gt;
+&lt;li&gt;Check ingress status: &lt;code&gt;kubectl describe ingress -n istio-system&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Check if &lt;a href=&#34;https://console.cloud.google.com/endpoints&#34;&gt;endpoint entry&lt;/a&gt; is created. There should be one entry with name &lt;code&gt;&amp;lt;deployment&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;If endpoint entry doesn&amp;rsquo;t exist, check &lt;code&gt;kubectl describe cloudendpoint -n istio-system&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;If using IAP: make sure you &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup/&#34;&gt;added&lt;/a&gt; &lt;code&gt;https://&amp;lt;deployment&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog/_gcp_gatekeeper/authenticate&lt;/code&gt;
+as an authorized redirect URI for the OAUTH credentials used to create the deployment.&lt;/li&gt;
+&lt;li&gt;If using IAP: see the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/monitor-iap-setup/&#34;&gt;monitoring your Cloud IAP setup&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See the sections below for troubleshooting specific problems.&lt;/li&gt;
+&lt;li&gt;Please &lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/new?template=bug_report.md&#34;&gt;report a bug&lt;/a&gt; if you can&amp;rsquo;t resolve the problem by following the above steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dns-name-not-registered&#34;&gt;DNS name not registered&lt;/h3&gt;
+&lt;p&gt;This section provides troubleshooting information for problems creating a DNS entry for your &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34;&gt;ingress&lt;/a&gt;. The ingress is a K8s resource
+that creates a GCP loadbalancer to enable http(s) access to Kubeflow web services from outside
+the cluster. This section assumes
+you are using &lt;a href=&#34;https://cloud.google.com/endpoints/&#34;&gt;Cloud Endpoints&lt;/a&gt; and a DNS name of the following pattern&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://${KF_NAME}.endpoints.${PROJECT}.cloud.goog
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Symptoms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When you access the the URL in Chrome you get the error: &lt;strong&gt;server IP address could not be found&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;nslookup for the domain name doesn&amp;rsquo;t return the IP address associated with the ingress&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nslookup ${KF_NAME}.endpoints.${PROJECT}.cloud.goog
+Server:   127.0.0.1
+Address:  127.0.0.1#53
+
+** server can&#39;t find ${KF_NAME}.endpoints.${PROJECT}.cloud.goog: NXDOMAIN
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Troubleshooting&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Check the &lt;code&gt;cloudendpoints&lt;/code&gt; resource&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get cloudendpoints -o yaml ${KF_NAME}
+kubectl describe cloudendpoints ${KF_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Check if there are errors indicating problems creating the endpoint&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The status of the &lt;code&gt;cloudendpoints&lt;/code&gt; object will contain the cloud operation used to register the operation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;For example&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; status:
+   config: &amp;quot;&amp;quot;
+   configMapHash: &amp;quot;&amp;quot;
+   configSubmit: operations/serviceConfigs.jlewi-1218-001.endpoints.cloud-ml-dev.cloud.goog:43fe6c6f-eb9c-41d0-ac85-b547fc3e6e38
+   endpoint: jlewi-1218-001.endpoints.cloud-ml-dev.cloud.goog
+   ingressIP: 35.227.243.83
+   jwtAudiences: null
+   lastAppliedSig: 4f3b903a06a683b380bf1aac1deca72792472429
+   observedGeneration: 1
+   stateCurrent: ENDPOINT_SUBMIT_PENDING
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;You can check the status of the operation by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud --project=${PROJECT} endpoints operations describe ${OPERATION}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Operation is everything after &lt;code&gt;operations/&lt;/code&gt; in the &lt;code&gt;configSubmit&lt;/code&gt; field&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;404-page-not-found-when-accessing-central-dashboard&#34;&gt;404 Page Not Found When Accessing Central Dashboard&lt;/h3&gt;
+&lt;p&gt;This section provides troubleshooting information for 404s, page not found, being return by the central dashboard which is served at&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://${KUBEFLOW_FQDN}/
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;KUBEFLOW_FQDN&lt;/strong&gt;&lt;/em&gt; is your project&amp;rsquo;s OAuth web app URI domain name &lt;code&gt;&amp;lt;name&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Since we were able to sign in this indicates the Ambassador reverse proxy is up and healthy we can confirm this is the case by running the following command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n ${NAMESPACE} get pods -l service=envoy
+
+NAME                     READY     STATUS    RESTARTS   AGE
+envoy-76774f8d5c-lx9bd   2/2       Running   2          4m
+envoy-76774f8d5c-ngjnr   2/2       Running   2          4m
+envoy-76774f8d5c-sg555   2/2       Running   2          4m
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Try other services to see if they&amp;rsquo;re accessible for example&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://${KUBEFLOW_FQDN}/whoami
+https://${KUBEFLOW_FQDN}/tfjobs/ui
+https://${KUBEFLOW_FQDN}/hub
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If other services are accessible then we know its a problem specific to the central dashboard and not ingress&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check that the centraldashboard is running&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get pods -l app=centraldashboard
+NAME                                READY     STATUS    RESTARTS   AGE
+centraldashboard-6665fc46cb-592br   1/1       Running   0          7h
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check a service for the central dashboard exists&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get service -o yaml centraldashboard
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check that an Ambassador route is properly defined&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl get service centraldashboard -o jsonpath=&#39;{.metadata.annotations.getambassador\.io/config}&#39;
+
+apiVersion: ambassador/v0
+  kind:  Mapping
+  name: centralui-mapping
+  prefix: /
+  rewrite: /
+  service: centraldashboard.kubeflow,
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check the logs of Ambassador for errors. See if there are errors like the following indicating
+an error parsing the route.If you are using the new Stackdriver Kubernetes monitoring you can use the following filter in the &lt;a href=&#34;https://console.cloud.google.com/logs/viewer&#34;&gt;stackdriver console&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; resource.type=&amp;quot;k8s_container&amp;quot;
+ resource.labels.location=${ZONE}
+ resource.labels.cluster_name=${CLUSTER}
+ metadata.userLabels.service=&amp;quot;ambassador&amp;quot;
+&amp;quot;could not parse YAML&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;502-server-error&#34;&gt;502 Server Error&lt;/h3&gt;
+&lt;p&gt;A 502 usually means traffic isn&amp;rsquo;t even making it to the envoy reverse proxy. And it
+usually indicates the loadbalancer doesn&amp;rsquo;t think any backends are healthy.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;In Cloud Console select Network Services -&amp;gt; Load Balancing&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Click on the load balancer (the name should contain the name of the ingress)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The exact name can be found by looking at the &lt;code&gt;ingress.kubernetes.io/url-map&lt;/code&gt; annotation on your ingress object&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;URLMAP=$(kubectl --namespace=${NAMESPACE} get ingress envoy-ingress -o jsonpath=&#39;{.metadata.annotations.ingress\.kubernetes\.io/url-map}&#39;)
+echo ${URLMAP}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click on your loadbalancer&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;This will show you the backend services associated with the load balancer&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;There is 1 backend service for each K8s service the ingress rule routes traffic too&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The named port will correspond to the NodePort a service is using&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NODE_PORT=$(kubectl --namespace=${NAMESPACE} get svc envoy -o jsonpath=&#39;{.spec.ports[0].nodePort}&#39;)
+BACKEND_NAME=$(gcloud compute --project=${PROJECT} backend-services list --filter=name~k8s-be-${NODE_PORT}- --format=&#39;value(name)&#39;)
+gcloud compute --project=${PROJECT} backend-services get-health --global ${BACKEND_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure the load balancer reports the backends as healthy&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If the backends aren&amp;rsquo;t reported as healthy check that the pods associated with the K8s service are up and running&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check that health checks are properly configured&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Click on the health check associated with the backend service for envoy&lt;/li&gt;
+&lt;li&gt;Check that the path is /healthz and corresponds to the path of the readiness probe on the envoy pods&lt;/li&gt;
+&lt;li&gt;See &lt;a href=&#34;https://github.com/kubernetes-retired/contrib/tree/master/ingress/controllers/gce/examples/health_checks&#34;&gt;K8s docs&lt;/a&gt; for important information about how health checks are determined from readiness probes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Check firewall rules to ensure traffic isn&amp;rsquo;t blocked from the GCP loadbalancer&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The firewall rule should be added automatically by the ingress but its possible it got deleted if you have some automatic firewall policy enforcement. You can recreate the firewall rule if needed with a rule like this&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud compute firewall-rules create $NAME \
+--project $PROJECT \
+--allow tcp:$PORT \
+--target-tags $NODE_TAG \
+--source-ranges 130.211.0.0/22,35.191.0.0/16
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To get the node tag&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# From the Kubernetes Engine cluster get the name of the managed instance group
+gcloud --project=$PROJECT container clusters --zone=$ZONE describe $CLUSTER
+# Get the template associated with the MIG
+gcloud --project=kubeflow-rl compute instance-groups managed describe --zone=${ZONE} ${MIG_NAME}
+# Get the instance tags from the template
+gcloud --project=kubeflow-rl compute instance-templates describe ${TEMPLATE_NAME}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For more info &lt;a href=&#34;https://cloud.google.com/compute/docs/load-balancing/health-checks&#34;&gt;see GCP HTTP health check docs&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In Stackdriver Logging look at the Cloud Http Load Balancer logs&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Logs are labeled with the forwarding rule&lt;/li&gt;
+&lt;li&gt;The forwarding rules are available via the annotations on the ingress
+&lt;pre&gt;&lt;code&gt;ingress.kubernetes.io/forwarding-rule
+ingress.kubernetes.io/https-forwarding-rule
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Verify that requests are being properly routed within the cluster&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Connect to one of the envoy proxies&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```
+kubectl exec -ti `kubectl get pods --selector=service=envoy -o jsonpath=&#39;{.items[0].metadata.name}&#39;` /bin/bash
+```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install curl in the pod&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y curl
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Verify access to the whoami app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;curl -L -s -i http://envoy:8080/noiap/whoami
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;If this doesn&amp;rsquo;t return a 200 OK response; then there is a problem with the K8s resources
+&lt;ul&gt;
+&lt;li&gt;Check the pods are running&lt;/li&gt;
+&lt;li&gt;Check services are pointing at the points (look at the endpoints for the various services)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;problems-with-ssl-certificate-from-lets-encrypt&#34;&gt;Problems with SSL certificate from Let&amp;rsquo;s Encrypt&lt;/h3&gt;
+&lt;p&gt;See the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/monitor-iap-setup/&#34;&gt;monitoring your Cloud IAP setup&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;envoy-pods-crash-looping-root-cause-is-backend-quota-exceeded&#34;&gt;Envoy pods crash-looping: root cause is backend quota exceeded&lt;/h2&gt;
+&lt;p&gt;If your logs show the
+&lt;a href=&#34;https://istio.io/docs/concepts/what-is-istio/#envoy&#34;&gt;Envoy&lt;/a&gt; pods crash-looping,
+the root cause may be that you have exceeded your quota for some
+backend services such as loadbalancers.
+This is particularly likely if you have multiple, differently named deployments
+in the same GCP project using &lt;a href=&#34;https://cloud.google.com/iap/&#34;&gt;Cloud IAP&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;the-error&#34;&gt;The error&lt;/h3&gt;
+&lt;p&gt;The error looks like this for the pod&amp;rsquo;s Envoy container:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl logs -n kubeflow envoy-79ff8d86b-z2snp envoy
+[2019-01-22 00:19:44.400][1][info][main] external/envoy/source/server/server.cc:184] initializing epoch 0 (hot restart version=9.200.16384.127.options=capacity=16384, num_slots=8209 hash=228984379728933363)
+[2019-01-22 00:19:44.400][1][critical][main] external/envoy/source/server/server.cc:71] error initializing configuration &#39;/etc/envoy/envoy-config.json&#39;: unable to read file: /etc/envoy/envoy-config.json
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;And the Cloud IAP container shows a message like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Waiting for backend id PROJECT=&amp;lt;your-project&amp;gt; NAMESPACE=kubeflow SERVICE=envoy filter=name~k8s-be-30352-...
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;diagnosing-the-cause&#34;&gt;Diagnosing the cause&lt;/h3&gt;
+&lt;p&gt;You can verify the cause of the problem by entering the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system describe ingress
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Look for something like this in the output:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Events:
+  Type     Reason  Age                  From                     Message
+  ----     ------  ----                 ----                     -------
+  Warning  Sync    14m (x193 over 19h)  loadbalancer-controller  Error during sync: googleapi: Error 403: Quota &#39;BACKEND_SERVICES&#39; exceeded. Limit: 5.0 globally., quotaExceeded
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;fixing-the-problem&#34;&gt;Fixing the problem&lt;/h3&gt;
+&lt;p&gt;If you have any redundant Kubeflow deployments, you can delete them using
+the &lt;a href=&#34;https://cloud.google.com/deployment-manager/docs/&#34;&gt;Deployment Manager&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Alternatively, you can request more backend services quota on the GCP Console.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to the &lt;a href=&#34;https://console.cloud.google.com/iam-admin/quotas?metric=Backend%20services&#34;&gt;quota settings for backend services on the GCP
+Console&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;EDIT QUOTAS&lt;/strong&gt;. A quota editing form opens on the right of the
+screen.&lt;/li&gt;
+&lt;li&gt;Follow the form instructions to apply for more quota.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;legacy-networks-are-not-supported&#34;&gt;Legacy networks are not supported&lt;/h2&gt;
+&lt;p&gt;Cloud Filestore and GKE try to use the network named &lt;code&gt;default&lt;/code&gt; by default. For older projects,
+this will be a legacy network which is incompatible with Cloud Filestore and newer GKE features
+like private clusters. This will
+manifest as the error &lt;strong&gt;&amp;ldquo;default is invalid; legacy networks are not supported&amp;rdquo;&lt;/strong&gt; when
+deploying Kubeflow.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s an example error when deploying Cloud Filestore:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ERROR: (gcloud.deployment-manager.deployments.update) Error in Operation [operation-1533189457517-5726d7cfd19c9-e1b0b0b5-58ca11b8]: errors:
+- code: RESOURCE_ERROR
+  location: /deployments/jl-0801-b-gcfs/resources/filestore
+  message: &#39;{&amp;quot;ResourceType&amp;quot;:&amp;quot;gcp-types/file-v1beta1:projects.locations.instances&amp;quot;,&amp;quot;ResourceErrorCode&amp;quot;:&amp;quot;400&amp;quot;,&amp;quot;ResourceErrorMessage&amp;quot;:{&amp;quot;code&amp;quot;:400,&amp;quot;message&amp;quot;:&amp;quot;network
+    default is invalid; legacy networks are not supported.&amp;quot;,&amp;quot;status&amp;quot;:&amp;quot;INVALID_ARGUMENT&amp;quot;,&amp;quot;statusMessage&amp;quot;:&amp;quot;Bad
+    Request&amp;quot;,&amp;quot;requestPath&amp;quot;:&amp;quot;https://file.googleapis.com/v1beta1/projects/cloud-ml-dev/locations/us-central1-a/instances&amp;quot;,&amp;quot;httpMethod&amp;quot;:&amp;quot;POST&amp;quot;}}&#39;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To fix this we can create a new network:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+cp .cache/master/deployment/gke/deployment_manager_configs/network.* \
+   ./gcp_config/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Edit &lt;code&gt;network.yaml &lt;/code&gt;to set the name for the network.&lt;/p&gt;
+&lt;p&gt;Edit &lt;code&gt;gcfs.yaml&lt;/code&gt; to use the name of the newly created network.&lt;/p&gt;
+&lt;p&gt;Apply the changes.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;cpu-platform-unavailable-in-requested-zone&#34;&gt;CPU platform unavailable in requested zone&lt;/h2&gt;
+&lt;p&gt;By default, we set minCpuPlatform to &lt;code&gt;Intel Haswell&lt;/code&gt; to make sure AVX2 is supported.
+See &lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/troubleshooting/&#34;&gt;troubleshooting&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;p&gt;If you encounter this &lt;code&gt;CPU platform unavailable&lt;/code&gt; error (might manifest as
+&lt;code&gt;Cluster is currently being created, deleted, updated or repaired and cannot be updated.&lt;/code&gt;),
+you can change the &lt;a href=&#34;https://github.com/kubeflow/manifests/blob/master/gcp/deployment_manager_configs/cluster-kubeflow.yaml#L31&#34;&gt;zone&lt;/a&gt;
+or change the &lt;a href=&#34;https://github.com/kubeflow/manifests/blob/master/gcp/deployment_manager_configs/cluster.jinja#L131&#34;&gt;minCpuPlatform&lt;/a&gt;.
+See &lt;a href=&#34;https://cloud.google.com/compute/docs/regions-zones/#available&#34;&gt;here&lt;/a&gt;
+for available zones and cpu platforms.&lt;/p&gt;
+&lt;h2 id=&#34;changing-the-oauth-client-used-by-iap&#34;&gt;Changing the OAuth client used by IAP&lt;/h2&gt;
+&lt;p&gt;If you need to change the OAuth client used by IAP, you can run the following commands
+to replace the Kubernetes secret containing the ID and secret.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow delete secret kubeflow-oauth
+kubectl -n kubeflow create secret generic kubeflow-oauth \
+       --from-literal=client_id=${CLIENT_ID} \
+       --from-literal=client_secret=${CLIENT_SECRET}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;troubleshooting-ssl-certificate-errors&#34;&gt;Troubleshooting SSL certificate errors&lt;/h2&gt;
+&lt;p&gt;This section describes how to enable service management API to avoid managed certificates failure.&lt;/p&gt;
+&lt;p&gt;To check your certificate:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Run the following command:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system describe managedcertificate gke-certificate
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Make sure the certificate status is either &lt;code&gt;Active&lt;/code&gt; or &lt;code&gt;Provisioning&lt;/code&gt; which means it is not ready. For more details on certificate status, refer to the &lt;a href=&#34;https://cloud.google.com/load-balancing/docs/ssl-certificates?hl=en_US&amp;amp;_ga=2.164380342.-821786221.1568995229#certificate-resource-status&#34;&gt;certificate statuses descriptions&lt;/a&gt; section. Also, make sure the domain name is correct.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Run the following command to look for the errors using the certificate name from the previous step:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;gcloud beta --project=${PROJECT} compute ssl-certificates describe --global ${CERTIFICATE_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;Run the following command:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system get ingress envoy-ingress -o yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Make sure of the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;networking.gke.io/managed-certificates&lt;/code&gt; annotation value points to the name of the Kubernetes managed certificate resource and is &lt;code&gt;gke-certificate&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;public IP address that is displayed in the status is assigned. See the example of IP address below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;status:
+  loadBalancer:
+    ingress:
+     - ip: 35.186.212.202
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;DNS entry for the domain has propogated. To verify this, use the following &lt;code&gt;nslookup&lt;/code&gt; command example:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;`nslookup ${DOMAIN}`
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;domain name is the fully qualified domain name which be the host value in the &lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34;&gt;ingress&lt;/a&gt;. See the example below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;${KF_APP_NAME}.endpoints.${PROJECT}.cloud.goog
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note that managed certificates cannot provision the certificate if the DNS lookup does not work properly.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Tutorial: End-to-end Kubeflow on GCP</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/gcp-e2e/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/gcp-e2e/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide walks you through an end-to-end example of Kubeflow on Google
+Cloud Platform (GCP) using a Jupyter notebook, 
+&lt;a href=&#34;https://github.com/kubeflow/examples/blob/master/mnist/mnist_gcp.ipynb&#34;&gt;mnist_gcp.ipynb&lt;/a&gt;. 
+By working through the notebook, you learn
+how to deploy Kubeflow on Kubernetes Engine (GKE), train an MNIST machine
+learning model for image classification, and use the model for online inference
+(also known as online prediction).&lt;/p&gt;
+&lt;h2 id=&#34;introductions&#34;&gt;Introductions&lt;/h2&gt;
+&lt;h3 id=&#34;overview-of-gcp-and-gke&#34;&gt;Overview of GCP and GKE&lt;/h3&gt;
+&lt;p&gt;Google Cloud Platform (GCP) is a suite of cloud computing services running
+on Google infrastructure. The services include compute power, data storage,
+data analytics, and machine learning.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://cloud.google.com/sdk/docs/&#34;&gt;Cloud SDK&lt;/a&gt; is a set of tools that you can use to interact with
+GCP from the command line, including the &lt;code&gt;gcloud&lt;/code&gt; command and others.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/&#34;&gt;Kubernetes Engine&lt;/a&gt; (GKE) is a managed service on GCP where
+you can deploy containerized applications. You describe the resources that your
+application needs, and GKE provisions and manages the underlying
+cloud resources.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a list of the primary GCP services that you use when following this
+guide:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/&#34;&gt;GKE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/compute/&#34;&gt;Compute Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/container-registry/&#34;&gt;Container Registry&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/storage/&#34;&gt;Cloud Storage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;the-model-and-the-data&#34;&gt;The model and the data&lt;/h3&gt;
+&lt;p&gt;This tutorial trains a &lt;a href=&#34;https://www.tensorflow.org/&#34;&gt;TensorFlow&lt;/a&gt; model on the
+&lt;a href=&#34;http://yann.lecun.com/exdb/mnist/index.html&#34;&gt;MNIST dataset&lt;/a&gt;, which is the &lt;em&gt;hello world&lt;/em&gt; for machine learning.&lt;/p&gt;
+&lt;p&gt;The MNIST dataset contains a large number of images of hand-written digits in
+the range 0 to 9, as well as the labels identifying the digit in each image.&lt;/p&gt;
+&lt;p&gt;After training, the model can classify incoming images into 10 categories
+(0 to 9) based on what it&amp;rsquo;s learned about handwritten images. In other words,
+you send an image to the model, and the model does its best to identify the
+digit shown in the image.
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;In the above screenshot, the image shows a hand-written &lt;strong&gt;7&lt;/strong&gt;. This image was
+the input to the model. The table below the image shows a bar graph for each
+classification label from 0 to 9, as output by the model. Each bar
+represents the probability that the image matches the respective label.
+Judging by this screenshot, the model seems pretty confident that this image
+is a 7.&lt;/p&gt;
+&lt;h3 id=&#34;the-overall-workflow&#34;&gt;The overall workflow&lt;/h3&gt;
+&lt;p&gt;The following diagram shows what you accomplish by following this guide:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;In summary:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Setting up &lt;a href=&#34;https://www.kubeflow.org/&#34;&gt;Kubeflow&lt;/a&gt; in a &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/&#34;&gt;GKE&lt;/a&gt;
+cluster.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Training the model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Packaging a TensorFlow program in a &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt; container.&lt;/li&gt;
+&lt;li&gt;Uploading the container to &lt;a href=&#34;https://cloud.google.com/container-registry/&#34;&gt;Container Registry&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Submitting a TensorFlow training (&lt;a href=&#34;https://www.tensorflow.org/api_guides/python/train&#34;&gt;tf.train&lt;/a&gt;) job.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Using the model for prediction (inference):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Saving the trained model to &lt;a href=&#34;https://cloud.google.com/storage/&#34;&gt;Cloud Storage&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Using &lt;a href=&#34;https://www.tensorflow.org/serving/&#34;&gt;TensorFlow Serving&lt;/a&gt; to serve the model.&lt;/li&gt;
+&lt;li&gt;Running a simple web app to send a prediction request to the model and
+display the result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It&amp;rsquo;s time to get started!&lt;/p&gt;
+&lt;h2 id=&#34;set-up-and-run-the-mnist-tutorial-on-gcp&#34;&gt;Set up and run the MNIST tutorial on GCP&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;GCP instructions&lt;/a&gt; to deploy Kubeflow with 
+Cloud Identity-Aware Proxy (IAP).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Launch a Jupyter notebook in your Kubeflow cluster. See the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/notebooks/setup/#create-a-jupyter-notebook-server-and-add-a-notebook&#34;&gt;setting up your 
+notebooks&lt;/a&gt;.
+&lt;em&gt;Note:&lt;/em&gt; This tutorial has been tested with the &lt;em&gt;Tensorflow 1.15 CPU&lt;/em&gt; image
+as the baseline image for the notebook.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Launch a terminal in Jupyter and clone the Kubeflow examples repository:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/kubeflow/examples.git git_kubeflow-examples
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: When you start a terminal in Jupyter, run the command &lt;code&gt;bash&lt;/code&gt; to start
+a bash terminal which is much more friendly than the default shell.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: You can change the URL for your notebook from &amp;lsquo;/tree&amp;rsquo; to &amp;lsquo;/lab&amp;rsquo; to switch to using JupyterLab.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open the notebook &lt;code&gt;mnist/mnist_gcp.ipynb&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the instructions in the notebook to train and deploy MNIST on Kubeflow.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Logging and monitoring</title>
+      <link>http://osmatrix.github.io/zh/docs/gke/monitoring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/gke/monitoring/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://prometheus.io/&#34;&gt;Prometheus&lt;/a&gt; is a monitoring tool often used with Kubernetes. If you configure Kubernetes Engine Monitoring and include Prometheus support, then the metrics that are generated by services using the &lt;a href=&#34;https://prometheus.io/docs/instrumenting/exposition_formats/&#34;&gt;Prometheus exposition format&lt;/a&gt; can be exported from the cluster and made visible as &lt;a href=&#34;https://cloud.google.com/monitoring/api/metrics_other#externalgoogleapiscom&#34;&gt;external metrics&lt;/a&gt; in Cloud Monitoring.&lt;/p&gt;
+&lt;p&gt;To configure and use Prometheus with Kubernetes Engine Monitoring, see &lt;a href=&#34;https://cloud.google.com/monitoring/kubernetes-engine/prometheus&#34;&gt;the GCP documentation&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

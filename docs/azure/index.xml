@@ -1,0 +1,284 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Kubeflow on Azure</title>
+    <link>http://osmatrix.github.io/docs/azure/</link>
+    <description>Recent content in Kubeflow on Azure on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/azure/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Deployment</title>
+      <link>http://osmatrix.github.io/docs/azure/deploy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/azure/deploy/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: End-to-End Pipeline Example on Azure</title>
+      <link>http://osmatrix.github.io/docs/azure/azureendtoend/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/azure/azureendtoend/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;introductions&#34;&gt;Introductions&lt;/h2&gt;
+&lt;h3 id=&#34;overview-of-azure-and-aks&#34;&gt;Overview of Azure and AKS&lt;/h3&gt;
+&lt;p&gt;Microsoft Azure is an open, flexible, enterprise-grade cloud computing platform running on Microsoft infrastructure. The platform has various services, many of which are extremely useful in a pipeline that works with ML models.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&#34;&gt;Azure CLI&lt;/a&gt; is a set of tools that you can use to interact with Azure from the command line.&lt;/p&gt;
+&lt;p&gt;Azure Kubernetes Service (AKS) on Azure allows you to deploy containerized applications, within which you describe the resources your application needs, and AKS will manage the underlying resources automatically. This workflow is especially efficient at scale.&lt;/p&gt;
+&lt;h3 id=&#34;the-overall-workflow&#34;&gt;The overall workflow&lt;/h3&gt;
+&lt;p&gt;This guide takes you through using your Kubeflow deployment to build a machine learning (ML) pipeline on Azure. This guide uses a sample pipeline to detail the process of creating an ML workflow from scratch. You will learn how to create and run a pipeline that processes data, trains a model, and then registers and deploys that model as a webservice.&lt;/p&gt;
+&lt;p&gt;To build your pipeline, you must create and build containers using Docker images. Containers are used to abstract the dependencies for each step of the pipeline. You can manage your containers using &lt;a href=&#34;https://ms.portal.azure.com/#home&#34;&gt;Azure&amp;rsquo;s portal&lt;/a&gt;, specifically using the Container Registry to store the containers in the cloud. Kubelfow pulls the containers from this registry as they are needed in each step of the pipeline.&lt;/p&gt;
+&lt;p&gt;By following this guide, you will learn how to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set up Kubeflow in an AKS Cluster&lt;/li&gt;
+&lt;li&gt;Create and compile a pipeline that can:
+&lt;ul&gt;
+&lt;li&gt;Preprocess data&lt;/li&gt;
+&lt;li&gt;Train a model&lt;/li&gt;
+&lt;li&gt;Register the model to ACR (&lt;a href=&#34;https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/acr-template?view=azure-devops&#34;&gt;Azure Container Registry&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Profile the model to optimize compute resources in AML (Azure Machine Learning)&lt;/li&gt;
+&lt;li&gt;Deploy the model to AML&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Interact with and customize your deployment&lt;/li&gt;
+&lt;li&gt;Test and use your deployed model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When your pipeline has finished running, you will be able to see a registered image, model, and deployment in your Azure ML workspace. You will then be able to visit the scoring URI and upload images for scoring in real time.&lt;/p&gt;
+&lt;h2 id=&#34;set-up-your-environment&#34;&gt;Set up your environment&lt;/h2&gt;
+&lt;h3 id=&#34;download-the-project-files&#34;&gt;Download the project files&lt;/h3&gt;
+&lt;p&gt;This tutorial uses the Azure Pipelines example in the Kubeflow examples repo. You can optionally use a pipeline of your own, but several key steps may differ.&lt;/p&gt;
+&lt;p&gt;Clone the project files and go to the directory containing the &lt;a href=&#34;https://github.com/kubeflow/examples/tree/master/pipelines&#34;&gt;Azure Pipelines (Tacos and Burritos)&lt;/a&gt; example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/kubeflow/examples.git
+cd examples/pipelines/azurepipeline
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;As an alternative to cloning, you can download the &lt;a href=&#34;https://github.com/kubeflow/examples/archive/master.zip&#34;&gt;Kubeflow examples repository zip file&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;deploy-kubeflow&#34;&gt;Deploy Kubeflow&lt;/h2&gt;
+&lt;p&gt;If you don&amp;rsquo;t already have one, create an Azure account. If you have not used Azure services before, you can recieve up to &lt;a href=&#34;https://azure.microsoft.com/en-ca/free/&#34;&gt;1 year of free services and free credits.&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: that some of the services used in this guide may not be included in the free services, but can be covered by free credits.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;First, install the &lt;a href=&#34;https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&#34;&gt;Azure CLI&lt;/a&gt;, then follow the instructions in the &lt;a href=&#34;https://www.kubeflow.org/docs/azure/deploy/install-kubeflow/&#34;&gt;guide to deploying Kubeflow on Azure&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ensure that the agent size you use has the proper memory and storage requirements. For the Azure Pipelines example, &lt;strong&gt;56 GiB&lt;/strong&gt; of memory are needed and &lt;strong&gt;premium storage&lt;/strong&gt; must be available. Use &lt;a href=&#34;https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes&#34;&gt;this guide&lt;/a&gt; to choose the right agent size for your deployment. (We chose an agent size of Standard_DS13_v2.)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;configuring-azure-resources&#34;&gt;Configuring Azure resources&lt;/h2&gt;
+&lt;h3 id=&#34;create-an-ml-workspace-in-azure&#34;&gt;Create an ML workspace in Azure&lt;/h3&gt;
+&lt;p&gt;Throughout your pipeline&amp;rsquo;s run, all of your models, images, and deployments will be pushed to your ML workspace in Azure. Your ML workspace also has support for managing your active deployments, which will be displayed later in this tutorial.&lt;/p&gt;
+&lt;p&gt;To create an ML workspace:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to &lt;a href=&#34;https://portal.azure.com&#34;&gt;the Azure portal&lt;/a&gt; and click on your resource group.&lt;/li&gt;
+&lt;li&gt;Select the &lt;strong&gt;add a new resource&lt;/strong&gt; option.&lt;/li&gt;
+&lt;li&gt;Search for &lt;strong&gt;Machine Learning Studio Workspace&lt;/strong&gt; and use the default options, taking note of the name you decide for it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;create-an-azure-container-registry&#34;&gt;Create an Azure container registry&lt;/h3&gt;
+&lt;p&gt;Kubeflow uses Docker images to describe each pipeline step&amp;rsquo;s dependencies. You need to create a container registry to store those images in the cloud so that Kubeflow can pull the images as they are needed.&lt;/p&gt;
+&lt;p&gt;To create a container registry:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to &lt;a href=&#34;https://portal.azure.com&#34;&gt;the Azure portal&lt;/a&gt; and click on your resource group.&lt;/li&gt;
+&lt;li&gt;From there, select the &lt;strong&gt;add a new resource&lt;/strong&gt; option.&lt;/li&gt;
+&lt;li&gt;Search for &lt;strong&gt;Container Registry&lt;/strong&gt; and add it to your resource group.&lt;/li&gt;
+&lt;li&gt;Configure your registry by selecting and noting the name you use for it. Enable an &lt;strong&gt;admin user&lt;/strong&gt;, and change the SKU option to &lt;strong&gt;Premium&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;create-a-persistent-volume-claim-pvc&#34;&gt;Create a persistent volume claim (PVC)&lt;/h3&gt;
+&lt;p&gt;A persistent volume claim is a dynamically provisioned storage resource attached to a Kubernetes cluster. It is used in the pipeline to store data and files across pipeline steps.&lt;/p&gt;
+&lt;p&gt;Using a bash shell, navigate to the &lt;code&gt;azurepipeline&lt;/code&gt; directory. Use the following commands to create a persistent volume claim for your cluster.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd kubernetes
+kubectl apply -f pvc.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;authenticate-your-service-principal&#34;&gt;Authenticate your service principal&lt;/h2&gt;
+&lt;p&gt;A service principal is used to allow your pipeline to securely interface with your Azure services without having to directly login in the pipeline and use admin privileges. To create a service principal with Contributor access to your Azure account, use the following steps.&lt;/p&gt;
+&lt;h3 id=&#34;create-an-app-registration&#34;&gt;Create an App Registration&lt;/h3&gt;
+&lt;p&gt;To create an app registration:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;In the Azure Portal, navigate to &lt;a href=&#34;https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview&#34;&gt;&lt;strong&gt;Azure Active Directory&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Select &lt;strong&gt;App registrations&lt;/strong&gt; and click &lt;strong&gt;New registration&lt;/strong&gt;. Name it, noting the name and use the default options.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Register&lt;/strong&gt;. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You should be redirected to your app registration’s dashboard. Select &lt;strong&gt;Overview&lt;/strong&gt; from the sidebar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make note of the &lt;strong&gt;Application (client) ID&lt;/strong&gt; and the &lt;strong&gt;Directory (tenant) ID&lt;/strong&gt;. The client ID is your service principal username. Save these in a secure location. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Select &lt;strong&gt;Certificates and Secrets&lt;/strong&gt; from the sidebar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Select &lt;strong&gt;New client secret&lt;/strong&gt;. Give the client secret a description and select how long you would like it to remain active for. Once you click the &lt;strong&gt;Add&lt;/strong&gt; button, make sure you take note of the client secret value and save it in a secure place. This is your service principal password. &lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;add-a-role-assignment&#34;&gt;Add a role assignment&lt;/h3&gt;
+&lt;p&gt;To add a role assignment for your service principal:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to your resource group page on the Azure Portal.&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Access control (IAM)&lt;/strong&gt; from the sidebar. Select &lt;strong&gt;Add a role assignment&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Set the role to &lt;strong&gt;Contributor&lt;/strong&gt; and search for the name you gave your app registration in the &lt;strong&gt;Select&lt;/strong&gt; dropdown.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Save&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;creating-containers-from-docker-images&#34;&gt;Creating containers from Docker images&lt;/h2&gt;
+&lt;h3 id=&#34;install-docker&#34;&gt;Install Docker&lt;/h3&gt;
+&lt;p&gt;You need to install Docker to be able to push and pull images to/from your Container registry.&lt;/p&gt;
+&lt;p&gt;For Windows and WSL: &lt;a href=&#34;https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly&#34;&gt;Guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For other OS: &lt;a href=&#34;https://hub.docker.com/?overlay=onboarding&#34;&gt;Docker Desktop&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;build-images&#34;&gt;Build images&lt;/h3&gt;
+&lt;p&gt;To deploy your code to Kubernetes, you must build your local project’s Docker images and push the containers to your Container Registry so that they are available in the cloud.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Set the path in Container Registry that you want to push the containers to:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;export REGISTRY_PATH=&amp;lt;REGISTRY_NAME&amp;gt;.azurecr.io
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Run the following command to authenticate your Container Registry:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;az acr login --name &amp;lt;REGISTRY_NAME&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Create a version, to be associated with your model each time it runs (change this accordingly):&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;export VERSION_TAG=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Each docker image will be built and uploaded to the cloud using the Container Registry.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: If you would like to test a container locally, you can use the &lt;code&gt;docker run -it ${REGISTRY_PATH}&amp;lt;CONTAINER NAME&amp;gt;:$(VERSION_TAG}&lt;/code&gt; before pushing to Container Registry.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;//Starting in the &#39;code&#39; directory of the azurepipeline folder
+
+cd preprocess
+docker build . -t ${REGISTRY_PATH}/preprocess:${VERSION_TAG}
+docker push ${REGISTRY_PATH}/preprocess:${VERSION_TAG}
+
+cd ../training
+docker build . -t ${REGISTRY_PATH}/training:${VERSION_TAG}
+docker push ${REGISTRY_PATH}/training:${VERSION_TAG}
+
+cd ../register
+docker build . -t ${REGISTRY_PATH}/register:${VERSION_TAG}
+docker push ${REGISTRY_PATH}/register:${VERSION_TAG}
+
+cd ../profile
+docker build . -t ${REGISTRY_PATH}/profile:${VERSION_TAG}
+docker push ${REGISTRY_PATH}/profile:${VERSION_TAG}
+
+cd ../deploy
+docker build . -t ${REGISTRY_PATH}/deploy:${VERSION_TAG}
+docker push ${REGISTRY_PATH}/deploy:${VERSION_TAG}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When all of the images are pushed successfully, modify the &lt;code&gt;pipeline.py&lt;/code&gt; file to use the appropriate image for each pipeline step.&lt;/p&gt;
+&lt;h2 id=&#34;running-and-deploying-your-pipeline&#34;&gt;Running and deploying your pipeline&lt;/h2&gt;
+&lt;h3 id=&#34;compile&#34;&gt;Compile&lt;/h3&gt;
+&lt;p&gt;To compile the pipeline, simply open a terminal and navigate to the azurepipeline/code folder. Run the following command to generate a pipeline in the tar.gz format:
+&lt;code&gt;python pipeline.py&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;run-and-deploy&#34;&gt;Run and deploy&lt;/h3&gt;
+&lt;p&gt;Upload the pipeline.tar.gz file to the pipelines dashboard on your Kubeflow deployment.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Create an experiment and then create a run using the pipeline you just uploaded.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;The finished pipeline should have five completed steps.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;pushing-images-for-scoring&#34;&gt;Pushing images for scoring&lt;/h3&gt;
+&lt;p&gt;Once your pipeline has finished successfully, you can visit the Azure portal to find your deployment url. Go to your ML workspace dashboard and select “Deployments” from the sidebar. Click on the most recent deployment. You should see a link under “Scoring URI”. You can whatever method you know best to send a GET/POST request with an image of a taco or a burrito to this url and it should return whether or not the image is of a taco or a burrito.&lt;/p&gt;
+&lt;p&gt;The easiest method is to find a url of an image of a taco or a burrito and append it to your scoring url as follows: &lt;code&gt;&amp;lt;scoring_url&amp;gt;?image=&amp;lt;image_url&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;clean-up-your-azure-environment&#34;&gt;Clean up your Azure environment&lt;/h2&gt;
+&lt;p&gt;When you are done, make sure you delete your resource group to avoid extra charges.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;az group delete -n MyResourceGroup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can optionally choose to delete individual resources on your clusters using the &lt;a href=&#34;https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-tutorial-delete-cluster&#34;&gt;Azure cluster docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;Build your own pipeline using the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/&#34;&gt;Kubeflow Pipelines SDK&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Access Control for Azure Deployment</title>
+      <link>http://osmatrix.github.io/docs/azure/authentication/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/azure/authentication/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This section shows how to restrict access to only certain IP addresses for your LoadBalancer Service on Azure. At a later date, it will also include formal authentication through Azure. This method is not the most ideal way to secure your Kubernetes cluster, as it requires that you access the service from the same IP address every time. This process was adapted from &lt;a href=&#34;https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service&#34;&gt;the Kubernetes guide to configuring a firewall&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When using a service with &lt;code&gt;spec.type: LoadBalancer&lt;/code&gt;, you can specify the IP ranges that are allowed to access the load balancer by using &lt;code&gt;spec.loadBalancerSourceRanges&lt;/code&gt;. This is currently supported on all major cloud providers.&lt;/p&gt;
+&lt;h2 id=&#34;editing-the-loadbalancer-service&#34;&gt;Editing the LoadBalancer Service&lt;/h2&gt;
+&lt;p&gt;Use the &lt;code&gt;kubectl edit svc &amp;lt;loadbalancer-name&amp;gt; -n kubeflow&lt;/code&gt; to add your source ranges. This command will open the editor defined by you KUBE_EDITOR or EDITOR environment variables or fall back to &amp;lsquo;vi&amp;rsquo; for Linux or &amp;lsquo;notepad&amp;rsquo; for Windows. More information about using alternative editors and options for this command can be found in &lt;a href=&#34;https://www.mankier.com/1/kubectl-edit&#34;&gt;the kubectl edit documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;internal-subnet-access&#34;&gt;Internal Subnet Access&lt;/h2&gt;
+&lt;p&gt;Assuming 10.0.0.0/8 is the address for the internal subnet, a load balancer will be created such that the deployment is only accessible from internal Kubernetes cluster IPs. This will not allow clients from outside your Kubernetes cluster to access the load balancer.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+spec:
+  ports:
+  - port: 8765
+    targetPort: 9376
+  selector:
+    app: example
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - 10.0.0.0/8
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;external-ip-addresses&#34;&gt;External IP Addresses&lt;/h2&gt;
+&lt;p&gt;In the following example, a load balancer will be created that is only accessible to clients with IP addresses from 130.211.204.1 and 130.211.204.2.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+spec:
+  ports:
+  - port: 8765
+    targetPort: 9376
+  selector:
+    app: example
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - 130.211.204.1/32
+  - 130.211.204.2/32
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Troubleshooting Deployments on Azure AKS</title>
+      <link>http://osmatrix.github.io/docs/azure/troubleshooting-azure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/azure/troubleshooting-azure/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;jupyter-notebook-is-not-a-valid-page-when-accessing-notebook&#34;&gt;Jupyter Notebook ‘is not a valid page’ when accessing notebook&lt;/h3&gt;
+&lt;p&gt;Restarting the ambassador pods will often fix this issue:
+&lt;code&gt;kubectl delete pods -l service=ambassador&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;the-client-does-not-have-authorization-to-perform-action&#34;&gt;The client does not have authorization to perform action&amp;hellip;&lt;/h3&gt;
+&lt;p&gt;This is likely an issue with ensuring your subscriptions are correctly setup. To fix the issue, list your subscriptions and then change the active subscription.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#list subscription 
+az account list --output table 
+
+#change the active subscription 
+az account set --subscription &amp;quot;My Demos&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

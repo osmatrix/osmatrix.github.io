@@ -1,0 +1,166 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Virtual Developer Environments</title>
+    <link>http://osmatrix.github.io/docs/other-guides/virtual-dev/</link>
+    <description>Recent content in Virtual Developer Environments on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/other-guides/virtual-dev/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Microk8s for Kubeflow</title>
+      <link>http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-multipass/</guid>
+      <description>
+        
+        
+        &lt;!-- raw HTML omitted --&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;a href=&amp;quot;https://github.com/kubeflow/kubeflow/issues&amp;quot;&amp;gt;feedback&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;about the usability of the feature.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;This document outlines the steps that you can take to get your local installation of Kubeflow running on top of Microk8s, a small enterprise Kubernetes cluster. Microk8s requires Linux; if you are not on a Linux system, you can use Multipass to create a Linux VM (virtual machine) on your native hypervisor.&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;If you already have Ubuntu or Linux that supports &lt;a href=&#34;https://snapcraft.io/&#34;&gt;snaps&lt;/a&gt;, you can easily install Kubernetes using &lt;a href=&#34;https://microk8s.io/&#34;&gt;Microk8s&lt;/a&gt;. You can jump to the &lt;strong&gt;Install Kubeflow using Microk8s&lt;/strong&gt; section below.&lt;/p&gt;
+&lt;p&gt;If you don&amp;rsquo;t have a Linux system already, or you would like to confine your Kubeflow to a disposable machine, then &lt;a href=&#34;https://multipass.run/&#34;&gt;Create a VM with Multipass&lt;/a&gt; first and then follow the instructions below. That will get you an Ubuntu machine that can be used to install Kubernetes and Kubeflow.&lt;/p&gt;
+&lt;h2 id=&#34;install-kubeflow-using-microk8s&#34;&gt;Install Kubeflow using Microk8s&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s a summary of the steps involved:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Set up Microk8s&lt;/li&gt;
+&lt;li&gt;Enable Kubeflow&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;1-install-and-set-up-microk8s&#34;&gt;1. Install and set up Microk8s&lt;/h3&gt;
+&lt;p&gt;Run the following commands to install and setup MicroK8s:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;snap install microk8s --classic
+microk8s.status --wait-ready
+# Enable common services:
+microk8s.enable dns dashboard storage
+# If you have a GPU, run: `microk8s.enable gpu`
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2-enable-kubeflow&#34;&gt;2. Enable Kubeflow&lt;/h3&gt;
+&lt;p&gt;Run the following command to enable Kubeflow:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;microk8s.enable kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This script will print out the port number for Ambassador and for Jupyter notebook 
+servers.&lt;/p&gt;
+&lt;h2 id=&#34;access-kubeflow&#34;&gt;Access Kubeflow&lt;/h2&gt;
+&lt;p&gt;If you installed Microk8s on your local host, then you can use localhost as the IP address in your browser. Otherwise, if you used Multipass, you can get the IP address of the VM with either &lt;code&gt;multipass list&lt;/code&gt; or &lt;code&gt;multipass info kubeflow&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Point browser to either:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;http://&amp;rdquo; Your kubeflow VM IP&amp;rdquo;:&amp;ldquo;Ambassador PORT&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;http://localhost:&amp;rdquo; Ambassador PORT&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/&#34;&gt;user guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/components/&#34;&gt;components&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Refer to the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/notebooks/&#34;&gt;Jupyter notebooks in Kubeflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: MiniKF</title>
+      <link>http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-minikf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/other-guides/virtual-dev/getting-started-minikf/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;https://www.arrikto.com/wp-content/uploads/2019/06/minikf-latest-version.svg&#34; alt=&#34;MiniKF latestversion&#34; title=&#34;MiniKF latest version&#34;&gt;&lt;/p&gt;
+&lt;p&gt;A production-ready, full-fledged, local Kubeflow deployment that
+installs in minutes.&lt;/p&gt;
+&lt;p&gt;MiniKF is a fast and easy way to get started with Kubeflow. With just a
+few clicks, you are up for experimentation, and for running complete
+Kubeflow Pipelines.&lt;/p&gt;
+&lt;p&gt;To train at scale, move to a Kubeflow cloud deployment with one click,
+without having to rewrite anything.&lt;/p&gt;
+&lt;p&gt;Please see the &lt;a href=&#34;https://medium.com/kubeflow/minikf-the-fastest-and-easiest-way-to-deploy-kubeflow-on-your-laptop-a91fb846d0ba&#34;&gt;official
+announcement&lt;/a&gt;
+and the rationale behind MiniKF.&lt;/p&gt;
+&lt;p&gt;Join the discussion on the
+&lt;a href=&#34;https://kubeflow.slack.com/messages/CGRKM3N0G/&#34;&gt;#minikf&lt;/a&gt; Slack channel,
+ask questions, request features, and get support for MiniKF.&lt;/p&gt;
+&lt;p&gt;To join the Kubeflow Slack workspace, please &lt;a href=&#34;https://kubeflow.slack.com/join/shared_invite/enQtNDg5MTM4NTQyNjczLTdkNTVhMjg1ZTExOWI0N2QyYTQ2MTIzNTJjMWRiOTFjOGRlZWEzODc1NzMwNTMwM2EzNjY1MTFhODczNjk4MTk&#34;&gt;request an
+invite&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;system-requirements&#34;&gt;System requirements&lt;/h3&gt;
+&lt;p&gt;For a smooth experience we recommend that your system meets the
+following requirements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;12GB RAM&lt;/li&gt;
+&lt;li&gt;2 CPUs&lt;/li&gt;
+&lt;li&gt;50GB disk space&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;operating-systems&#34;&gt;Operating systems&lt;/h3&gt;
+&lt;p&gt;MiniKF runs on all major operating systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux&lt;/li&gt;
+&lt;li&gt;macOS&lt;/li&gt;
+&lt;li&gt;Windows&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;
+&lt;p&gt;Before installing MiniKF, you need to have Vagrant and VirtualBox
+installed on your laptop.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.vagrantup.com/downloads.html&#34;&gt;Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;Virtual Box&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;minikf-installation&#34;&gt;MiniKF installation&lt;/h3&gt;
+&lt;p&gt;Open a terminal on your laptop, create a new directory, switch into it,
+and run the following commands to install MiniKF:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vagrant init arrikto/minikf
+vagrant up
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;MiniKF will take a few minutes to boot. When this is done, navigate to
+http://10.10.10.10 and follow the on-screen instructions to start Kubeflow and
+Rok.&lt;/p&gt;
+&lt;h3 id=&#34;minikf-upgrade&#34;&gt;MiniKF upgrade&lt;/h3&gt;
+&lt;p&gt;Here are step-by-step instructions for upgrading from a previous version:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Upgrade the MiniKF box to the latest version:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;vagrant box update
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Ensure you have updated to the latest version:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;vagrant box list
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Upgrade the &lt;code&gt;vagrant-persistent-storage&lt;/code&gt; plugin to v0.0.47 or later:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;vagrant plugin update vagrant-persistent-storage
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Destroy the VM:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;vagrant destroy
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Remove all local state. This will remove all of your customization in MiniKF
+(notebooks, pipelines, Rok snapshots):
+&lt;ul&gt;
+&lt;li&gt;[Windows] &lt;code&gt;del minikf-user-data.vdi&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;[Linux/macOS] &lt;code&gt;rm minikf-user-data.vdi&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Re-create your VM:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;vagrant up
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;end-to-end-example-on-minikf&#34;&gt;End-to-end example on MiniKF&lt;/h3&gt;
+&lt;p&gt;Notebooks &amp;amp; Kubeflow Pipelines on the new MiniKF. Run an e2e ML pipeline
+following this
+&lt;a href=&#34;https://medium.com/kubeflow/an-end-to-end-ml-pipeline-on-prem-notebooks-kubeflow-pipelines-on-the-new-minikf-33b7d8e9a836&#34;&gt;tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;installation-video&#34;&gt;Installation video&lt;/h3&gt;
+&lt;p&gt;Here is a demo of installing MiniKF from scratch:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=rVak_NIKF88&#34; title=&#34;minikf-installation&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/rVak_NIKF88/0.jpg&#34; alt=&#34;MiniKFinstallation&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

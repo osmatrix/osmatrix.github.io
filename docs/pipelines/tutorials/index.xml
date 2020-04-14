@@ -1,0 +1,285 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Samples and Tutorials</title>
+    <link>http://osmatrix.github.io/docs/pipelines/tutorials/</link>
+    <description>Recent content in Samples and Tutorials on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/pipelines/tutorials/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Experiment with the Kubeflow Pipelines API</title>
+      <link>http://osmatrix.github.io/docs/pipelines/tutorials/api-pipelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/pipelines/tutorials/api-pipelines/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This tutorial demonstrates how to use the Kubeflow Pipelines API to build, run, and manage pipelines. This guide is recommended for users who would like to learn how to manage Kubeflow Pipelines using the REST API.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This tutorial assumes that you have access to the &lt;code&gt;ml-pipeline&lt;/code&gt; service. If Kubeflow is not configured to use an identity provider, use port-forwarding to directly access the service.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SVC_PORT=$(kubectl -n kubeflow get svc/ml-pipeline -o json | jq &amp;quot;.spec.ports[0].port&amp;quot;)
+kubectl port-forward -n kubeflow svc/ml-pipeline ${SVC_PORT}:8888
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This tutorial assumes that the service is accessible on localhost.&lt;/p&gt;
+&lt;p&gt;You also need to install &lt;a href=&#34;https://stedolan.github.io/jq/download/&#34;&gt;jq&lt;/a&gt;, and the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/install-sdk/&#34;&gt;Kubeflow Pipelines SDK&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;building-and-running-a-pipeline&#34;&gt;Building and running a pipeline&lt;/h2&gt;
+&lt;p&gt;Follow this guide to download, compile, and run the &lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/sequential/sequential.py&#34;&gt;&lt;code&gt;sequential.py&lt;/code&gt; sample pipeline&lt;/a&gt;. To learn how to compile and run pipelines using the Kubeflow Pipelines SDK or a Jupyter notebook, follow the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/tutorials/build-pipeline/&#34;&gt;experimenting with Kubeflow Pipelines samples tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;PIPELINE_URL=https://raw.githubusercontent.com/kubeflow/pipelines/master/samples/core/sequential/sequential.py
+PIPELINE_FILE=${PIPELINE_URL##*/}
+PIPELINE_NAME=${PIPELINE_FILE%.*}
+
+wget -O ${PIPELINE_FILE} ${PIPELINE_URL}
+dsl-compile --py ${PIPELINE_FILE} --output ${PIPELINE_NAME}.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After running the commands above, you should get two files in your current directory: &lt;code&gt;sequential.py&lt;/code&gt; and &lt;code&gt;sequential.tar.gz&lt;/code&gt;. Run the following command to deploy the generated &lt;code&gt;.tar.gz&lt;/code&gt; file as you would do using the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/build-component/#deploy-the-pipeline&#34;&gt;Kubeflow Pipelines UI&lt;/a&gt;, but this time using the REST API.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SVC=localhost:8888
+PIPELINE_ID=$(curl -F &amp;quot;uploadfile=@${PIPELINE_NAME}.tar.gz&amp;quot; ${SVC}/apis/v1beta1/pipelines/upload | jq -r .id)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If the operation was successful, you should see the pipeline in the central dashboard. You can also get the details using the &lt;code&gt;PIPELINE_ID&lt;/code&gt; with the following API call.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl ${SVC}/apis/v1beta1/pipelines/${PIPELINE_ID} | jq
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The response should be similar to the following one:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;id&amp;quot;: &amp;quot;d30d28d7-0bfc-4f0c-8a57-6844a8ec9742&amp;quot;,
+  &amp;quot;created_at&amp;quot;: &amp;quot;2020-02-20T16:15:02Z&amp;quot;,
+  &amp;quot;name&amp;quot;: &amp;quot;sequential.tar.gz&amp;quot;,
+  &amp;quot;parameters&amp;quot;: [
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;url&amp;quot;,
+      &amp;quot;value&amp;quot;: &amp;quot;gs://ml-pipeline-playground/shakespeare1.txt&amp;quot;
+    }
+  ],
+  &amp;quot;default_version&amp;quot;: {
+    &amp;quot;id&amp;quot;: &amp;quot;d30d28d7-0bfc-4f0c-8a57-6844a8ec9742&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;sequential.tar.gz&amp;quot;,
+    &amp;quot;created_at&amp;quot;: &amp;quot;2020-02-20T16:15:02Z&amp;quot;,
+    &amp;quot;parameters&amp;quot;: [
+      {
+        &amp;quot;name&amp;quot;: &amp;quot;url&amp;quot;,
+        &amp;quot;value&amp;quot;: &amp;quot;gs://ml-pipeline-playground/shakespeare1.txt&amp;quot;
+      }
+    ],
+    &amp;quot;resource_references&amp;quot;: [
+      {
+        &amp;quot;key&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;PIPELINE&amp;quot;,
+          &amp;quot;id&amp;quot;: &amp;quot;d30d28d7-0bfc-4f0c-8a57-6844a8ec9742&amp;quot;
+        },
+        &amp;quot;relationship&amp;quot;: &amp;quot;OWNER&amp;quot;
+      }
+    ]
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Finally, use the &lt;code&gt;PIPELINE_ID&lt;/code&gt; to trigger a run of your pipeline.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;RUN_ID=$((
+curl -H &amp;quot;Content-Type: application/json&amp;quot; -X POST ${SVC}/apis/v1beta1/runs \
+-d @- &amp;lt;&amp;lt; EOF
+{
+   &amp;quot;name&amp;quot;:&amp;quot;${PIPELINE_NAME}_run&amp;quot;,
+   &amp;quot;pipeline_spec&amp;quot;:{
+      &amp;quot;pipeline_id&amp;quot;:&amp;quot;${PIPELINE_ID}&amp;quot;
+   }
+}
+EOF
+) | jq -r .run.id)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Run the following command occasionally to see how the status of your run changes. After a while, the status of your pipeline should change to &lt;strong&gt;Succeeded&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl ${SVC}/apis/v1beta1/runs/${RUN_ID} | jq
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The response should be similar to the following one:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;run&amp;quot;: {
+    &amp;quot;id&amp;quot;: &amp;quot;4ff0debd-d6d7-4681-8593-21ec002e6e0c&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;sequential_run&amp;quot;,
+    &amp;quot;pipeline_spec&amp;quot;: {
+      &amp;quot;pipeline_id&amp;quot;: &amp;quot;d30d28d7-0bfc-4f0c-8a57-6844a8ec9742&amp;quot;,
+      &amp;quot;pipeline_name&amp;quot;: &amp;quot;sequential.tar.gz&amp;quot;,
+      &amp;quot;workflow_manifest&amp;quot;: &amp;quot;{...}&amp;quot;
+    },
+    &amp;quot;resource_references&amp;quot;: [
+      {
+        &amp;quot;key&amp;quot;: {
+          &amp;quot;type&amp;quot;: &amp;quot;EXPERIMENT&amp;quot;,
+          &amp;quot;id&amp;quot;: &amp;quot;27af7eee-ce0a-44ba-a44d-07142abfc83c&amp;quot;
+        },
+        &amp;quot;name&amp;quot;: &amp;quot;Default&amp;quot;,
+        &amp;quot;relationship&amp;quot;: &amp;quot;OWNER&amp;quot;
+      }
+    ],
+    &amp;quot;created_at&amp;quot;: &amp;quot;2020-02-20T16:18:58Z&amp;quot;,
+    &amp;quot;scheduled_at&amp;quot;: &amp;quot;1970-01-01T00:00:00Z&amp;quot;,
+    &amp;quot;finished_at&amp;quot;: &amp;quot;1970-01-01T00:00:00Z&amp;quot;,
+    &amp;quot;status&amp;quot;: &amp;quot;Succeeded&amp;quot;
+  },
+  &amp;quot;pipeline_runtime&amp;quot;: {
+    &amp;quot;workflow_manifest&amp;quot;: &amp;quot;{...}&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Read &lt;a href=&#34;docs/pipelines/reference/api/kubeflow-pipeline-api-spec/&#34;&gt;Kubeflow Pipelines API Reference&lt;/a&gt; to learn more about how to use the API.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Experiment with the Pipelines Samples</title>
+      <link>http://osmatrix.github.io/docs/pipelines/tutorials/build-pipeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/pipelines/tutorials/build-pipeline/</guid>
+      <description>
+        
+        
+        &lt;p&gt;You can learn how to build and deploy pipelines by running the samples
+provided in the Kubeflow Pipelines repository or by walking through a
+Jupyter notebook that describes the process.&lt;/p&gt;
+&lt;h2 id=&#34;compiling-the-samples-on-the-command-line&#34;&gt;Compiling the samples on the command line&lt;/h2&gt;
+&lt;p&gt;This section shows you how to compile the 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/samples&#34;&gt;Kubeflow Pipelines samples&lt;/a&gt;
+and deploy them using the Kubeflow Pipelines UI.&lt;/p&gt;
+&lt;h3 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h3&gt;
+&lt;p&gt;Set up your environment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Clone or download the
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/samples&#34;&gt;Kubeflow Pipelines samples&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/install-sdk/&#34;&gt;Kubeflow Pipelines SDK&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Activate your Python 3 environment if you haven&amp;rsquo;t done so already:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source activate &amp;lt;YOUR-PYTHON-ENVIRONMENT-NAME&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source activate mlpipeline
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;choose-and-compile-a-pipeline&#34;&gt;Choose and compile a pipeline&lt;/h3&gt;
+&lt;p&gt;Examine the pipeline samples that you downloaded and choose one to work with.
+The 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/sequential/sequential.py&#34;&gt;&lt;code&gt;sequential.py&lt;/code&gt; sample pipeline&lt;/a&gt;:
+is a good one to start with.&lt;/p&gt;
+&lt;p&gt;Each pipeline is defined as a Python program. Before you can submit a pipeline
+to the Kubeflow Pipelines service, you must compile the 
+pipeline to an intermediate representation. The intermediate representation
+takes the form of a YAML file compressed into a 
+&lt;code&gt;.tar.gz&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Use the &lt;code&gt;dsl-compile&lt;/code&gt; command to compile the pipeline that you chose:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;dsl-compile --py &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;path/to/python/file&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; --output &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;path/to/output/tar.gz&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For example, to compile the
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/sequential/sequential.py&#34;&gt;&lt;code&gt;sequential.py&lt;/code&gt; sample pipeline&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=[&lt;/span&gt;YOUR PIPELINES REPO DIRECTORY&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;/samples/core/sequential
+dsl-compile --py &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/sequential.py --output &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/sequential.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;deploy-the-pipeline&#34;&gt;Deploy the pipeline&lt;/h3&gt;
+&lt;p&gt;Upload the generated &lt;code&gt;.tar.gz&lt;/code&gt; file through the Kubeflow Pipelines UI. See the
+guide to &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/pipelines-quickstart&#34;&gt;getting started with the UI&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;building-a-pipeline-in-a-jupyter-notebook&#34;&gt;Building a pipeline in a Jupyter notebook&lt;/h2&gt;
+&lt;p&gt;You can choose to build your pipeline in a Jupyter notebook. The
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/samples/core&#34;&gt;sample notebooks&lt;/a&gt;
+walk you through the process.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s easiest to use the Jupyter services that are installed in the same cluster as 
+the Kubeflow Pipelines system.&lt;/p&gt;
+&lt;p&gt;Note: The notebook samples don&amp;rsquo;t work on Jupyter notebooks outside the same 
+cluster, because the Python library communicates with the Kubeflow Pipelines 
+system through in-cluster service names.&lt;/p&gt;
+&lt;p&gt;Follow these steps to start a notebook:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Deploy Kubeflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;GCP deployment guide&lt;/a&gt;, including the step 
+to deploy Kubeflow using the 
+&lt;a href=&#34;https://deploy.kubeflow.cloud/&#34;&gt;Kubeflow deployment UI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When Kubeflow is running, access the Kubeflow UI at a URL of the form
+&lt;code&gt;https://&amp;lt;deployment-name&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog/&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/notebooks/setup/&#34;&gt;Kubeflow notebooks setup guide&lt;/a&gt; to
+create a Jupyter notebook server and open the Jupyter UI.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Download the sample notebooks from
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/samples/core&#34;&gt;https://github.com/kubeflow/pipelines/tree/master/samples/core&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upload these notebooks from the Jupyter UI: In Jupyter, go to the tree view
+and find the &lt;strong&gt;upload&lt;/strong&gt; button in the top right-hand area of the screen.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open one of the uploaded notebooks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure the notebook kernel is set to Python 3. The Python version is at 
+the top right-hand corner in the Jupyter notebook view.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the instructions in the notebook.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following notebooks are available:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/tfx-oss/TFX%20Example.ipynb&#34;&gt;KubeFlow pipeline using TFX OSS components&lt;/a&gt;:
+This notebook demonstrates how to build a machine learning pipeline based on
+&lt;a href=&#34;https://www.tensorflow.org/tfx/&#34;&gt;TensorFlow Extended (TFX)&lt;/a&gt; components. 
+The pipeline includes a TFDV step to infer the schema, a TFT preprocessor, a 
+TensorFlow trainer, a TFMA analyzer, and a model deployer which deploys the 
+trained model to &lt;code&gt;tf-serving&lt;/code&gt; in the same cluster. The notebook also 
+demonstrates how to build a component based on Python 3 inside the notebook, 
+including how to build a Docker container.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/lightweight_component/lightweight_component.ipynb&#34;&gt;Lightweight Python components&lt;/a&gt;: 
+This notebook demonstrates how to build simple Python components based on 
+Python 3 and use them in a pipeline with fast iterations. If you use this
+technique, you don&amp;rsquo;t need to build a Docker container when you build a
+component. Note that the container image may not be self contained because the 
+source code is not built into the container.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Learn the various ways to use the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/&#34;&gt;Kubeflow Pipelines 
+SDK&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See how to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/build-component/&#34;&gt;build your own pipeline components&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Read more about 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/lightweight-python-components/&#34;&gt;building lightweight components&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Run a Cloud-specific Pipelines Tutorial</title>
+      <link>http://osmatrix.github.io/docs/pipelines/tutorials/cloud-tutorials/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/pipelines/tutorials/cloud-tutorials/</guid>
+      <description>
+        
+        
+        
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Opportunity to add cloud tutorials&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/azure/azureendtoend/&#34;&gt;Pipelines End-to-end on Azure&lt;/a&gt;: An end-to-end tutorial for Kubeflow Pipelines on Microsoft Azure.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://g.co/codelabs/kfp-gis&#34;&gt;Pipelines on Google Cloud Platform&lt;/a&gt; : This GCP tutorial walks through a Kubeflow Pipelines example that shows training a Tensor2Tensor model for GitHub issue summarization, both via the Pipelines Dashboard UI, and from a Jupyter notebook&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

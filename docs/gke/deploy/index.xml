@@ -1,0 +1,1049 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Deploying Kubeflow</title>
+    <link>http://osmatrix.github.io/docs/gke/deploy/</link>
+    <description>Recent content in Deploying Kubeflow on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/gke/deploy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Set up a GCP Project</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/project-setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/project-setup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Follow these steps to set up your GCP project:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Select or create a project on the 
+&lt;a href=&#34;https://console.cloud.google.com/cloud-resource-manager&#34;&gt;GCP Console&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure that you have the 
+&lt;a href=&#34;https://cloud.google.com/iam/docs/understanding-roles#primitive_role_definitions&#34;&gt;owner role&lt;/a&gt;
+for the project.
+The deployment process creates various service accounts with
+appropriate roles in order to enable seamless integration with
+GCP services. This process requires that you have the 
+owner role for the project in order to deploy Kubeflow.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure that billing is enabled for your project. See the guide to
+&lt;a href=&#34;https://cloud.google.com/billing/docs/how-to/modify-project&#34;&gt;modifying a project&amp;rsquo;s billing 
+settings&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Go to the following pages on the GCP Console and ensure that the 
+specified APIs are enabled:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/compute.googleapis.com&#34;&gt;Compute Engine API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/container.googleapis.com&#34;&gt;Kubernetes Engine API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/iam.googleapis.com&#34;&gt;Identity and Access Management (IAM) API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/deploymentmanager.googleapis.com&#34;&gt;Deployment Manager API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.developers.google.com/apis/library/cloudresourcemanager.googleapis.com&#34;&gt;Cloud Resource Manager API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.developers.google.com/apis/library/file.googleapis.com&#34;&gt;Cloud Filestore API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.developers.google.com/apis/library/ml.googleapis.com&#34;&gt;AI Platform Training &amp;amp; Prediction API&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;If you are using the 
+&lt;a href=&#34;https://cloud.google.com/free/docs/gcp-free-tier&#34;&gt;GCP Free Tier&lt;/a&gt; or the
+12-month trial period with $300 credit, note that you can&amp;rsquo;t run the default
+GCP installation of Kubeflow, because the free tier does not offer enough
+resources. You need to 
+&lt;a href=&#34;https://cloud.google.com/free/docs/gcp-free-tier#how-to-upgrade&#34;&gt;upgrade to a paid account&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For more information, see the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/website/issues/1065&#34;&gt;kubeflow/website #1065&lt;/a&gt;
+reports the problem.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3936&#34;&gt;kubeflow/kubeflow #3936&lt;/a&gt;
+requests a Kubeflow configuration to work with a free trial project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Read the GCP guide to &lt;a href=&#34;https://cloud.google.com/compute/quotas&#34;&gt;resource quotas&lt;/a&gt;
+to understand the quotas on resource usage that Compute Engine enforces, and 
+to learn how to check your quota and how to request an increase in quota.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You do not need a running GKE cluster. The deployment process creates a
+cluster for you.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup&#34;&gt;Set up an OAuth credential&lt;/a&gt; if you want to use 
+&lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud Identity-Aware Proxy (Cloud IAP)&lt;/a&gt;.
+Cloud IAP is recommended for production deployments or deployments with access 
+to sensitive data. You can skip this step if you want to test Kubeflow
+in a non-production environment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Choose one of the following ways to deploy Kubeflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui&#34;&gt;Using the UI&lt;/a&gt;. This option provides a simple
+way to deploy Kubeflow.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;Using the CLI&lt;/a&gt;. This option provides more
+control over the deployment process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Set up OAuth for Cloud IAP</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/oauth-setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/oauth-setup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;If you want to use 
+&lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud Identity-Aware Proxy (Cloud IAP)&lt;/a&gt; 
+when deploying Kubeflow on GCP,
+then you must follow these instructions to create an OAuth client for use
+with Kubeflow.&lt;/p&gt;
+&lt;p&gt;You can skip the instructions on this page if you want to use basic 
+authentication (username and password) with Kubeflow instead of Cloud IAP.
+Cloud IAP is recommended for production deployments or deployments with access 
+to sensitive data.&lt;/p&gt;
+&lt;p&gt;Follow the steps below to create an OAuth client ID that identifies Cloud IAP 
+when requesting access to a user&amp;rsquo;s email account. Kubeflow uses the email 
+address to verify the user&amp;rsquo;s identity.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Set up your OAuth &lt;a href=&#34;https://console.cloud.google.com/apis/credentials/consent&#34;&gt;consent screen&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;In the &lt;strong&gt;Application name&lt;/strong&gt; box, enter the name of your application.
+The example below uses the name &amp;ldquo;Kubeflow&amp;rdquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Under &lt;strong&gt;Support email&lt;/strong&gt;, select the email address that you want to display 
+as a public contact. You must use either your email address or a Google 
+Group that you own.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you see &lt;strong&gt;Authorized domains&lt;/strong&gt;, enter&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;project&amp;gt;.cloud.goog
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;where &amp;lt;project&amp;gt; is your Google Cloud Platform (GCP) project ID.&lt;/li&gt;
+&lt;li&gt;If you are using your own domain, such as &lt;strong&gt;acme.com&lt;/strong&gt;, you should add 
+that as well&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Authorized domains&lt;/strong&gt; option appears only for certain project 
+configurations. If you don&amp;rsquo;t see the option, then there&amp;rsquo;s nothing you 
+need to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Save&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Here&amp;rsquo;s an example of the completed form:&lt;br&gt;
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On the &lt;a href=&#34;https://console.cloud.google.com/apis/credentials&#34;&gt;credentials screen&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Click &lt;strong&gt;Create credentials&lt;/strong&gt;, and then click &lt;strong&gt;OAuth client ID&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Under &lt;strong&gt;Application type&lt;/strong&gt;, select &lt;strong&gt;Web application&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;In the &lt;strong&gt;Name&lt;/strong&gt; box enter any name for your OAuth client ID. This is &lt;em&gt;not&lt;/em&gt;
+the name of your application nor the name of your Kubeflow deployment. It&amp;rsquo;s
+just a way to help you identify the OAuth client ID.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Create&lt;/strong&gt;. A dialog box appears, like the one below:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy the &lt;strong&gt;client ID&lt;/strong&gt; shown in the dialog box, because you need the client
+ID in the next step.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On the &lt;strong&gt;Create credentials&lt;/strong&gt; screen, find your newly created OAuth 
+credential and click the pencil icon to edit it:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the &lt;strong&gt;Authorized redirect URIs&lt;/strong&gt; box, enter the following (if it&amp;rsquo;s not 
+already present in the list of authorized redirect URIs):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://iap.googleapis.com/v1/oauth/clientIds/&amp;lt;CLIENT_ID&amp;gt;:handleRedirect
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;CLIENT_ID&amp;gt;&lt;/code&gt; is the OAuth client ID that you copied from the dialog box in
+step four. It looks like &lt;code&gt;XXX.apps.googleusercontent.com&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Note that the URI is not dependent on the Kubeflow deployment or endpoint. 
+Multiple Kubeflow deployments can share the same OAuth client without the 
+need to modify the redirect URIs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Press &lt;strong&gt;Enter/Return&lt;/strong&gt; to add the URI. Check that the URI now appears as
+a confirmed item under &lt;strong&gt;Authorized redirect URIs&lt;/strong&gt;. (The URI should no longer be
+editable.)&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s an example of the completed form:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Save&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make note that you can find your OAuth client credentials in the credentials
+section of the GCP Console. You need to retrieve the &lt;strong&gt;client ID&lt;/strong&gt; and 
+&lt;strong&gt;client secret&lt;/strong&gt; later when you&amp;rsquo;re ready to enable Cloud IAP.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;Choose one of the following ways to deploy Kubeflow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui&#34;&gt;Using the UI&lt;/a&gt;. This option provides a simple
+way to deploy Kubeflow.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;Using the CLI&lt;/a&gt;. This option provides more
+control over the deployment process.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Deploy using UI</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/deploy-ui/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/deploy-ui/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page provides instructions for using the Kubeflow deployment web app to
+deploy Kubeflow on GCP. The deployment web app currently supports
+&lt;strong&gt;Kubeflow v1.0.0&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For more control over your deployment, see the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deployment using the CLI&lt;/a&gt;.
+The CLI supports Kubeflow v1.0 and later versions.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;Check the following requirements before installing Kubeflow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure that your GCP project meets the minimum requirements
+described in the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/project-setup/&#34;&gt;project setup guide&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you want to use &lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud Identity-Aware Proxy (Cloud 
+IAP)&lt;/a&gt; for access control, follow the guide
+to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup/&#34;&gt;setting up OAuth credentials&lt;/a&gt;. 
+Cloud IAP is recommended for production deployments or deployments with 
+access to sensitive data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;deploy-kubeflow&#34;&gt;Deploy Kubeflow&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s a partial screenshot of the deployment user interface (UI):&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Follow these steps to open the deployment UI and deploy Kubeflow on GCP:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open &lt;a href=&#34;https://deploy.kubeflow.cloud/#/deploy&#34;&gt;https://deploy.kubeflow.cloud/&lt;/a&gt;
+in your web browser. You should see a form like the one in the above
+screenshot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sign in to your browser using an account that has the 
+&lt;a href=&#34;https://cloud.google.com/iam/docs/understanding-roles&#34;&gt;&lt;code&gt;owner&lt;/code&gt; role&lt;/a&gt; 
+for your GCP project.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Complete the following fields on the form:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Project ID:&lt;/strong&gt; Enter your GCP project ID.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Deployment name:&lt;/strong&gt; Enter a short name that you can use to recognize this 
+deployment of Kubeflow.
+The maximum length for the deployment name is 25 characters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Choose how to connect to Kubeflow service:&lt;/strong&gt; You can choose one of the
+following options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Login with GCP IAP:&lt;/strong&gt; Choose this option if you want to use &lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud 
+Identity-Aware Proxy (Cloud
+IAP)&lt;/a&gt; for access control.
+Cloud IAP is the best option for production deployments or deployments 
+with access to sensitive data. See more details &lt;a href=&#34;#cloud-iap&#34;&gt;below&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Login with Username Password:&lt;/strong&gt; &lt;strong&gt;Warning: This option is deprecated in Kubeflow 1.0 and
+will be removed in the next version. We recommend switching to IAP.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GKE zone:&lt;/strong&gt; Enter the 
+&lt;a href=&#34;https://cloud.google.com/compute/docs/regions-zones/&#34;&gt;GCP zone&lt;/a&gt; in which 
+to create your deployment. The default is &lt;code&gt;us-central-1a&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kubeflow version:&lt;/strong&gt; Choose one of the available versions of Kubeflow.
+You can see all the versions on the 
+&lt;a href=&#34;https://github.com/kubeflow/kfctl/releases/&#34;&gt;Kubeflow releases page&lt;/a&gt;.
+If you need a version that does not show on the deployment UI, you need to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deploy Kubeflow using the CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Share Anonymous Usage Report:&lt;/strong&gt; Check this option to allow Kubeflow to
+report usage data using &lt;a href=&#34;https://github.com/kubernetes-incubator/spartakus&#34;&gt;Spartakus&lt;/a&gt;. Spartakus does not report any personal information. The 
+default is to enable the reporting of usage data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Create Deployment&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Watch for the deployment updates in the information box at the bottom of the 
+deployment UI.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;authenticating-with-cloud-iap&#34;&gt;Authenticating with Cloud IAP&lt;/h2&gt;
+&lt;p&gt;This section contains details about using &lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud 
+IAP&lt;/a&gt; to control access to Kubeflow. 
+Cloud IAP is the best option for production deployments or deployments with 
+access to sensitive data.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup/&#34;&gt;setting up OAuth 
+credentials&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Choose the &lt;strong&gt;Login with GCP IAP&lt;/strong&gt; option on the Kubeflow deployment UI.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enter your &lt;strong&gt;IAP OAuth client ID&lt;/strong&gt; and &lt;strong&gt;IAP OAuth client secret&lt;/strong&gt; into the
+corresponding fields on the deployment UI.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Complete the rest of the form as described above.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Kubeflow will be available at the following URI:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://&amp;lt;deployment_name&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It can take 10-15 minutes for the URI to become available. You can watch
+for updates in the information box on the deployment UI. If the deployment
+takes longer than expected, click &lt;strong&gt;Kubeflow Service Endpoint&lt;/strong&gt; to try
+accessing your Kubeflow URI.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;authenticating-with-username-and-password&#34;&gt;Authenticating with username and password&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;No longer supported&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Run a full ML workflow on Kubeflow, using the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/gcp-e2e/&#34;&gt;end-to-end MNIST tutorial&lt;/a&gt; or the
+&lt;a href=&#34;https://github.com/kubeflow/examples/tree/master/github_issue_summarization&#34;&gt;GitHub issue summarization 
+example&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See how to delete your Kubeflow deployment using the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/delete-cli&#34;&gt;CLI&lt;/a&gt; 
+or the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/delete-ui&#34;&gt;GCP Console&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke&#34;&gt;customize&lt;/a&gt; your Kubeflow 
+deployment.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/upgrading/upgrade/&#34;&gt;upgrade Kubeflow&lt;/a&gt; and how to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/upgrade/&#34;&gt;upgrade or reinstall a Kubeflow Pipelines 
+deployment&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke&#34;&gt;Troubleshoot&lt;/a&gt; any issues you may
+find.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Deploy using CLI</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/deploy-cli/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/deploy-cli/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This guide describes how to use the &lt;code&gt;kfctl&lt;/code&gt; command line interface (CLI) to
+deploy Kubeflow on GCP. The command line deployment gives you more control over
+the deployment process and configuration than you get if you use the deployment 
+UI. If you&amp;rsquo;re looking for a simpler deployment procedure, see how to deploy 
+Kubeflow &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui&#34;&gt;using the deployment UI&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;Before installing Kubeflow on the command line:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Ensure you have installed the following tools:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34;&gt;kubectl&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/sdk/&#34;&gt;gcloud&lt;/a&gt;. If you already have &lt;code&gt;gcloud&lt;/code&gt;
+installed, run &lt;code&gt;gcloud components update&lt;/code&gt; to
+get the latest version of all your installed Cloud SDK components.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you&amp;rsquo;re using
+&lt;a href=&#34;https://cloud.google.com/shell/&#34;&gt;Cloud Shell&lt;/a&gt;, enable 
+&lt;a href=&#34;https://cloud.google.com/shell/docs/features#boost_mode&#34;&gt;boost mode&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure that your GCP project meets the minimum requirements
+described in the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/project-setup/&#34;&gt;project setup guide&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the guide
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup/&#34;&gt;setting up OAuth credentials&lt;/a&gt;. 
+to create OAuth credentials for &lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud Identity-Aware Proxy (Cloud 
+IAP)&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;prepare-your-environment&#34;&gt;Prepare your environment&lt;/h2&gt;
+&lt;p&gt;Follow these steps to download the kfctl binary for the Kubeflow CLI and set
+some handy environment variables:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download the kfctl v1.0 release from the
+&lt;a href=&#34;https://github.com/kubeflow/kfctl/releases/tag/v1.0&#34;&gt;kfctl releases page&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Unpack the tar ball:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -xvf kfctl_v1.0_&amp;lt;platform&amp;gt;.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Log in. You only need to run this command once:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud auth login
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create user credentials. You only need to run this command once:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud auth application-default login
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Configure gcloud default values for zone and project&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Set your GCP project ID and the zone where you want to create 
+# the Kubeflow deployment:
+export PROJECT=&amp;lt;your GCP project ID&amp;gt;
+export ZONE=&amp;lt;your GCP zone&amp;gt;
+
+gcloud config set project ${PROJECT}    
+gcloud config set compute/zone ${ZONE}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kfctl&lt;/code&gt; by default uses the gcloud defaults for zone and project&lt;/li&gt;
+&lt;li&gt;You can override this by explicitly setting zone and project in your &lt;code&gt;KFDef&lt;/code&gt;
+file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Select the KFDef spec to use as the basis for your deployment&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_URI=&amp;quot;https://raw.githubusercontent.com/kubeflow/manifests/v1.0-branch/kfdef/kfctl_gcp_iap.v1.0.0.yaml&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create environment variables containing the OAuth client ID and secret that you created earlier&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CLIENT_ID=&amp;lt;CLIENT_ID from OAuth page&amp;gt;
+export CLIENT_SECRET=&amp;lt;CLIENT_SECRET from OAuth page&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;The CLIENT_ID and CLIENT_SECRET can be obtained from the Cloud Console by selecting
+&lt;strong&gt;APIs &amp;amp; Services -&amp;gt; Credentials&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pick a name &lt;strong&gt;KF_NAME&lt;/strong&gt; for your Kubeflow deployment and directory for
+your configuration.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_NAME=&amp;lt;your choice of name for the Kubeflow deployment&amp;gt;
+export BASE_DIR=&amp;lt;path to a base directory&amp;gt;
+export KF_DIR=${BASE_DIR}/${KF_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;For example, your kubeflow deployment name might be &amp;lsquo;my-kubeflow&amp;rsquo; or &amp;lsquo;kf-test&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Set base directory where you want to store one or more Kubeflow deployments. 
+For example, ${HOME}/kf_deployments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;(Optional) Add the kfctl binary to your path. If you don&amp;rsquo;t add kfctl to your path, you must use the full path
+each time you run kfctl.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PATH=$PATH:&amp;lt;path to your kfctl file&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${PROJECT}&lt;/strong&gt; - The project ID of the GCP project where you want Kubeflow 
+deployed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${ZONE}&lt;/strong&gt; - The GCP zone where you want to create the Kubeflow deployment.
+You can see a list of zones in the 
+&lt;a href=&#34;https://cloud.google.com/compute/docs/regions-zones/#available&#34;&gt;Compute Engine documentation&lt;/a&gt;.
+If you plan to use accelerators, you must choose a zone that supports the
+type you want. See the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke/#gpu-config&#34;&gt;customizing your Kubeflow deployment&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${CONFIG_URI}&lt;/strong&gt; - The GitHub address of the configuration YAML file that
+you want to use to deploy Kubeflow. For GCP deployments, the recommended
+configuration is:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://raw.githubusercontent.com/kubeflow/manifests/v1.0-branch/kfdef/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When you run &lt;code&gt;kfctl apply&lt;/code&gt; or &lt;code&gt;kfctl build&lt;/code&gt; (see the next step), kfctl creates
+a local version of the configuration YAML file which you can further
+customize if necessary.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${KF_NAME}&lt;/strong&gt; - The name of your Kubeflow deployment.
+If you want a custom deployment name, specify that name here.
+For example,  &lt;code&gt;my-kubeflow&lt;/code&gt; or &lt;code&gt;kf-test&lt;/code&gt;.
+The value of KF_NAME must consist of lower case alphanumeric characters or
+&amp;lsquo;-&#39;, and must start and end with an alphanumeric character.
+The value of this variable cannot be greater than 25 characters. It must
+contain just a name, not a directory path.
+You also use this value as directory name when creating the directory where 
+your Kubeflow  configurations are stored, that is, the Kubeflow application 
+directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${KF_DIR}&lt;/strong&gt; - The full path to your Kubeflow application directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;deploying-kubeflow&#34;&gt;Deploying Kubeflow&lt;/h2&gt;
+&lt;p&gt;To deploy Kubeflow using the &lt;strong&gt;default settings&lt;/strong&gt;,
+run the &lt;code&gt;kfctl apply&lt;/code&gt; command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p ${KF_DIR}
+cd ${KF_DIR}
+kfctl apply -V -f ${CONFIG_URI}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;kfctl will try to populate the KFDef spec with various defaults automatically&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;project&lt;/strong&gt; and &lt;strong&gt;zone&lt;/strong&gt; will be set based on your gcloud config defaults&lt;/li&gt;
+&lt;li&gt;the name for the deployment will be inferred from the directory ${KF_DIR}&lt;/li&gt;
+&lt;li&gt;You can override these values by modifying your KFDef spec before running the &lt;code&gt;build&lt;/code&gt; and &lt;code&gt;apply&lt;/code&gt;
+commands&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can follow the instructions in the next section to override these defaults.&lt;/p&gt;
+&lt;h2 id=&#34;customizing-your-kubeflow-deployment&#34;&gt;Customizing your Kubeflow deployment&lt;/h2&gt;
+&lt;p&gt;The process outlined in the previous step configures Kubeflow with various defaults. 
+You can follow the instructions below to have greater control.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download the KFDef file to your local directory to allow modifications&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p ${KF_DIR}
+cd ${KF_DIR}
+curl -L -o ${CONFIG_FILE} https://raw.githubusercontent.com/kubeflow/manifests/v1.0-branch/kfdef/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CONFIG_FILE&lt;/strong&gt; should be the name you would like to use for your local config file; e.g. &amp;ldquo;kfdef.yaml&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit the KFDef spec in the yaml file. The following snippet shows you how to set values in the configuration file
+using &lt;a href=&#34;https://github.com/mikefarah/yq/releases&#34;&gt;yq&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yq w -i ${CONFIG_FILE} &#39;spec.plugins[0].spec.project&#39; ${PROJECT}
+yq w -i ${CONFIG_FILE} &#39;spec.plugins[0].spec.zone&#39; ${ZONE}
+yq w -i ${CONFIG_FILE} &#39;metadata.name&#39; ${KF_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PROJECT:&lt;/strong&gt; The GCP project to deploy in&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ZONE:&lt;/strong&gt; The zone to deploy in&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;KF_NAME&lt;/strong&gt;: The name used for your deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;kfctl build&lt;/code&gt; command to generate kustomize and GCP Deployment manager configuration files for your deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ${KF_DIR}
+kfctl build -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To customize your GKE cluster modify the deployment manager configuration files
+in the directory &lt;code&gt;${KF_DIR}/gcp_config&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For more information refer to:
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke/&#34;&gt;customizing your Kubeflow deployment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/deployment-manager/docs&#34;&gt;deployment manager docs&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To customize individual Kubeflow applications modify the Kustomize manifests in the directory
+&lt;code&gt;${KF_DIR}/kustomize&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For more information please refer to the &lt;a href=&#34;https://github.com/kubernetes-sigs/kustomize/tree/master/docs&#34;&gt;kustomize docs&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;kfctl apply&lt;/code&gt; command to deploy Kubeflow:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;check-your-deployment&#34;&gt;Check your deployment&lt;/h2&gt;
+&lt;p&gt;Follow these steps to verify the deployment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The deployment process creates a separate deployment for your data storage. 
+After running &lt;code&gt;kfctl apply&lt;/code&gt; you should notice two new 
+&lt;a href=&#34;https://console.cloud.google.com/dm/deployments&#34;&gt;deployments&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;{KF_NAME}-storage&lt;/strong&gt;: This deployment has persistent volumes for your
+pipelines.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;{KF_NAME}&lt;/strong&gt;: This deployment has all the components of Kubeflow, including 
+a &lt;a href=&#34;https://console.cloud.google.com/kubernetes/list&#34;&gt;GKE cluster&lt;/a&gt; 
+named &lt;strong&gt;${KF_NAME}&lt;/strong&gt; with Kubeflow installed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When the deployment finishes, check the resources installed in the namespace
+&lt;code&gt;kubeflow&lt;/code&gt; in your new cluster.  To do this from the command line, first set 
+your &lt;code&gt;kubectl&lt;/code&gt; credentials to point to the new cluster:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud container clusters get-credentials ${KF_NAME} --zone ${ZONE} --project ${PROJECT}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then see what&amp;rsquo;s installed in the &lt;code&gt;kubeflow&lt;/code&gt; namespace of your GKE cluster:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow get all
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;access-the-kubeflow-user-interface-ui&#34;&gt;Access the Kubeflow user interface (UI)&lt;/h2&gt;
+&lt;p&gt;Follow these steps to access the Kubeflow central dashboard:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Enter the following URI into your browser address bar. It can take 20
+minutes for the URI to become available:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://&amp;lt;KF_NAME&amp;gt;.endpoints.&amp;lt;project-id&amp;gt;.cloud.goog/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can run the following command to get the URI for your deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system get ingress
+NAME            HOSTS                                                      ADDRESS         PORTS   AGE
+envoy-ingress   your-kubeflow-name.endpoints.your-gcp-project.cloud.goog   34.102.232.34   80      5d13h
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The following command sets an environment variable named &lt;code&gt;HOST&lt;/code&gt; to the URI:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export HOST=$(kubectl -n istio-system get ingress envoy-ingress -o=jsonpath={.spec.rules[0].host})
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the instructions on the UI to create a namespace. See the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/components/multi-tenancy/getting-started/#automatic-creation-of-profiles&#34;&gt;creation of profiles&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can take 20 minutes for the URI to become available.
+Kubeflow needs to provision a signed SSL certificate and register a DNS 
+name.&lt;/li&gt;
+&lt;li&gt;If you own or manage the domain or a subdomain with 
+&lt;a href=&#34;https://cloud.google.com/dns/docs/&#34;&gt;Cloud DNS&lt;/a&gt;
+then you can configure this process to be much faster.
+See &lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/731&#34;&gt;kubeflow/kubeflow#731&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;understanding-the-deployment-process&#34;&gt;Understanding the deployment process&lt;/h2&gt;
+&lt;p&gt;This section gives you more details about the kfctl configuration and 
+deployment process, so that you can customize your Kubeflow deployment if
+necessary.&lt;/p&gt;
+&lt;h3 id=&#34;kfctl-process-and-configuration&#34;&gt;kfctl process and configuration&lt;/h3&gt;
+&lt;p&gt;The kfctl deployment process includes the following commands:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kfctl build&lt;/code&gt; - (Optional) Creates configuration files defining the various 
+resources in your deployment. You only need to run &lt;code&gt;kfctl build&lt;/code&gt; if you want 
+to edit the resources before running &lt;code&gt;kfctl apply&lt;/code&gt;. See the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke/&#34;&gt;customizing your Kubeflow deployment&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kfctl apply&lt;/code&gt; - Creates or updates the resources.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kfctl delete&lt;/code&gt; - Deletes the resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The kfctl deployment process applies default values to certain properties
+as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Email address:&lt;/strong&gt; kfctl attempts to fetch your email address from your
+Cloud SDK configuration. You can run &lt;code&gt;gcloud config list&lt;/code&gt; to see the default 
+email address, which the command output lists as the &lt;strong&gt;account&lt;/strong&gt;.
+If kfctl can&amp;rsquo;t find a valid email address, you must use the
+flag &lt;code&gt;--email &amp;lt;your email address&amp;gt;&lt;/code&gt; to pass a valid email address. This email 
+address becomes an administrator in the configuration of your Kubeflow 
+deployment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GCP project ID:&lt;/strong&gt; kfctl attempts to fetch your project ID from your
+Cloud SDK configuration. You can run &lt;code&gt;gcloud config list&lt;/code&gt; to see your 
+active project ID.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;GCP zone:&lt;/strong&gt; kfctl attempts to fetch the zone from your Cloud SDK
+configuration. You can run &lt;code&gt;gcloud config list&lt;/code&gt; to see your active zone.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kubeflow deployment name:&lt;/strong&gt; kfctl defaults to the name of the directory
+where you run the &lt;code&gt;kfctl build&lt;/code&gt; or &lt;code&gt;kfctl apply&lt;/code&gt; command.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can also explicitly set the following values in your &lt;code&gt;${CONFIG_FILE}&lt;/code&gt;
+configuration file:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Kubeflow deployment name&lt;/li&gt;
+&lt;li&gt;GCP project&lt;/li&gt;
+&lt;li&gt;GCP zone&lt;/li&gt;
+&lt;li&gt;Email address&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following snippet shows you how to set values in the configuration file
+using &lt;a href=&#34;https://github.com/mikefarah/yq/releases&#34;&gt;yq&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yq w -i ${CONFIG_FILE} &#39;spec.plugins[0].spec.project&#39; ${PROJECT}
+yq w -i ${CONFIG_FILE} &#39;spec.plugins[0].spec.zone&#39; ${ZONE}
+yq w -i ${CONFIG_FILE} &#39;metadata.name&#39; ${KF_NAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;application-layout&#34;&gt;Application layout&lt;/h3&gt;
+&lt;p&gt;Your Kubeflow application directory &lt;strong&gt;${KF_DIR}&lt;/strong&gt; contains the following files and 
+directories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;${CONFIG_FILE}&lt;/strong&gt; is a YAML file that defines configurations related to your 
+Kubeflow deployment.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This file is a copy of the GitHub-based configuration YAML file that
+you used when deploying Kubeflow: 
+&lt;a href=&#34;https://raw.githubusercontent.com/kubeflow/manifests/v1.0-branch/kfdef/kfctl_gcp_iap.v1.0.0.yaml&#34;&gt;kfctl_gcp_iap.v1.0.0.yaml&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;When you run &lt;code&gt;kfctl apply&lt;/code&gt; or &lt;code&gt;kfctl build&lt;/code&gt;, kfctl creates
+a local version of the configuration file, &lt;strong&gt;${CONFIG_FILE}&lt;/strong&gt;,
+which you can further customize if necessary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;gcp_config&lt;/strong&gt; is a directory that contains 
+&lt;a href=&#34;https://cloud.google.com/deployment-manager/docs/configuration/&#34;&gt;Deployment Manager configuration files&lt;/a&gt; 
+defining your GCP infrastructure.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The directory is created when you run &lt;code&gt;kfctl build&lt;/code&gt; or &lt;code&gt;kfctl apply&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;You can modify these configurations to customize your GCP infrastructure.
+After modifying a configuration, run &lt;code&gt;kfctl apply&lt;/code&gt; again.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;kustomize&lt;/strong&gt; is a directory that contains the kustomize packages for Kubeflow 
+applications. See 
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/kustomize/&#34;&gt;how Kubeflow uses kustomize&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The directory is created when you run &lt;code&gt;kfctl build&lt;/code&gt; or &lt;code&gt;kfctl apply&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;You can customize the Kubernetes resources by modifying the manifests and 
+running &lt;code&gt;kfctl apply&lt;/code&gt; again.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We recommend that you check in the contents of your &lt;strong&gt;${KF_DIR}&lt;/strong&gt; directory
+into source control.&lt;/p&gt;
+&lt;h3 id=&#34;gcp-service-accounts&#34;&gt;GCP service accounts&lt;/h3&gt;
+&lt;p&gt;The kfctl deployment process creates three service accounts in your 
+GCP project. These service accounts follow the &lt;a href=&#34;https://en.wikipedia.org/wiki/Principle_of_least_privilege&#34;&gt;principle of least 
+privilege&lt;/a&gt;. 
+The service accounts are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;${KF_NAME}-admin&lt;/code&gt; is used for some admin tasks like configuring the load 
+balancers. The principle is that this account is needed to deploy Kubeflow but 
+not needed to actually run jobs.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;${KF_NAME}-user&lt;/code&gt; is intended to be used by training jobs and models to access 
+GCP resources (Cloud Storage, BigQuery, etc.). This account has a much smaller 
+set of privileges compared to &lt;code&gt;admin&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;${KF_NAME}-vm&lt;/code&gt; is used only for the virtual machine (VM) service account. This
+account has the minimal permissions needed to send metrics and logs to 
+&lt;a href=&#34;https://cloud.google.com/stackdriver/&#34;&gt;Stackdriver&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;basic-authentication-deprecated&#34;&gt;Basic authentication (deprecated)&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;No longer supported&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Run a full ML workflow on Kubeflow, using the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/gcp-e2e/&#34;&gt;end-to-end MNIST tutorial&lt;/a&gt; or the
+&lt;a href=&#34;https://github.com/kubeflow/examples/tree/master/github_issue_summarization/pipelines&#34;&gt;GitHub issue summarization Pipelines
+example&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/delete-cli/&#34;&gt;delete&lt;/a&gt; your Kubeflow deployment 
+using the CLI.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke/&#34;&gt;customize&lt;/a&gt; your Kubeflow 
+deployment.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/upgrading/upgrade/&#34;&gt;upgrade Kubeflow&lt;/a&gt; and how to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/upgrade/&#34;&gt;upgrade or reinstall a Kubeflow Pipelines 
+deployment&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke/&#34;&gt;Troubleshoot&lt;/a&gt; any issues you may
+find.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Monitor Cloud IAP Setup</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/monitor-iap-setup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/monitor-iap-setup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud Identity-Aware Proxy (Cloud IAP)&lt;/a&gt; is 
+the recommended solution for accessing your Kubeflow 
+deployment from outside the cluster, when running Kubeflow on Google Cloud
+Platform (GCP).&lt;/p&gt;
+&lt;p&gt;This document is a step-by-step guide to ensuring that your IAP-secured endpoint
+is available, and to debugging problems that may cause the endpoint to be
+unavailable.&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;When deploying Kubeflow using the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui/&#34;&gt;deployment UI&lt;/a&gt; 
+or the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;command-line interface&lt;/a&gt;,
+you choose the authentication method you want to use. One of the options is
+Cloud IAP. This document assumes that you have already deployed Kubeflow.&lt;/p&gt;
+&lt;p&gt;Kubeflow uses the &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs&#34;&gt;Google-managed certificate&lt;/a&gt;
+to provide an SSL certificate for the Kubeflow Ingress.&lt;/p&gt;
+&lt;p&gt;Cloud IAP gives you the following benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Users can log in in using their GCP accounts.&lt;/li&gt;
+&lt;li&gt;You benefit from Google&amp;rsquo;s security expertise to protect your sensitive 
+workloads.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;monitoring-your-cloud-iap-setup&#34;&gt;Monitoring your Cloud IAP setup&lt;/h2&gt;
+&lt;p&gt;Follow these instructions to monitor your Cloud IAP setup and troubleshoot any
+problems:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Examine the
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/services-networking/ingress/&#34;&gt;Ingress&lt;/a&gt; 
+and Google Cloud Build (GCB) load balancer to make sure it is available:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n istio-system describe ingress
+
+Name:             envoy-ingress
+Namespace:        kubeflow
+Address:          35.244.132.160
+Default backend:  default-http-backend:80 (10.20.0.10:8080)
+Annotations:
+...
+Events:
+   Type     Reason     Age                 From                     Message
+   ----     ------     ----                ----                     -------
+   Normal   ADD        12m                 loadbalancer-controller  kubeflow/envoy-ingress
+   Warning  Translate  12m (x10 over 12m)  loadbalancer-controller  error while evaluating the ingress spec: could not find service &amp;quot;kubeflow/envoy&amp;quot;
+   Warning  Translate  12m (x2 over 12m)   loadbalancer-controller  error while evaluating the ingress spec: error getting BackendConfig for port &amp;quot;8080&amp;quot; on service &amp;quot;kubeflow/envoy&amp;quot;, err: no BackendConfig for service port exists.
+   Warning  Sync       12m                 loadbalancer-controller  Error during sync: Error running backend syncing routine: received errors when updating backend service: googleapi: Error 400: The resource &#39;projects/code-search-demo/global/backendServices/k8s-be-32230--bee2fc38fcd6383f&#39; is not ready, resourceNotReady
+ googleapi: Error 400: The resource &#39;projects/code-search-demo/global/backendServices/k8s-be-32230--bee2fc38fcd6383f&#39; is not ready, resourceNotReady
+   Normal  CREATE  11m  loadbalancer-controller  ip: 35.244.132.160
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;There should be an annotation indicating that we are using managed certificate:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;annotation:
+  networking.gke.io/managed-certificates: gke-certificate
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Any problems with creating the load balancer are reported as Kubernetes
+events in the results of the above &lt;code&gt;describe&lt;/code&gt; command.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If the address isn&amp;rsquo;t set then there was a problem creating the load 
+balancer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;CREATE&lt;/code&gt; event indicates the load balancer was successfully 
+created on the specified IP address.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The most common error is running out of GCP quota. To fix this problem,
+you must either increase the quota for the relevant resource on your GCP 
+project or delete some existing resources.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Verify that a managed certificate resource is generated:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl describe -n istio-system managedcertificate gke-certificate
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The status field should have information about the current status of the Certificate.
+Eventually, certificate status should be &lt;code&gt;Active&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wait for the load balancer to report the back ends as healthy:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl describe -n istio-system ingress envoy-ingress
+
+...
+Annotations:
+ kubernetes.io/ingress.global-static-ip-name:  kubeflow-ip
+ kubernetes.io/tls-acme:                       true
+ certmanager.k8s.io/issuer:                    letsencrypt-prod
+ ingress.kubernetes.io/backends:               {&amp;quot;k8s-be-31380--5e1566252944dfdb&amp;quot;:&amp;quot;HEALTHY&amp;quot;,&amp;quot;k8s-be-32133--5e1566252944dfdb&amp;quot;:&amp;quot;HEALTHY&amp;quot;}
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Both backends should be reported as healthy.
+It can take several minutes for the load balancer to consider the back ends 
+healthy.&lt;/p&gt;
+&lt;p&gt;The service with port &lt;code&gt;31380&lt;/code&gt; is the one that handles Kubeflow 
+traffic. (31380 is the default port of the service &lt;code&gt;istio-ingressgateway&lt;/code&gt;.)&lt;/p&gt;
+&lt;p&gt;If the backend is unhealthy, check the pods in &lt;code&gt;istio-system&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kubectl get pods -n istio-system&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;istio-ingressgateway-XX&lt;/code&gt; pods should be running&lt;/li&gt;
+&lt;li&gt;Check the logs of pod &lt;code&gt;backend-updater-0&lt;/code&gt;, &lt;code&gt;iap-enabler-XX&lt;/code&gt; to see if there is any error&lt;/li&gt;
+&lt;li&gt;Follow the steps &lt;a href=&#34;https://www.kubeflow.org/docs/gke/troubleshooting-gke/#502-server-error&#34;&gt;here&lt;/a&gt; to check the load balancer and backend service on GCP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Try accessing Cloud IAP at the fully qualified domain name in your web 
+browser:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://&amp;lt;your-fully-qualified-domain-name&amp;gt;     
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you get SSL errors when you log in, this typically means that your SSL 
+certificate is still propagating. Wait a few minutes and try again. SSL 
+propagation can take up to 10 minutes.&lt;/p&gt;
+&lt;p&gt;If you do not see a login prompt and you get a 404 error, the configuration
+of Cloud IAP is not yet complete. Keep retrying for up to 10 minutes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you get an error &lt;code&gt;Error: redirect_uri_mismatch&lt;/code&gt; after logging in, this means the list of OAuth authorized redirect URIs does not include your domain.&lt;/p&gt;
+&lt;p&gt;The full error message looks like the following example and includes the 	
+relevant links:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;The redirect URI in the request, https://mykubeflow.endpoints.myproject.cloud.goog/_gcp_gatekeeper/authenticate, does not match the ones authorized for the OAuth client. 	
+To update the authorized redirect URIs, visit: https://console.developers.google.com/apis/credentials/oauthclient/22222222222-7meeee7a9a76jvg54j0g2lv8lrsb4l8g.apps.googleusercontent.com?project=22222222222	
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Follow the link in the error message to find the OAuth credential being used	
+and add the redirect URI listed in the error message to the list of 	
+authorized URIs. For more information, read the guide to 	
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/oauth-setup/&#34;&gt;setting up OAuth for Cloud IAP&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;a href=&#34;http://osmatrix.github.io/docs/gke/troubleshooting-gke/&#34;&gt;GCP troubleshooting guide&lt;/a&gt; for Kubeflow.&lt;/li&gt;
+&lt;li&gt;Guide to &lt;a href=&#34;http://osmatrix.github.io/docs/components/multi-tenancy/getting-started&#34;&gt;sharing cluster access&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;GCP guide to &lt;a href=&#34;https://cloud.google.com/iap/docs/&#34;&gt;Cloud IAP&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Delete using CLI</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/delete-cli/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/delete-cli/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page shows you how to use the CLI to delete a Kubeflow deployment on
+Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide assumes the following settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${KF_DIR}&lt;/code&gt; environment variable contains the path to
+your Kubeflow application directory, which holds your Kubeflow configuration 
+files. For example, &lt;code&gt;/opt/my-kubeflow/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export KF_DIR=&amp;lt;path to your Kubeflow application directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The &lt;code&gt;${CONFIG_FILE}&lt;/code&gt; environment variable contains the path to your 
+Kubeflow configuration file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_iap.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Or:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export CONFIG_FILE=${KF_DIR}/kfctl_gcp_basic_auth.v1.0.0.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For further background about the above settings, see the guide to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli&#34;&gt;deploying Kubeflow with the CLI&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;deleting-your-deployment&#34;&gt;Deleting your deployment&lt;/h2&gt;
+&lt;p&gt;Run the following commands to delete your deployment and reclaim all GCP
+resources:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# If you want to delete all the resources, including storage:
+kfctl delete -f ${CONFIG_FILE} --delete_storage
+
+# If you want to preserve storage, which contains metadata and information
+# from Kubeflow Pipelines:
+kfctl delete -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You should consider preserving storage if you may want to relaunch
+Kubeflow in the future and restore the data from your 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/pipelines-overview/&#34;&gt;pipelines&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Delete using GCP Console</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/delete-ui/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/delete-ui/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page shows you how to delete your Kubeflow deployment using Deployment 
+Manager in the GCP Console.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; For best results you should use the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/delete-cli/&#34;&gt;CLI to delete Kubeflow&lt;/a&gt;. Deleting with Deployment 
+Manager as described below can orphan some resources like 
+&lt;a href=&#34;https://cloud.google.com/endpoints/docs/&#34;&gt;Cloud Endpoints&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To delete your Kubeflow deployment and reclaim all related resources using the
+GCP Console:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open the &lt;a href=&#34;https://console.cloud.google.com/dm/deployments&#34;&gt;Deployment Manager in the GCP
+Console&lt;/a&gt; for your project.
+Deployment Manager lists all the available deployments
+in your project. Make sure that the selected project is the same as the one
+you used for your Kubeflow deployment. 
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Select the Kubeflow deployment with the deployment name you used at the
+time of creation and click the &lt;strong&gt;Delete&lt;/strong&gt; button at the top.
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This action should delete any running nodes in your deployment, delete service
+accounts that were created for the deployment, and reclaim all resources.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Features of Kubeflow on GCP</title>
+      <link>http://osmatrix.github.io/docs/gke/deploy/reasons/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/deploy/reasons/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Running Kubeflow on GCP brings you the following features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You use
+&lt;a href=&#34;https://cloud.google.com/deployment-manager/docs/&#34;&gt;Deployment Manager&lt;/a&gt; to
+declaratively manage all non-Kubernetes resources (including the GKE 
+cluster). Deployment Manager is easy to customize for your particular use
+case.&lt;/li&gt;
+&lt;li&gt;You can take advantage of 
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs&#34;&gt;GKE&lt;/a&gt; autoscaling to scale 
+your cluster horizontally 
+and vertically to meet the demands of machine learning (ML) workloads with 
+large resource requirements.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/iap/&#34;&gt;Cloud Identity-Aware Proxy (Cloud IAP)&lt;/a&gt; 
+makes it easy to securely connect to Jupyter and other
+web apps running as part of Kubeflow.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/logging/docs/&#34;&gt;Stackdriver&lt;/a&gt; provides 
+persistent logs to aid in debugging and troubleshooting.&lt;/li&gt;
+&lt;li&gt;You can use GPUs and &lt;a href=&#34;https://cloud.google.com/tpu/&#34;&gt;Cloud TPU&lt;/a&gt; to 
+accelerate your workload.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui/&#34;&gt;Deploy Kubeflow&lt;/a&gt; if you haven&amp;rsquo;t already done so.&lt;/li&gt;
+&lt;li&gt;Run a full ML workflow on Kubeflow, using the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/gcp-e2e/&#34;&gt;end-to-end MNIST tutorial&lt;/a&gt; or the
+&lt;a href=&#34;https://github.com/kubeflow/examples/tree/master/github_issue_summarization&#34;&gt;GitHub issue summarization 
+example&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

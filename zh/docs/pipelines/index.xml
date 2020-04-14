@@ -1,0 +1,558 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow中文文档 – 流水线</title>
+    <link>http://osmatrix.github.io/zh/docs/pipelines/</link>
+    <description>Recent content in 流水线 on Kubeflow中文文档</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/zh/docs/pipelines/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 流水线快速入门</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/pipelines-quickstart/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/pipelines-quickstart/</guid>
+      <description>
+        
+        
+        &lt;!-- raw HTML omitted --&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;a href=&amp;quot;https://github.com/kubeflow/pipelines/issues&amp;quot;&amp;gt;feedback&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;about the usability of the feature.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Use this guide if you want to get a simple pipeline running quickly in
+Kubeflow Pipelines.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This quickstart guide shows you how to use one of the samples that come with 
+the Kubeflow Pipelines installation and are visible on the Kubeflow Pipelines
+user interface (UI). You can use this guide as an introduction to the 
+Kubeflow Pipelines UI.&lt;/li&gt;
+&lt;li&gt;The end-to-end tutorial shows you how to prepare and compile a pipeline, 
+upload it to Kubeflow Pipelines, then run it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;deploy-kubeflow-and-open-the-pipelines-ui&#34;&gt;Deploy Kubeflow and open the pipelines UI&lt;/h2&gt;
+&lt;p&gt;Follow these steps to deploy Kubeflow and open the pipelines dashboard:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;kubeflow/pipelines#1700&lt;!-- raw HTML omitted --&gt;,
+the container builder in Kubeflow Pipelines currently prepares credentials for
+Google Cloud Platform (GCP) only. As a result, the container builder supports
+only Google Container Registry. However, you can store the container images on
+other registries, provided you set up the credentials correctly to fetch
+the image.&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;When Kubeflow is running, access the Kubeflow UI at a URL of the form
+&lt;code&gt;https://&amp;lt;deployment-name&amp;gt;.endpoints.&amp;lt;project&amp;gt;.cloud.goog/&lt;/code&gt;, as described in the setup
+guide. The Kubeflow UI looks like this:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;If you skipped the Cloud IAP option when deploying Kubeflow, or if you 
+haven&amp;rsquo;t yet set up your Kubeflow endpoint, you can access Kubeflow via 
+&lt;code&gt;kubectl&lt;/code&gt; and port-forwarding:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install &lt;code&gt;kubectl&lt;/code&gt; if you haven&amp;rsquo;t already done so, by running the 
+following command on the command line: 
+&lt;code&gt;gcloud components install kubectl&lt;/code&gt;. For more information, see the 
+&lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34;&gt;&lt;code&gt;kubectl&lt;/code&gt; 
+documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80&lt;/code&gt; and go to &lt;code&gt;http://localhost:8080/&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Pipelines&lt;/strong&gt; to access the pipelines UI. The pipelines UI looks like
+this:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;run-a-basic-pipeline&#34;&gt;Run a basic pipeline&lt;/h2&gt;
+&lt;p&gt;The pipelines UI offers a few samples that you can use to try out
+pipelines quickly. The steps below show you how to run a basic sample that
+includes some Python operations, but doesn&amp;rsquo;t include a machine learning (ML) 
+workload:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Click the name of the sample, &lt;strong&gt;[Sample] Basic - Parallel Execution&lt;/strong&gt;, on the pipelines 
+UI:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Create experiment&lt;/strong&gt;:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the prompts to create an &lt;strong&gt;experiment&lt;/strong&gt; and then create a &lt;strong&gt;run&lt;/strong&gt;. 
+The sample supplies default values for all the parameters you need. The 
+following screenshot assumes you&amp;rsquo;ve already created an experiment named
+&lt;em&gt;My experiment&lt;/em&gt; and are now creating a run named &lt;em&gt;My first run&lt;/em&gt;:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Start&lt;/strong&gt; to create the run.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click the name of the run on the experiments dashboard:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Explore the graph and other aspects of your run by clicking on the 
+components of the graph and the other UI elements:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can find &lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/samples/core/parallel_join/parallel_join.py&#34;&gt;the source code for the basic parallel join sample&lt;/a&gt;
+in the Kubeflow Pipelines repo.&lt;/p&gt;
+&lt;h2 id=&#34;run-an-ml-pipeline&#34;&gt;Run an ML pipeline&lt;/h2&gt;
+&lt;p&gt;This section shows you how to run the XGBoost sample available
+from the pipelines UI. Unlike the basic sample described above, the
+XGBoost sample does include ML components. Before running this sample, 
+you need to set up some GCP services for use by the sample.&lt;/p&gt;
+&lt;p&gt;Follow these steps to set up the necessary GCP services and run the sample:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;In addition to the standard GCP APIs that you need for Kubeflow (see the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/project-setup&#34;&gt;GCP setup guide&lt;/a&gt;), ensure that the 
+following APIs are enabled:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/storage-component.googleapis.com&#34;&gt;Cloud Storage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://console.cloud.google.com/apis/library/dataproc.googleapis.com&#34;&gt;Dataproc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a 
+&lt;a href=&#34;https://console.cloud.google.com/storage/create-bucket&#34;&gt;Cloud Storage bucket&lt;/a&gt; 
+to hold the results of the pipeline run.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Your &lt;em&gt;bucket name&lt;/em&gt; must be unique across all of Cloud Storage.&lt;/li&gt;
+&lt;li&gt;Each time you create a new run for this pipeline, Kubeflow creates a unique
+directory within the output bucket, so the output of each run does not
+override the output of the previous run.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Click the name of the sample, 
+&lt;strong&gt;[Sample] ML - XGBoost - Training with Confusion Matrix&lt;/strong&gt;, on the pipelines 
+UI:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Create experiment&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the prompts to create an &lt;strong&gt;experiment&lt;/strong&gt; and then create a &lt;strong&gt;run&lt;/strong&gt;.
+Supply the following &lt;strong&gt;run parameters&lt;/strong&gt;:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;output:&lt;/strong&gt; The Cloud Storage bucket that you created earlier to hold the
+results of the pipeline run.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;project:&lt;/strong&gt; Your GCP project ID.&lt;/p&gt;
+&lt;p&gt;The sample supplies the values for the other parameters:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;region: The GCP geographical region in which the training and evaluation
+data is stored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;train-data: Cloud Storage path to the training data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;eval-data: Cloud Storage path to the evaluation data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;schema: Cloud Storage path to a JSON file describing the format of the
+CSV files that contain the training and evaluation data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;target: Column name of the target variable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;rounds: The number of rounds for XGBoost training.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;workers: Number of workers used for distributed training.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;true-label: Column to be used for text representation of the label output
+by the model.&lt;/p&gt;
+&lt;p&gt;The following partial screenshot shows the run parameters, including the 
+two parameters that you must supply:
+&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Click &lt;strong&gt;Start&lt;/strong&gt; to create the run.&lt;/li&gt;
+&lt;li&gt;Click the name of the run on the experiments dashboard.&lt;/li&gt;
+&lt;li&gt;Explore the graph and other aspects of your run by clicking on the 
+components of the graph and the other UI elements. The following screenshot
+shows the graph when the pipeline has finished running:
+&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can find the source code for the XGBoost training sample in the 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/samples/core/xgboost_training_cm&#34;&gt;Kubeflow Pipelines 
+repo&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;clean-up-your-gcp-environment&#34;&gt;Clean up your GCP environment&lt;/h2&gt;
+&lt;p&gt;As you work through this guide, your project uses billable components of
+GCP. To minimise costs, follow these steps to clean up resources when you&amp;rsquo;ve 
+finished with them:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Visit &lt;a href=&#34;https://console.cloud.google.com/dm&#34;&gt;Deployment Manager&lt;/a&gt; to delete 
+your deployment and related resources.&lt;/li&gt;
+&lt;li&gt;Delete your &lt;a href=&#34;https://console.cloud.google.com/storage&#34;&gt;Cloud Storage bucket&lt;/a&gt; 
+when you&amp;rsquo;ve finished examining the output of the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Learn more about the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/concepts/&#34;&gt;important concepts&lt;/a&gt; in Kubeflow
+Pipelines.&lt;/li&gt;
+&lt;li&gt;This page showed you how to run some of the examples supplied in the Kubeflow
+Pipelines UI. Next, you may want to run a pipeline from a notebook, or compile 
+and run a sample from the code. See the guide to experimenting with
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/tutorials/build-pipeline/&#34;&gt;the Kubeflow Pipelines samples&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Build your own machine-learning pipelines with the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/&#34;&gt;Kubeflow Pipelines 
+SDK&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 安装流水线</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/installation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/installation/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 了解流水线</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/overview/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 使用SDK构建流水线</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/sdk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/sdk/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 升级与重新安装</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/upgrade/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/upgrade/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Starting from Kubeflow v0.5, Kubeflow Pipelines persists the
+pipeline data in permanent storage volumes. Kubeflow Pipelines therefore
+supports the following capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reinstall:&lt;/strong&gt; You can delete a cluster and create a new cluster, specifying
+the existing storage volumes to retrieve the original data in the new cluster.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Upgrade (limited support):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The full Kubeflow deployment currently supports upgrading in &lt;strong&gt;alpha&lt;/strong&gt;
+status with limited support. Check the following sources for progress
+updates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3727&#34;&gt;Issue kubeflow/kubeflow #3727&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/upgrading/upgrade/&#34;&gt;Kubeflow upgrade guide&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide tells you how to reinstall Kubeflow Pipelines as part of a
+full Kubeflow deployment. This guide therefore assumes that you want to use one 
+of the options in the &lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;Kubeflow deployment 
+guide&lt;/a&gt; to deploy Kubeflow Pipelines with 
+Kubeflow.&lt;/p&gt;
+&lt;p&gt;Note the following alternatives:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Instead of the full Kubeflow deployment, you can use Kubeflow Pipelines 
+Standalone, which does support upgrading. See how to upgrade the
+&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/standalone-deployment/#upgrade&#34;&gt;Kubeflow Pipelines Standalone
+deployment&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you&amp;rsquo;re using Kubeflow Pipelines on Google Cloud Platform (GCP), see how to
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/pipelines/upgrade/&#34;&gt;upgrade or reinstall Kubeflow Pipelines on 
+GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;kubeflow-pipelines-data-storage&#34;&gt;Kubeflow Pipelines data storage&lt;/h2&gt;
+&lt;p&gt;Kubeflow Pipelines creates and manages the following data related to your 
+machine learning pipeline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Metadata:&lt;/strong&gt; Experiments, jobs, runs, etc. Kubeflow Pipelines 
+stores the pipeline metadata in a MySQL database.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Artifacts:&lt;/strong&gt; Pipeline packages, metrics, views, etc. Kubeflow Pipelines 
+stores the artifacts in a &lt;a href=&#34;https://docs.minio.io/&#34;&gt;Minio server&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kubeflow Pipelines uses the Kubernetes
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes&#34;&gt;PersistentVolume&lt;/a&gt;
+(PV) subsystem to provision the MySQL database and the Minio server. 
+You can specify your own preferred PV.&lt;/p&gt;
+&lt;h2 id=&#34;deploying-kubeflow&#34;&gt;Deploying Kubeflow&lt;/h2&gt;
+&lt;p&gt;This section describes how to deploy Kubeflow in a way that ensures you can use
+the Kubeflow Pipelines reinstallation capability.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;If you don&amp;rsquo;t need custom storage and are happy with the default PVs that
+Kubeflow provides, you can follow the Kubeflow
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;deployment guide&lt;/a&gt;
+without doing anything extra. The deployment process uses the Kubernetes 
+default
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/storage-classes/#the-storageclass-resource&#34;&gt;StorageClass&lt;/a&gt;
+to provision the PVs for you.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you want to specify a custom PV:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create your Kubernetes cluster if you don&amp;rsquo;t already have one. 
+See the &lt;a href=&#34;https://kubernetes.io/docs/setup/&#34;&gt;Kubernetes documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create two PVs in your Kubernetes cluster with your preferred storage type. 
+See the
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes&#34;&gt;Kubernetes guide to PVs&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the Kubeflow
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;deployment guide&lt;/a&gt;,
+but &lt;strong&gt;note the following changes to the standard procedure&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Before&lt;/strong&gt; running the &lt;code&gt;kfctl apply&lt;/code&gt; command:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/minio/overlays/minioPd/params.env&lt;/code&gt; and specify
+the PV for the Minio server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+minioPd=[YOUR-PRE-CREATED-MINIO-PV-NAME]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/mysql/overlays/mysqlPd/params.env&lt;/code&gt; and specify
+the PV for the MySQL database:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+mysqlPd=[YOUR-PRE-CREATED-MYSQL-PV-NAME]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;kfctl apply&lt;/code&gt; command to deploy Kubeflow as usual:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reinstalling-kubeflow-pipelines&#34;&gt;Reinstalling Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;You can delete a Kubeflow cluster and create a new one, specifying
+your existing storage to retrieve the original data in the new cluster.&lt;/p&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You must use command-line deployment. 
+You cannot reinstall Kubeflow Pipelines using the web interface.&lt;/li&gt;
+&lt;li&gt;When you do &lt;code&gt;kfctl apply&lt;/code&gt; or &lt;code&gt;kfctl build&lt;/code&gt;, you should use a different 
+deployment name from your existing deployment name. Using a different name
+ensures that your data is safe in case of a deployment failure. This guide 
+defines the deployment name in the ${KF_NAME} environment variable.&lt;/li&gt;
+&lt;li&gt;The reinstallation steps are the same as for a standard Kubeflow installation, 
+except that you must use the same PV definitions as in your previous 
+deployment to create the PV in the new cluster.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To reinstall Kubeflow Pipelines:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create two PVs in your Kubernetes cluster, using the same PV definitions as
+in your previous deployment. See the
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes&#34;&gt;Kubernetes guide to PVs&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the Kubeflow
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;deployment guide&lt;/a&gt;,
+but &lt;strong&gt;note the following changes to the standard procedure&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set a different &lt;code&gt;${KF_NAME}&lt;/code&gt; name from your existing &lt;code&gt;${KF_NAME}&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Before&lt;/strong&gt; running the &lt;code&gt;kfctl apply&lt;/code&gt; command:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/minio/overlays/minioPd/params.env&lt;/code&gt; and specify
+the PV for the Minio server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+minioPd=[YOUR-PRE-CREATED-MINIO-PV-NAME]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/mysql/overlays/mysqlPd/params.env&lt;/code&gt;and specify
+the PV for the MySQL database:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+mysqlPd=[YOUR-PRE-CREATED-MYSQL-PV-NAME]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;kfctl apply&lt;/code&gt; command to deploy Kubeflow as usual:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You should now have a new Kubeflow deployment that uses the same pipelines data 
+storage as your previous deployment. Follow any remaining steps in the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;Kubeflow deployment guide&lt;/a&gt;
+to check your deployment, depending on the deployment option you chose.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 样例和教程</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/tutorials/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/tutorials/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 可能的问题</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/troubleshooting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/troubleshooting/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page presents some hints for troubleshooting specific problems that you
+may encounter.&lt;/p&gt;
+&lt;h2 id=&#34;diagnosing-problems-in-your-kubeflow-pipelines-environment&#34;&gt;Diagnosing problems in your Kubeflow Pipelines environment&lt;/h2&gt;
+&lt;p&gt;For help diagnosing environment issues that affect Kubeflow Pipelines, run
+the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool&#34;&gt;&lt;code&gt;kfp diagnose_me&lt;/code&gt; command-line tool&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;kfp diagnose_me&lt;/code&gt; CLI reports on the configuration of your local
+development environment, Kubernetes cluster, or Google Cloud environment.
+Use this command to help resolve issues like the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python library dependencies&lt;/li&gt;
+&lt;li&gt;Trouble accessing resources or APIs using Kubernetes secrets&lt;/li&gt;
+&lt;li&gt;Trouble accessing Persistent Volume Claims&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To use the &lt;code&gt;kfp diagnose_me&lt;/code&gt; CLI, follow these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/install-sdk/&#34;&gt;Kubeflow Pipelines SDK&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Follow the &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/authentication/&#34;&gt;guide to configuring access to Kubernetes clusters&lt;/a&gt;,
+to update your kubeconfig file with appropriate credentials and endpoint
+information to access your Kubeflow cluster.
+If your Kubeflow Pipelines cluster is hosted on a cloud provider like
+Google Cloud, use your cloud provider&amp;rsquo;s instructions for configuring
+access to your Kubernetes cluster.&lt;/li&gt;
+&lt;li&gt;Run the &lt;code&gt;kfp diagnose_me&lt;/code&gt; command.&lt;/li&gt;
+&lt;li&gt;Analyze the results to troubleshoot your environment.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;troubleshooting-the-kubeflow-pipelines-sdk&#34;&gt;Troubleshooting the Kubeflow Pipelines SDK&lt;/h2&gt;
+&lt;p&gt;The following sections describe how to resolve issues that can occur when
+installing or using the Kubeflow Pipelines SDK.&lt;/p&gt;
+&lt;h3 id=&#34;error-could-not-find-a-version-that-satisfies-the-requirement-kfp&#34;&gt;Error: Could not find a version that satisfies the requirement kfp&lt;/h3&gt;
+&lt;p&gt;This error indicates that you have not installed the &lt;code&gt;kfp&lt;/code&gt; package in your
+Python3 environment. Follow the instructions in the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/install-sdk/&#34;&gt;Kubeflow Pipelines SDK
+installation guide&lt;/a&gt;, if you have not already
+installed the SDK.&lt;/p&gt;
+&lt;p&gt;If you have already installed the Kubeflow Pipelines SDK, check that you have
+Python 3.5 or higher:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python3 -V
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The response should be something like the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Python 3.7.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you do not have Python 3.5 or higher, you can
+&lt;a href=&#34;https://www.python.org/downloads/&#34;&gt;download Python&lt;/a&gt; from the Python
+Software Foundation.&lt;/p&gt;
+&lt;h3 id=&#34;kfp-or-dsl-compile-command-not-found&#34;&gt;kfp or dsl-compile command not found&lt;/h3&gt;
+&lt;p&gt;If your install the Kubeflow Pipelines SDK with the &lt;code&gt;--user&lt;/code&gt; flag, you may
+get the following error when using the &lt;code&gt;kfp&lt;/code&gt; or &lt;code&gt;dsl-compile&lt;/code&gt; command-line
+tools.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash: kfp: command not found
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This error occurs because installing the Kubeflow Pipelines SDK with
+&lt;code&gt;--user&lt;/code&gt; stores &lt;code&gt;kfp&lt;/code&gt; and &lt;code&gt;dsl-compile&lt;/code&gt; in your &lt;code&gt;~/.local/bin&lt;/code&gt; directory.
+In some Linux distributions, the &lt;code&gt;~/.local/bin&lt;/code&gt; directory is not part of the
+$PATH environment variable.&lt;/p&gt;
+&lt;p&gt;You can resolve this issue by using one of the following options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &lt;code&gt;export $PATH=$PATH:~/.local/bin&lt;/code&gt; to the end of your &lt;code&gt;~/.bashrc&lt;/code&gt; file.
+Then restart your terminal session or run &lt;code&gt;source ~/.bashrc&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Run the &lt;code&gt;kfp&lt;/code&gt; and &lt;code&gt;dsl-compile&lt;/code&gt; commands as &lt;code&gt;~/.local/bin/kfp&lt;/code&gt; and
+&lt;code&gt;~/.local/bin/dsl-compile&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 参考文档</title>
+      <link>http://osmatrix.github.io/zh/docs/pipelines/reference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/zh/docs/pipelines/reference/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

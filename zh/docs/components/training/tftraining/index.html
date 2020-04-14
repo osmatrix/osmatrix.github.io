@@ -1,0 +1,3268 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.69.0" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x196.png" sizes="96x196">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png"sizes="192x192">
+
+<script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "WebSite",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/osmatrix.github.io"
+      },
+      "articleSection" : "docs",
+      "name" : "TensorFlow Training (TFJob)",
+      "headline" : "TensorFlow Training (TFJob)",
+      "description" : "Using TFJob to train a model with TensorFlow",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "0001",
+      "datePublished": "0001-01-01 00:00:00 \x2b0000 UTC",
+      "dateModified" : "0001-01-01 00:00:00 \x2b0000 UTC",
+      "url" : "http:\/\/osmatrix.github.io\/zh\/docs\/components\/training\/tftraining\/",
+      "wordCount" : "2187",
+      "keywords" : [ "Kubeflow" ]
+  }
+  </script>
+<title>TensorFlow Training (TFJob) | Kubeflow中文文档</title><meta property="og:title" content="TensorFlow Training (TFJob)" />
+<meta property="og:description" content="Using TFJob to train a model with TensorFlow" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://osmatrix.github.io/zh/docs/components/training/tftraining/" />
+<meta property="article:modified_time" content="2020-03-10T17:38:23+08:00" /><meta property="og:site_name" content="Kubeflow中文文档" />
+<meta itemprop="name" content="TensorFlow Training (TFJob)">
+<meta itemprop="description" content="Using TFJob to train a model with TensorFlow">
+<meta itemprop="dateModified" content="2020-03-10T17:38:23&#43;08:00" />
+<meta itemprop="wordCount" content="2187">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TensorFlow Training (TFJob)"/>
+<meta name="twitter:description" content="Using TFJob to train a model with TensorFlow"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" as="style">
+<link href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+    <title>TensorFlow Training (TFJob) | Kubeflow中文文档</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+	<a class="navbar-brand" href="/zh/">
+		<span class="navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 276.93 274.55"><g data-name="Layer 2"><g data-name="Layer 1"><path d="M95.9 62.15l4.1 102.1 73.75-94.12a6.79 6.79.0 019.6-1.11l46 36.92-15-65.61z" fill="#4279f4"/><path fill="#0028aa" d="M102.55 182.98h65.42l-40.17-32.23-25.25 32.23z"/><path fill="#014bd1" d="M180.18 83.92l-44 56.14 46.88 37.61 44.47-55.76-47.35-37.99z"/><path fill="#bedcff" d="M83.56 52.3l.01-.01 38.69-48.52-62.39 30.05-15.41 67.51 39.1-49.03z"/><path fill="#6ca1ff" d="M45.32 122.05l41.44 51.96-3.95-98.98-37.49 47.02z"/><path fill="#a1c3ff" d="M202.31 28.73 142.65.0l-37.13 46.56 96.79-17.83z"/><path d="M1.6 272v-44.78h5.74v23.41l20.48-23.41h6.4l-17.39 19.7 19 25.07H29.1l-15.92-20.8-5.84 6.65V272zm40.02-9.79V240h5.43v22.39a4.67 4.67.0 002.35 4.19 11 11 0 0011 0 4.69 4.69.0 002.33-4.19V240h5.43v22.19a9.08 9.08.0 01-4.1 7.87 16.2 16.2.0 01-18.37.0 9.07 9.07.0 01-4.07-7.85zM77.46 272v-48h5.43v16.81a29.29 29.29.0 019.32-1.73 13.1 13.1.0 016.2 1.41 10.71 10.71.0 014.18 3.74 18.07 18.07.0 012.23 5.06 21.26 21.26.0 01.73 5.58q0 8.43-4.38 12.79T87.35 272zm5.43-4.87h4.55q6.77.0 9.72-2.95t3-9.51a14.21 14.21.0 00-2-7.52 6.55 6.55.0 00-6-3.22 24.73 24.73.0 00-9.25 1.54zm29.47-11.19q0-7.71 4.09-12.3a13.75 13.75.0 0110.8-4.59q13.35.0 13.36 18.86h-22.82a12.3 12.3.0 002.9 7.07q2.59 3.11 7.9 3.1a24.92 24.92.0 0010.55-2v5a27.74 27.74.0 01-9.86 1.87 19.83 19.83.0 01-7.7-1.37 13.31 13.31.0 01-5.28-3.76 16.21 16.21.0 01-3-5.38 20.84 20.84.0 01-.94-6.5zm5.62-2.12h17.26a14.91 14.91.0 00-2.37-7.12 6.44 6.44.0 00-5.62-2.78 8.2 8.2.0 00-6.21 2.72 12.07 12.07.0 00-3.04 7.18z" fill="#4279f4" stroke="#4279f4" stroke-miterlimit="10" stroke-width="3.2"/><path d="M147.32 244.89V240h5v-7.59a8.14 8.14.0 012.31-6.05 7.79 7.79.0 015.69-2.28h7.86V229h-5c-2.21.0-3.67.45-4.37 1.34s-1.06 2.55-1.06 5V240h8.46v4.87h-8.46V272h-5.44v-27.1zM175.26 272v-48h5.43v48zm19.15-3.95a17.86 17.86.0 1112.33 4.9 16.57 16.57.0 01-12.33-4.9zm3.84-20.65a13.16 13.16.0 000 17.2 12.07 12.07.0 0017 0 13.09 13.09.0 000-17.2 12.07 12.07.0 00-17 0zm30.2-7.4h5.75l7.3 25.32 7.43-25.32h5.36l7.34 25.34L269 240h5.74l-10.04 32h-6.12l-6.83-24.58L245 272h-6.47z" fill="#0028aa" stroke="#0028aa" stroke-miterlimit="10" stroke-width="3.2"/></g></g></svg> </span><span class="brand-name text-uppercase font-weight-bold">Kubeflow中文文档</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/zh/docs/about/kubeflow/" ><span>Kubeflow是什么?</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/zh/docs/" ><span>文档</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://medium.com/kubeflow" target="_blank" ><span>博客</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://github.com/kubeflow/" target="_blank" ><span>GitHub</span></a>
+			</li>
+			
+			
+      <li class="nav-item dropdown d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	v1.0
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="https://master.kubeflow.org">master</a>
+	
+	<a class="dropdown-item" href="https://v0-2.kubeflow.org">v0.2</a>
+	
+	<a class="dropdown-item" href="https://v0-3.kubeflow.org">v0.3</a>
+	
+	<a class="dropdown-item" href="https://v0-4.kubeflow.org">v0.4</a>
+	
+	<a class="dropdown-item" href="https://v0-5.kubeflow.org">v0.5</a>
+	
+	<a class="dropdown-item" href="https://v0-6.kubeflow.org">v0.6</a>
+	
+	<a class="dropdown-item" href="https://v0-7.kubeflow.org">v0.7</a>
+	
+</div>
+
+			</li>
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	简体中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/docs/components/training/tftraining/">English</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+ <input type="search" class="form-control td-search-input" placeholder="&#xf002 站内搜索…" aria-label="站内搜索…" autocomplete="off">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	简体中文
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/docs/components/training/tftraining/">English</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">文档</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/about/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">关于</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsabout">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutuse-cases" href="/zh/docs/about/use-cases/">应用案例</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutkubeflow" href="/zh/docs/about/kubeflow/">简介</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutcontributing" href="/zh/docs/about/contributing/">参与贡献</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutcommunity" href="/zh/docs/about/community/">社区</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutevents" href="/zh/docs/about/events/">活动日历</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutdocs" href="/zh/docs/about/docs/">关于文档</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsaboutstyle-guide" href="/zh/docs/about/style-guide/">文档风格</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/started/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">快速入门</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsstarted">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedkubeflow-overview" href="/zh/docs/started/kubeflow-overview/">了解Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedgetting-started" href="/zh/docs/started/getting-started/">安装Kubeflow</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/started/cloud/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">在云端安装</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsstartedcloud">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedcloudgetting-started-aws" href="/zh/docs/started/cloud/getting-started-aws/">AWS for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedcloudgetting-started-azure" href="/zh/docs/started/cloud/getting-started-azure/">Azure for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedcloudgetting-started-gke" href="/zh/docs/started/cloud/getting-started-gke/">Google Cloud for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedcloudgetting-started-icp" href="/zh/docs/started/cloud/getting-started-icp/">IBM Cloud for Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/started/k8s/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">在Kubernetes上安装</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsstartedk8s">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedk8soverview" href="/zh/docs/started/k8s/overview/">Overview of Deployment on Existing Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedk8skfctl-k8s-istio" href="/zh/docs/started/k8s/kfctl-k8s-istio/">Kubeflow Deployment with kfctl_k8s_istio</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedk8skfctl-existing-arrikto" href="/zh/docs/started/k8s/kfctl-existing-arrikto/">Multi-user, auth-enabled Kubeflow with kfctl_existing_arrikto</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedk8skfctl-istio-dex" href="/zh/docs/started/k8s/kfctl-istio-dex/">Multi-user, auth-enabled Kubeflow with kfctl_istio_dex</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/started/workstation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">在主机上安装</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsstartedworkstation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedworkstationgetting-started-linux" href="/zh/docs/started/workstation/getting-started-linux/">Kubeflow on Linux</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedworkstationgetting-started-macos" href="/zh/docs/started/workstation/getting-started-macos/">Kubeflow on macOS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedworkstationgetting-started-windows" href="/zh/docs/started/workstation/getting-started-windows/">Kubeflow on Windows</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsstartedworkstationminikf-gcp" href="/zh/docs/started/workstation/minikf-gcp/">Deploy using MiniKF on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow组件</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponents">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsmetadata" href="/zh/docs/components/metadata/">Metadata</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/central-dash/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">管理中心UI</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentscentral-dash">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentscentral-dashoverview" href="/zh/docs/components/central-dash/overview/">Central Dashboard</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentscentral-dashregistration-flow" href="/zh/docs/components/central-dash/registration-flow/">Registration Flow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsjupyter" href="/zh/docs/components/jupyter/">Jupyter Notebooks</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/serving/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">模型服务工具</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentsserving">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingoverview" href="/zh/docs/components/serving/overview/">Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingkfserving" href="/zh/docs/components/serving/kfserving/">KFServing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingseldon" href="/zh/docs/components/serving/seldon/">Seldon Core Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingtrtinferenceserver" href="/zh/docs/components/serving/trtinferenceserver/">NVIDIA TensorRT Inference Server</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingtfserving_new" href="/zh/docs/components/serving/tfserving_new/">TensorFlow Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsservingtfbatchpredict" href="/zh/docs/components/serving/tfbatchpredict/">TensorFlow Batch Prediction</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">流水线</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentspipelinespipelines" href="/zh/docs/components/pipelines/pipelines/">Pipelines</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/training/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">训练框架</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="zhdocscomponentstraining">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentstrainingchainer" href="/zh/docs/components/training/chainer/">Chainer Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentstrainingmpi" href="/zh/docs/components/training/mpi/">MPI Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentstrainingmxnet" href="/zh/docs/components/training/mxnet/">MXNet Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentstrainingpytorch" href="/zh/docs/components/training/pytorch/">PyTorch Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-zhdocscomponentstrainingtftraining" href="/zh/docs/components/training/tftraining/">TensorFlow Training (TFJob)</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/hyperparameter-tuning/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">超参数调试</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentshyperparameter-tuning">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentshyperparameter-tuningoverview" href="/zh/docs/components/hyperparameter-tuning/overview/">Introduction to Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentshyperparameter-tuninghyperparameter" href="/zh/docs/components/hyperparameter-tuning/hyperparameter/">Getting started with Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentshyperparameter-tuningexperiment" href="/zh/docs/components/hyperparameter-tuning/experiment/">Running an experiment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/multi-tenancy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">多租户管理</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentsmulti-tenancy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsmulti-tenancyoverview" href="/zh/docs/components/multi-tenancy/overview/">Introduction to Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsmulti-tenancydesign" href="/zh/docs/components/multi-tenancy/design/">Design for Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsmulti-tenancygetting-started" href="/zh/docs/components/multi-tenancy/getting-started/">Getting Started with Multi-user Isolation</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/components/misc/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">其它</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocscomponentsmisc">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocscomponentsmiscnuclio" href="/zh/docs/components/misc/nuclio/">Nuclio functions</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/notebooks/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Jupyter Notebook</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsnotebooks">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookswhy-use-jupyter-notebook" href="/zh/docs/notebooks/why-use-jupyter-notebook/">了解Kubeflow的Jupyter Notebook</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookssetup" href="/zh/docs/notebooks/setup/">设置Notebook</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookscustom-notebook" href="/zh/docs/notebooks/custom-notebook/">创建定制Jupyter镜像</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookssubmit-kubernetes" href="/zh/docs/notebooks/submit-kubernetes/">Submit Kubernetes Resources</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookssubmit-docker-image" href="/zh/docs/notebooks/submit-docker-image/">在GCP上构建Docker镜像</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsnotebookstroubleshoot" href="/zh/docs/notebooks/troubleshoot/">问题解决指南</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">流水线</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinespipelines-quickstart" href="/zh/docs/pipelines/pipelines-quickstart/">流水线快速入门</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/installation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">安装流水线</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinesinstallation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesinstallationoverview" href="/zh/docs/pipelines/installation/overview/">Installation Options for Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesinstallationstandalone-deployment" href="/zh/docs/pipelines/installation/standalone-deployment/">Kubeflow Pipelines Standalone Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/overview/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">了解流水线</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinesoverview">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewpipelines-overview" href="/zh/docs/pipelines/overview/pipelines-overview/">Overview of Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewinterfaces" href="/zh/docs/pipelines/overview/interfaces/">Introduction to the Pipelines Interfaces</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/overview/concepts/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Concepts</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinesoverviewconcepts">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptspipeline" href="/zh/docs/pipelines/overview/concepts/pipeline/">Pipeline</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptscomponent" href="/zh/docs/pipelines/overview/concepts/component/">Component</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsgraph" href="/zh/docs/pipelines/overview/concepts/graph/">Graph</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsexperiment" href="/zh/docs/pipelines/overview/concepts/experiment/">Experiment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsrun" href="/zh/docs/pipelines/overview/concepts/run/">Run and Recurring Run</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsrun-trigger" href="/zh/docs/pipelines/overview/concepts/run-trigger/">Run Trigger</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsstep" href="/zh/docs/pipelines/overview/concepts/step/">Step</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesoverviewconceptsoutput-artifact" href="/zh/docs/pipelines/overview/concepts/output-artifact/">Output Artifact</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/sdk/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">使用SDK构建流水线</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinessdk">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdksdk-overview" href="/zh/docs/pipelines/sdk/sdk-overview/">Introduction to the Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkinstall-sdk" href="/zh/docs/pipelines/sdk/install-sdk/">Install the Kubeflow Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkbuild-component" href="/zh/docs/pipelines/sdk/build-component/">Build Components and Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkcomponent-development" href="/zh/docs/pipelines/sdk/component-development/">Create Reusable Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdklightweight-python-components" href="/zh/docs/pipelines/sdk/lightweight-python-components/">Build Lightweight Python Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkbest-practices" href="/zh/docs/pipelines/sdk/best-practices/">Best Practices for Designing Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkparameters" href="/zh/docs/pipelines/sdk/parameters/">Pipeline Parameters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkpython-based-visualizations" href="/zh/docs/pipelines/sdk/python-based-visualizations/">Python Based Visualizations</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkoutput-viewer" href="/zh/docs/pipelines/sdk/output-viewer/">Visualize Results in the Pipelines UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkpipelines-metrics" href="/zh/docs/pipelines/sdk/pipelines-metrics/">Pipeline Metrics</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkstatic-type-checking" href="/zh/docs/pipelines/sdk/static-type-checking/">DSL Static Type Checking</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkdsl-recursion" href="/zh/docs/pipelines/sdk/dsl-recursion/">DSL Recursion</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkenviroment_variables" href="/zh/docs/pipelines/sdk/enviroment_variables/">Using environment variables in pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkgcp" href="/zh/docs/pipelines/sdk/gcp/">GCP-specific Uses of the SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinessdkmanipulate-resources" href="/zh/docs/pipelines/sdk/manipulate-resources/">Manipulate Kubernetes Resources as Part of a Pipeline</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesupgrade" href="/zh/docs/pipelines/upgrade/">升级与重新安装</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">样例和教程</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinestutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinestutorialsapi-pipelines" href="/zh/docs/pipelines/tutorials/api-pipelines/">Experiment with the Kubeflow Pipelines API</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinestutorialsbuild-pipeline" href="/zh/docs/pipelines/tutorials/build-pipeline/">Experiment with the Pipelines Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinestutorialscloud-tutorials" href="/zh/docs/pipelines/tutorials/cloud-tutorials/">Run a Cloud-specific Pipelines Tutorial</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinestroubleshooting" href="/zh/docs/pipelines/troubleshooting/">可能的问题</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/pipelines/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">参考文档</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocspipelinesreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesreferencecomponent-spec" href="/zh/docs/pipelines/reference/component-spec/">Component Specification</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesreferenceapikubeflow-pipeline-api-spec" href="/zh/docs/pipelines/reference/api/kubeflow-pipeline-api-spec/">Pipelines API Reference</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocspipelinesreferencesdk" href="/zh/docs/pipelines/reference/sdk/"> Pipelines SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairing">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairingfairing-overview" href="/zh/docs/fairing/fairing-overview/">Overview of Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairinginstall-fairing" href="/zh/docs/fairing/install-fairing/">Install Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairingconfigure-fairing" href="/zh/docs/fairing/configure-fairing/">Configure Kubeflow Fairing</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairingazure">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/gcp/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairinggcp">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairinggcpconfigure-gcp" href="/zh/docs/fairing/gcp/configure-gcp/">Configure Kubeflow Fairing with Access to GCP</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/gcp/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">GCP Samples and Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairinggcptutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairinggcptutorialsgcp-local-notebook" href="/zh/docs/fairing/gcp/tutorials/gcp-local-notebook/">Train and Deploy on GCP from a Local Notebook</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairinggcptutorialsgcp-kubeflow-notebook" href="/zh/docs/fairing/gcp/tutorials/gcp-kubeflow-notebook/">Train and Deploy on GCP from a Kubeflow Notebook</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairingtutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairingtutorialsother-tutorials" href="/zh/docs/fairing/tutorials/other-tutorials/">Other Samples and Tutorials</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/fairing/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsfairingreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsfairingreferencesdk" href="/zh/docs/fairing/reference/sdk/"> Kubeflow Fairing SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/aws/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">部署到AWS</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsaws">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/aws/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsawsdeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsdeployinstall-kubeflow" href="/zh/docs/aws/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsdeployuninstall-kubeflow" href="/zh/docs/aws/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawscustomizing-aws" href="/zh/docs/aws/customizing-aws/">Customizing Kubeflow on AWS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsiam-for-sa" href="/zh/docs/aws/iam-for-sa/">AWS IAM Role for Service Account</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawslogging" href="/zh/docs/aws/logging/">Logging</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsprivate-access" href="/zh/docs/aws/private-access/">Private Access</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsauthentication" href="/zh/docs/aws/authentication/">Authentication and Authorization</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawscustom-domain" href="/zh/docs/aws/custom-domain/">Custom Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsstorage" href="/zh/docs/aws/storage/">Storage Options</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawstroubleshooting-aws" href="/zh/docs/aws/troubleshooting-aws/">Troubleshooting Deployments on Amazon EKS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsfeatures" href="/zh/docs/aws/features/">Kubeflow on AWS Features</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsawsaws-e2e" href="/zh/docs/aws/aws-e2e/">End-to-end Kubeflow on AWS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">部署到Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsazure">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/azure/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsazuredeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazuredeployinstall-kubeflow" href="/zh/docs/azure/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazuredeployexisting-cluster" href="/zh/docs/azure/deploy/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazuredeployuninstall-kubeflow" href="/zh/docs/azure/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazureazureendtoend" href="/zh/docs/azure/azureendtoend/">End-to-End Pipeline Example on Azure</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazureauthentication" href="/zh/docs/azure/authentication/">Access Control for Azure Deployment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsazuretroubleshooting-azure" href="/zh/docs/azure/troubleshooting-azure/">Troubleshooting Deployments on Azure AKS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/gke/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">部署到GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsgke">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/gke/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deploying Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsgkedeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeployproject-setup" href="/zh/docs/gke/deploy/project-setup/">Set up a GCP Project</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeployoauth-setup" href="/zh/docs/gke/deploy/oauth-setup/">Set up OAuth for Cloud IAP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeploydeploy-ui" href="/zh/docs/gke/deploy/deploy-ui/">Deploy using UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeploydeploy-cli" href="/zh/docs/gke/deploy/deploy-cli/">Deploy using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeploymonitor-iap-setup" href="/zh/docs/gke/deploy/monitor-iap-setup/">Monitor Cloud IAP Setup</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeploydelete-cli" href="/zh/docs/gke/deploy/delete-cli/">Delete using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeploydelete-ui" href="/zh/docs/gke/deploy/delete-ui/">Delete using GCP Console</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkedeployreasons" href="/zh/docs/gke/deploy/reasons/">Features of Kubeflow on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkeanthos" href="/zh/docs/gke/anthos/">Kubeflow On-premises on Anthos GKE</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/gke/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsgkepipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkepipelinesauthentication-pipelines" href="/zh/docs/gke/pipelines/authentication-pipelines/">Authenticating Pipelines to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkepipelinesupgrade" href="/zh/docs/gke/pipelines/upgrade/">Upgrading and Reinstalling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkepipelinesenable-gpu-and-tpu" href="/zh/docs/gke/pipelines/enable-gpu-and-tpu/">Enabling GPU and TPU</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkepipelinespreemptible" href="/zh/docs/gke/pipelines/preemptible/">Using Preemptible VMs and GPUs on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkecustomizing-gke" href="/zh/docs/gke/customizing-gke/">Customizing Kubeflow on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkecustom-domain" href="/zh/docs/gke/custom-domain/">Using Your Own Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkeauthentication" href="/zh/docs/gke/authentication/">Authenticating Kubeflow to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkecloud-filestore" href="/zh/docs/gke/cloud-filestore/">Using Cloud Filestore</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkeprivate-clusters" href="/zh/docs/gke/private-clusters/">Securing Your Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgketroubleshooting-gke" href="/zh/docs/gke/troubleshooting-gke/">Troubleshooting Deployments on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkegcp-e2e" href="/zh/docs/gke/gcp-e2e/">Tutorial: End-to-end Kubeflow on GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsgkemonitoring" href="/zh/docs/gke/monitoring/">Logging and monitoring</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/ibm/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">部署到IBM Cloud</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsibm">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsibminstall-kubeflow" href="/zh/docs/ibm/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsibmexisting-cluster" href="/zh/docs/ibm/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsibmuninstall-kubeflow" href="/zh/docs/ibm/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/openshift/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">部署到OpenShift</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsopenshift">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsopenshiftinstall-kubeflow" href="/zh/docs/openshift/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsopenshiftuninstall-kubeflow" href="/zh/docs/openshift/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/examples/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">教程、样例与资源</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsexamples">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsexampleskubeflow-samples" href="/zh/docs/examples/kubeflow-samples/">Kubeflow Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsexamplescodelabs-tutorials" href="/zh/docs/examples/codelabs-tutorials/">Codelabs, Workshops, and Tutorials</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsexamplesblog-posts" href="/zh/docs/examples/blog-posts/">Blog Posts</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsexamplesvideos" href="/zh/docs/examples/videos/">Videos</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsexamplesshared-resources" href="/zh/docs/examples/shared-resources/">Shared Resources and Components</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/other-guides/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">更多设置与解决方案</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsother-guides">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/other-guides/virtual-dev/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Virtual Developer Environments</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsother-guidesvirtual-dev">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesvirtual-devgetting-started-multipass" href="/zh/docs/other-guides/virtual-dev/getting-started-multipass/">Microk8s for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesvirtual-devgetting-started-minikf" href="/zh/docs/other-guides/virtual-dev/getting-started-minikf/">MiniKF</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guideskustomize" href="/zh/docs/other-guides/kustomize/">Configuring Kubeflow with kfctl and kustomize</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guideskubeflow-on-multinode-cluster" href="/zh/docs/other-guides/kubeflow-on-multinode-cluster/">Kubeflow On-prem in a Multi-node Kubernetes Cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesusage-reporting" href="/zh/docs/other-guides/usage-reporting/">Usage Reporting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesistio-in-kubeflow" href="/zh/docs/other-guides/istio-in-kubeflow/">Istio Usage in Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesjob-scheduling" href="/zh/docs/other-guides/job-scheduling/">Job Scheduling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidestroubleshooting" href="/zh/docs/other-guides/troubleshooting/">Troubleshooting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidesfreq-ask-questions" href="/zh/docs/other-guides/freq-ask-questions/">Frequently Asked Questions</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsother-guidessupport" href="/zh/docs/other-guides/support/">Support</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/upgrading/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">升级Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsupgrading">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsupgradingupgrade" href="/zh/docs/upgrading/upgrade/">Upgrading a Kubeflow Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">参考</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferenceoverview" href="/zh/docs/reference/overview/">Reference Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferenceversion-policy" href="/zh/docs/reference/version-policy/">Kubeflow Versioning Policies</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferenceimages" href="/zh/docs/reference/images/">Dockerfile Locations</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/katib/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib参考</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencekatib">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/katib/v1alpha3/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib v1alpha3</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencekatibv1alpha3">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencekatibv1alpha3katib" href="/zh/docs/reference/katib/v1alpha3/katib/">Katib</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/notebook/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD参考</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencenotebook">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/notebook/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD V1 Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencenotebookv1">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/pytorchjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob参考</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencepytorchjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/pytorchjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencepytorchjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencepytorchjobv1pytorch" href="/zh/docs/reference/pytorchjob/v1/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/pytorchjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencepytorchjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencepytorchjobv1beta2pytorch" href="/zh/docs/reference/pytorchjob/v1beta2/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/tfjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob参考</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencetfjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/tfjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencetfjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencetfjobv1common" href="/zh/docs/reference/tfjob/v1/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencetfjobv1tensorflow" href="/zh/docs/reference/tfjob/v1/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/zh/docs/reference/tfjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="zhdocsreferencetfjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencetfjobv1beta2common" href="/zh/docs/reference/tfjob/v1beta2/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-zhdocsreferencetfjobv1beta2tensorflow" href="/zh/docs/reference/tfjob/v1beta2/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+
+<a href="https://github.com/huhongjun/website-kubeflow/edit/master/content/zh/docs%5ccomponents%5ctraining%5ctftraining.md" target="_blank"><i class="fa fa-edit fa-fw"></i> 编辑此页</a>
+<a href="https://github.com/huhongjun/website-kubeflow/issues/new?title=TensorFlow%20Training%20%28TFJob%29&amp;body=https://www.kubeflow.org/zh/docs/components/training/tftraining/" target="_blank"><i class="fab fa-github fa-fw"></i> 提交文档问题</a>
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-tfjob">What is TFJob?</a></li>
+    <li><a href="#quick-start">Quick start</a>
+      <ul>
+        <li><a href="#submitting-a-tensorflow-training-job">Submitting a TensorFlow training job</a></li>
+        <li><a href="#running-the-mnist-example">Running the MNist example</a></li>
+        <li><a href="#customizing-the-tfjob">Customizing the TFJob</a></li>
+      </ul>
+    </li>
+    <li><a href="#using-gpus">Using GPUs</a></li>
+    <li><a href="#monitoring-your-job">Monitoring your job</a>
+      <ul>
+        <li><a href="#conditions">Conditions</a></li>
+        <li><a href="#tfreplicastatuses">tfReplicaStatuses</a></li>
+        <li><a href="#events">Events</a></li>
+      </ul>
+    </li>
+    <li><a href="#tensorflow-logs">TensorFlow Logs</a>
+      <ul>
+        <li><a href="#stackdriver-on-gke">Stackdriver on GKE</a></li>
+      </ul>
+    </li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#more-information">More information</a></li>
+  </ul>
+</nav>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/zh/docs/">文档</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/zh/docs/components/">Kubeflow组件</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/zh/docs/components/training/">训练框架</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="http://osmatrix.github.io/zh/docs/components/training/tftraining/">TensorFlow Training (TFJob)</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>TensorFlow Training (TFJob)</h1>
+	<div class="lead">Using TFJob to train a model with TensorFlow</div>
+	<!-- raw HTML omitted -->
+<p>This page describes TFJob for training a machine learning model with TensorFlow.</p>
+<h2 id="what-is-tfjob">What is TFJob?</h2>
+<p>TFJob is a Kubernetes 
+<a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">custom resource</a> that you can use to run TensorFlow training jobs on Kubernetes. The Kubeflow
+implementation of TFJob is in
+<a href="https://github.com/kubeflow/tf-operator"><code>tf-operator</code></a>.</p>
+<p>A TFJob is a resource with a YAML representation like the one below (edit to use the container image and command for your own training code):</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>kubeflow.org/v1<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJob<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">generateName</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tfjob<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">namespace</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>your-user-namespace<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>tfReplicaSpecs<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>PS<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/your-project/your-image<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>command<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- -m<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- trainer.task<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --training_steps=<span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>Worker<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/your-project/your-image<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>command<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- -m<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- trainer.task<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --training_steps=<span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>If you want to give your TFJob pods access to credentials secrets, such as the GCP credentials automatically created when you do a GKE-based Kubeflow installation, you can mount and use a secret like this:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>kubeflow.org/v1<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJob<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">generateName</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tfjob<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">namespace</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>your-user-namespace<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>tfReplicaSpecs<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>PS<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/your-project/your-image<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>command<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- -m<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- trainer.task<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --training_steps=<span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>env<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>GOOGLE_APPLICATION_CREDENTIALS<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">value</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;/etc/secrets/user-gcp-sa.json&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>volumeMounts<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>sa<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">mountPath</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;/etc/secrets&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">readOnly</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>volumes<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>sa<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>secret<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">secretName</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>user-gcp-sa<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>Worker<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/your-project/your-image<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>command<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- -m<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- trainer.task<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>- --training_steps=<span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>env<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>GOOGLE_APPLICATION_CREDENTIALS<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">value</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;/etc/secrets/user-gcp-sa.json&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>volumeMounts<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>sa<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">mountPath</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;/etc/secrets&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">readOnly</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>volumes<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>sa<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>secret<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">secretName</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>user-gcp-sa<span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>If you are not familiar with Kubernetes resources please refer to the page <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/">Understanding Kubernetes Objects</a>.</p>
+<p>What makes TFJob different from built in <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">controllers</a> is the TFJob spec is designed to manage 
+<a href="https://www.tensorflow.org/deploy/distributed">distributed TensorFlow training jobs</a>.</p>
+<p>A distributed TensorFlow job typically contains 0 or more of the following processes</p>
+<ul>
+<li><strong>Chief</strong> The chief is responsible for orchestrating training and performing tasks
+like checkpointing the model.</li>
+<li><strong>Ps</strong> The ps are parameter servers; these servers provide a distributed data store
+for the model parameters.</li>
+<li><strong>Worker</strong> The workers do the actual work of training the model. In some cases, 
+worker 0 might also act as the chief.</li>
+<li><strong>Evaluator</strong> The evaluators can be used to compute evaluation metrics as the model
+is trained.</li>
+</ul>
+<p>The field <strong>tfReplicaSpecs</strong> in TFJob spec contains a map from the type of
+replica (as listed above) to the <strong>TFReplicaSpec</strong> for that replica. <strong>TFReplicaSpec</strong>
+consists of 3 fields</p>
+<ul>
+<li>
+<p><strong>replicas</strong> The number of replicas of this type to spawn for this TFJob.</p>
+</li>
+<li>
+<p><strong>template</strong> A <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#podtemplatespec-v1-core">PodTemplateSpec</a> that describes the pod to create
+for each replica.</p>
+<ul>
+<li><strong>The pod must include a container named <code>tensorflow</code></strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>restartPolicy</strong> Determines whether pods will be restarted when they exit. The
+allowed values are as follows</p>
+<ul>
+<li>
+<p><strong>Always</strong> means the pod will always be restarted. This policy is good 
+for parameter servers since they never exit and should always be restarted
+in the event of failure.</p>
+</li>
+<li>
+<p><strong>OnFailure</strong> means the pod will be restarted if the pod exits due to failure.</p>
+<ul>
+<li>A non-zero exit code indicates a failure.</li>
+<li>An exit code of 0 indicates success and the pod will not be restarted.</li>
+<li>This policy is good for chief and workers.</li>
+</ul>
+</li>
+<li>
+<p><strong>ExitCode</strong> means the restart behavior is dependent on the exit code of
+the <code>tensorflow</code> container as follows:</p>
+<ul>
+<li>
+<p>Exit code <code>0</code> indicates the process completed successfully and will 
+not be restarted.</p>
+</li>
+<li>
+<p>The following exit codes indicate a permanent error and the container 
+will not be restarted:</p>
+<ul>
+<li><code>1</code>: general errors</li>
+<li><code>2</code>: misuse of shell builtins</li>
+<li><code>126</code>: command invoked cannot execute</li>
+<li><code>127</code>: command not found</li>
+<li><code>128</code>: invalid argument to exit</li>
+<li><code>139</code>: container terminated by SIGSEGV (invalid memory reference)</li>
+</ul>
+</li>
+<li>
+<p>The following exit codes indicate a retryable error and the container 
+will be restarted:</p>
+<ul>
+<li><code>130</code>: container terminated by SIGINT (keyboard Control-C)</li>
+<li><code>137</code>: container received a SIGKILL</li>
+<li><code>143</code>: container received a SIGTERM</li>
+</ul>
+</li>
+<li>
+<p>Exit code <code>138</code> corresponds to SIGUSR1 and is reserved for 
+user-specified retryable errors.</p>
+</li>
+<li>
+<p>Other exit codes are undefined and there is no guarantee about the
+behavior.</p>
+</li>
+</ul>
+<p>For background information on exit codes, see the <a href="https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html">GNU guide to 
+termination signals</a>
+and the  <a href="http://tldp.org/LDP/abs/html/exitcodes.html">Linux Documentation 
+Project</a>.</p>
+</li>
+<li>
+<p><strong>Never</strong> means pods that terminate will never be restarted. This policy
+should rarely be used because Kubernetes will terminate pods for any number
+of reasons (e.g. node becomes unhealthy) and this will prevent the job from
+recovering.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="submitting-a-tensorflow-training-job">Submitting a TensorFlow training job</h3>
+<p><strong>Note:</strong> Before submitting a training job, you should have <a href="#deploy-kubeflow">deployed kubeflow to your cluster</a>. Doing so ensures that
+the <a href="https://github.com/kubeflow/tf-operator"><code>TFJob</code> custom resource</a> is available when you submit the training job.</p>
+<h3 id="running-the-mnist-example">Running the MNist example</h3>
+<p>Kubeflow ships with an <a href="https://github.com/kubeflow/tf-operator/tree/master/examples/v1/mnist_with_summaries">example</a> suitable for running
+a simple <a href="http://yann.lecun.com/exdb/mnist/">MNist model</a>.</p>
+<pre><code>git clone https://github.com/kubeflow/tf-operator
+cd tf-operator/examples/v1/mnist_with_summaries
+# Deploy the event volume
+kubectl apply -f tfevent-volume
+# Submit the TFJob
+kubectl apply -f tf_job_mnist.yaml
+</code></pre><p>Monitor the job (see the <a href="#monitoring-your-job">detailed guide below</a>):</p>
+<pre><code>kubectl -n kubeflow get tfjob mnist -o yaml
+</code></pre><p>Delete it</p>
+<pre><code>kubectl -n kubeflow delete tfjob mnist
+</code></pre><h3 id="customizing-the-tfjob">Customizing the TFJob</h3>
+<p>Typically you can change the following values in the TFJob yaml file:</p>
+<ol>
+<li>
+<p>Change the image to point to the docker image containing your code</p>
+</li>
+<li>
+<p>Change the number and types of replicas</p>
+</li>
+<li>
+<p>Change the resources (requests and limits) assigned to each resource</p>
+</li>
+<li>
+<p>Set any environment variables</p>
+<ul>
+<li>For example, you might need to configure various environment variables to talk to datastores like GCS or S3</li>
+</ul>
+</li>
+<li>
+<p>Attach PVs if you want to use PVs for storage.</p>
+</li>
+</ol>
+<h2 id="using-gpus">Using GPUs</h2>
+<p>To use GPUs your cluster must be configured to use GPUs.</p>
+<ul>
+<li>Nodes must have GPUs attached.</li>
+<li>The Kubernetes cluster must recognize the <code>nvidia.com/gpu</code> resource type.</li>
+<li>GPU drivers must be installed on the cluster.</li>
+<li>For more information:
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/">Kubernetes instructions for scheduling GPUs</a></li>
+<li><a href="https://cloud.google.com/kubernetes-engine/docs/concepts/gpus">GKE instructions</a></li>
+<li><a href="https://docs.aws.amazon.com/eks/latest/userguide/gpu-ami.html">EKS instructions</a></li>
+</ul>
+</li>
+</ul>
+<p>To attach GPUs specify the GPU resource on the container in the replicas
+that should contain the GPUs; for example.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;kubeflow.org/v1&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;TFJob&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;tf-smoke-gpu&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>tfReplicaSpecs<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>PS<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">creationTimestamp</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">null</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- args<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- tf_cnn_benchmarks.py<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --model=resnet50<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --variable_update=parameter_server<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --flush_stdout=<span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --num_gpus=<span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --local_parameter_device=cpu<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --device=cpu<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --data_format=NHWC<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/kubeflow/tf-benchmarks-cpu<span style="color:#000;font-weight:bold">:</span>v20171202-bdab599-dirty-284af3<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>ports<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">containerPort</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">2222</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tfjob-port<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>resources<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>limits<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">                </span><span style="color:#204a87;font-weight:bold">cpu</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;1&#39;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">workingDir</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/opt/tf-benchmarks/scripts/tf_cnn_benchmarks<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>Worker<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">creationTimestamp</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">null</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- args<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- tf_cnn_benchmarks.py<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">32</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --model=resnet50<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --variable_update=parameter_server<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --flush_stdout=<span style="color:#204a87;font-weight:bold">true</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --num_gpus=<span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --local_parameter_device=cpu<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --device=gpu<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --data_format=NHWC<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/kubeflow/tf-benchmarks-gpu<span style="color:#000;font-weight:bold">:</span>v20171202-bdab599-dirty-284af3<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>ports<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">containerPort</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">2222</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tfjob-port<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>resources<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span>limits<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">                </span><span style="color:#204a87;font-weight:bold">nvidia.com/gpu</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">workingDir</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/opt/tf-benchmarks/scripts/tf_cnn_benchmarks<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>OnFailure<span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><p>Follow TensorFlow&rsquo;s <a href="https://www.tensorflow.org/guide/gpu">instructions</a>
+for using GPUs.</p>
+<h2 id="monitoring-your-job">Monitoring your job</h2>
+<p>To get the status of your job</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl get -o yaml tfjobs <span style="color:#4e9a06">${</span><span style="color:#000">JOB</span><span style="color:#4e9a06">}</span>
+</code></pre></div><p>Here is sample output for an example job</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>kubeflow.org/v1<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJob<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>metadata<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>annotations<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">kubectl.kubernetes.io/last-applied-configuration</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#8f5902;font-style:italic">|
+</span><span style="color:#8f5902;font-style:italic">      {&#34;apiVersion&#34;:&#34;kubeflow.org/v1&#34;,&#34;kind&#34;:&#34;TFJob&#34;,&#34;metadata&#34;:{&#34;annotations&#34;:{},&#34;name&#34;:&#34;mnist&#34;,&#34;namespace&#34;:&#34;kubeflow&#34;},&#34;spec&#34;:{&#34;cleanPodPolicy&#34;:&#34;None&#34;,&#34;tfReplicaSpecs&#34;:{&#34;Worker&#34;:{&#34;replicas&#34;:1,&#34;restartPolicy&#34;:&#34;Never&#34;,&#34;template&#34;:{&#34;spec&#34;:{&#34;containers&#34;:[{&#34;command&#34;:[&#34;python&#34;,&#34;/var/tf_mnist/mnist_with_summaries.py&#34;,&#34;--log_dir=/train&#34;,&#34;--learning_rate=0.01&#34;,&#34;--batch_size=150&#34;],&#34;image&#34;:&#34;gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0&#34;,&#34;name&#34;:&#34;tensorflow&#34;,&#34;volumeMounts&#34;:[{&#34;mountPath&#34;:&#34;/train&#34;,&#34;name&#34;:&#34;training&#34;}]}],&#34;volumes&#34;:[{&#34;name&#34;:&#34;training&#34;,&#34;persistentVolumeClaim&#34;:{&#34;claimName&#34;:&#34;tfevent-volume&#34;}}]}}}}}}</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">creationTimestamp</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:44:38Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">generation</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>mnist<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">namespace</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>your-user-namespace<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">resourceVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;10429537&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">selfLink</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/apis/kubeflow.org/v1/namespaces/kubeflow/tfjobs/mnist<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">uid</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>a77b9fb4-a773<span style="color:#0000cf;font-weight:bold">-11e9</span>-91fe-42010a960094<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">cleanPodPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>None<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>tfReplicaSpecs<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>Worker<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">replicas</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">restartPolicy</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>Never<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span>template<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">        </span>spec<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>containers<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- command<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- python<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- /var/tf_mnist/mnist_with_summaries.py<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --log_dir=/train<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --learning_rate=<span style="color:#0000cf;font-weight:bold">0.01</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- --batch_size=<span style="color:#0000cf;font-weight:bold">150</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>gcr.io/kubeflow-ci/tf-mnist-with-summaries<span style="color:#000;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">1.0</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tensorflow<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>volumeMounts<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>- <span style="color:#204a87;font-weight:bold">mountPath</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>/train<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>training<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>volumes<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">          </span>- <span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>training<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">            </span>persistentVolumeClaim<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">              </span><span style="color:#204a87;font-weight:bold">claimName</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>tfevent-volume<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline"></span>status<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">completionTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:45:23Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>conditions<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">lastTransitionTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:44:38Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">lastUpdateTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:44:38Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">message</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJob<span style="color:#f8f8f8;text-decoration:underline"> </span>mnist<span style="color:#f8f8f8;text-decoration:underline"> </span>is<span style="color:#f8f8f8;text-decoration:underline"> </span>created.<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">reason</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJobCreated<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">status</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;True&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">type</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>Created<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">lastTransitionTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:45:20Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">lastUpdateTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:45:20Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">message</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJob<span style="color:#f8f8f8;text-decoration:underline"> </span>mnist<span style="color:#f8f8f8;text-decoration:underline"> </span>is<span style="color:#f8f8f8;text-decoration:underline"> </span>running.<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">reason</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>TFJobRunning<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">status</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;True&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">type</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span>Running<span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span>replicaStatuses<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">    </span>Worker<span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">      </span><span style="color:#204a87;font-weight:bold">running</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">startTime</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#34;2019-07-16T02:44:38Z&#34;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></code></pre></div><h3 id="conditions">Conditions</h3>
+<p>A TFJob has a TFJobStatus, which has an array of TFJobConditions through which the TFJob has or has not passed. Each element of the TFJobCondition array has six possible fields:</p>
+<ul>
+<li>The <strong>lastUpdateTime</strong> field provides the last time this condition was updated.</li>
+<li>The <strong>lastTransitionTime</strong> field provides the last time the condition transitioned from one status to another.</li>
+<li>The <strong>message</strong> field is a human readable message indicating details about the transition.</li>
+<li>The <strong>reason</strong> field is a unique, one-word, CamelCase reason for the condition&rsquo;s
+last transition.</li>
+<li>The <strong>status</strong> field is a string with possible values &ldquo;True&rdquo;, &ldquo;False&rdquo;, and &ldquo;Unknown&rdquo;.</li>
+<li>The <strong>type</strong> field is a string with the following possible values:
+<ul>
+<li><strong>TFJobCreated</strong> means the tfjob has been accepted by the system,
+but one or more of the pods/services has not been started.</li>
+<li><strong>TFJobRunning</strong> means all sub-resources (e.g. services/pods) of this TFJob
+have been successfully scheduled and launched and the job is running.</li>
+<li><strong>TFJobRestarting</strong> means one or more sub-resources (e.g. services/pods) 
+of this TFJob had a problem and is being restarted.</li>
+<li><strong>TFJobSucceeded</strong> means the job completed successfully.</li>
+<li><strong>TFJobFailed</strong> means the job has failed.</li>
+</ul>
+</li>
+</ul>
+<p>Success or failure of a job is determined as follows</p>
+<ul>
+<li>If a job has a <strong>chief</strong> success or failure is determined by the status
+of the chief.</li>
+<li>If a job has no chief success or failure is determined by the workers.</li>
+<li>In both cases the TFJob succeeds if the process being monitored exits
+with exit code 0.</li>
+<li>In the case of non-zero exit code the behavior is determined by the restartPolicy
+for the replica.</li>
+<li>If the restartPolicy allows for restarts then the process will just be restarted and the TFJob will continue to execute.
+<ul>
+<li>For the restartPolicy ExitCode the behavior is exit code dependent.</li>
+<li>If the restartPolicy doesn&rsquo;t allow restarts a non-zero exit code is considered
+a permanent failure and the job is marked failed.</li>
+</ul>
+</li>
+</ul>
+<h3 id="tfreplicastatuses">tfReplicaStatuses</h3>
+<p>tfReplicaStatuses provides a map indicating the number of pods for each
+replica in a given state. There are three possible states</p>
+<ul>
+<li><strong>Active</strong> is the number of currently running pods.</li>
+<li><strong>Succeeded</strong> is the number of pods that completed successfully.</li>
+<li><strong>Failed</strong> is the number of pods that completed with an error.</li>
+</ul>
+<h3 id="events">Events</h3>
+<p>During execution, TFJob will emit events to indicate whats happening such
+as the creation/deletion of pods and services. Kubernetes doesn&rsquo;t retain
+events older than 1 hour by default. To see recent events for a job run</p>
+<pre><code>kubectl describe tfjobs ${JOB}
+</code></pre><p>which will produce output like</p>
+<pre><code>Name:         mnist
+Namespace:    kubeflow
+Labels:       &lt;none&gt;
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {&quot;apiVersion&quot;:&quot;kubeflow.org/v1&quot;,&quot;kind&quot;:&quot;TFJob&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;mnist&quot;,&quot;namespace&quot;:&quot;kubeflow&quot;},&quot;spec&quot;:{&quot;cleanPodPolicy...
+API Version:  kubeflow.org/v1
+Kind:         TFJob
+Metadata:
+  Creation Timestamp:  2019-07-16T02:44:38Z
+  Generation:          1
+  Resource Version:    10429537
+  Self Link:           /apis/kubeflow.org/v1/namespaces/kubeflow/tfjobs/mnist
+  UID:                 a77b9fb4-a773-11e9-91fe-42010a960094
+Spec:
+  Clean Pod Policy:  None
+  Tf Replica Specs:
+    Worker:
+      Replicas:        1
+      Restart Policy:  Never
+      Template:
+        Spec:
+          Containers:
+            Command:
+              python
+              /var/tf_mnist/mnist_with_summaries.py
+              --log_dir=/train
+              --learning_rate=0.01
+              --batch_size=150
+            Image:  gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+            Name:   tensorflow
+            Volume Mounts:
+              Mount Path:  /train
+              Name:        training
+          Volumes:
+            Name:  training
+            Persistent Volume Claim:
+              Claim Name:  tfevent-volume
+Status:
+  Completion Time:  2019-07-16T02:45:23Z
+  Conditions:
+    Last Transition Time:  2019-07-16T02:44:38Z
+    Last Update Time:      2019-07-16T02:44:38Z
+    Message:               TFJob mnist is created.
+    Reason:                TFJobCreated
+    Status:                True
+    Type:                  Created
+    Last Transition Time:  2019-07-16T02:45:20Z
+    Last Update Time:      2019-07-16T02:45:20Z
+    Message:               TFJob mnist is running.
+    Reason:                TFJobRunning
+    Status:                True
+    Type:                  Running
+  Replica Statuses:
+    Worker:
+      Running:  1
+  Start Time:  2019-07-16T02:44:38Z
+Events:
+  Type    Reason                   Age    From         Message
+  ----    ------                   ----   ----         -------
+  Normal  SuccessfulCreatePod      8m6s   tf-operator  Created pod: mnist-worker-0
+  Normal  SuccessfulCreateService  8m6s   tf-operator  Created service: mnist-worker-0
+</code></pre><p>Here the events indicate that the pods and services were successfully created.</p>
+<h2 id="tensorflow-logs">TensorFlow Logs</h2>
+<p>Logging follows standard K8s logging practices.</p>
+<p>You can use kubectl to get standard output/error for any pods 
+that haven&rsquo;t been <strong>deleted</strong>.</p>
+<p>First find the pod created by the job controller for the replica of
+interest. Pods will be named</p>
+<pre><code>${JOBNAME}-${REPLICA-TYPE}-${INDEX}
+</code></pre><p>Once you&rsquo;ve identified your pod you can get the logs using kubectl.</p>
+<pre><code>kubectl logs ${PODNAME}
+</code></pre><p>The <strong>CleanPodPolicy</strong> in the TFJob spec controls deletion of pods when a job terminates. 
+The policy can be one of the following values</p>
+<ul>
+<li>The <strong>Running</strong> policy means that only pods still running when a job completes 
+(e.g. parameter servers) will be deleted immediately; completed pods will
+not be deleted so that the logs will be preserved. This is the default value.</li>
+<li>The <strong>All</strong> policy means all pods even completed pods will be deleted immediately
+when the job finishes.</li>
+<li>The <strong>None</strong> policy means that no pods will be deleted when the job completes.</li>
+</ul>
+<p>If your cluster takes advantage of Kubernetes
+<a href="https://kubernetes.io/docs/concepts/cluster-administration/logging/">cluster logging</a>
+then your logs may also be shipped to an appropriate data store for
+further analysis.</p>
+<h3 id="stackdriver-on-gke">Stackdriver on GKE</h3>
+<p>See the guide to <a href="/docs/gke/monitoring/">logging and monitoring</a> for 
+instructions on getting logs using Stackdriver.</p>
+<p>As described in the guide to 
+<a href="https://www.kubeflow.org/docs/gke/monitoring/#filter-with-labels">logging and monitoring</a>,
+it&rsquo;s possible to fetch the logs for a particular replica based on pod labels.</p>
+<p>Using the Stackdriver UI you can use a query like</p>
+<pre><code>resource.type=&quot;k8s_container&quot;
+resource.labels.cluster_name=&quot;${CLUSTER}&quot;
+metadata.userLabels.tf_job_name=&quot;${JOB_NAME}&quot;
+metadata.userLabels.tf-replica-type=&quot;${TYPE}&quot;
+metadata.userLabels.tf-replica-index=&quot;${INDEX}&quot;
+</code></pre><p>Alternatively using gcloud</p>
+<pre><code>QUERY=&quot;resource.type=\&quot;k8s_container\&quot; &quot;
+QUERY=&quot;${QUERY} resource.labels.cluster_name=\&quot;${CLUSTER}\&quot; &quot;
+QUERY=&quot;${QUERY} metadata.userLabels.tf_job_name=\&quot;${JOB_NAME}\&quot; &quot;
+QUERY=&quot;${QUERY} metadata.userLabels.tf-replica-type=\&quot;${TYPE}\&quot; &quot;
+QUERY=&quot;${QUERY} metadata.userLabels.tf-replica-index=\&quot;${INDEX}\&quot; &quot;
+gcloud --project=${PROJECT} logging read  \
+     --freshness=24h \
+     --order asc  ${QUERY}        
+</code></pre><h2 id="troubleshooting">Troubleshooting</h2>
+<p>Here are some steps to follow to troubleshoot your job</p>
+<ol>
+<li>
+<p>Is a status present for your job? Run the command</p>
+<pre><code>kubectl -n ${USER_NAMESPACE} get tfjobs -o yaml ${JOB_NAME}
+</code></pre><ul>
+<li>
+<p><strong>USER_NAMESPACE</strong> is the namespace created for your user profile.</p>
+</li>
+<li>
+<p>If the resulting output doesn&rsquo;t include a status for your job then this typically
+indicates the job spec is invalid.</p>
+</li>
+<li>
+<p>If the TFJob spec is invalid there should be a log message in the tf operator logs</p>
+<pre><code>kubectl -n ${KUBEFLOW_NAMESPACE} logs `kubectl get pods --selector=name=tf-job-operator -o jsonpath='{.items[0].metadata.name}'` 
+</code></pre><ul>
+<li><strong>KUBEFLOW_NAMESPACE</strong> Is the namespace you deployed the TFJob operator in.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Check the events for your job to see if the pods were created</p>
+<ul>
+<li>
+<p>There are a number of ways to get the events; if your job is less than <strong>1 hour old</strong>
+then you can do</p>
+<pre><code>kubectl -n ${USER_NAMESPACE} describe tfjobs -o yaml ${JOB_NAME}
+</code></pre><p>`</p>
+</li>
+<li>
+<p>The bottom of the output should include a list of events emitted by the job; e.g.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"></code></pre></div></li>
+</ul>
+</li>
+</ol>
+<p>Events:
+Type     Reason                          Age                From         Message</p>
+<hr>
+<p>Warning  SettedPodTemplateRestartPolicy  19s (x2 over 19s)  tf-operator  Restart policy in pod template will be overwritten by restart policy in replica spec
+Normal   SuccessfulCreatePod             19s                tf-operator  Created pod: tfjob2-worker-0
+Normal   SuccessfulCreateService         19s                tf-operator  Created service: tfjob2-worker-0
+Normal   SuccessfulCreatePod             19s                tf-operator  Created pod: tfjob2-ps-0
+Normal   SuccessfulCreateService         19s                tf-operator  Created service: tfjob2-ps-0
+```</p>
+<pre><code>* Kubernetes only preserves events for **1 hour** (see [kubernetes/kubernetes#52521](https://github.com/kubernetes/kubernetes/issues/52521))
+
+  * Depending on your cluster setup events might be persisted to external storage and accessible for longer periods
+  * On GKE events are persisted in stackdriver and can be accessed using the instructions in the previous section.
+* If the pods and services aren't being created then this suggests the TFJob isn't being processed; common causes are
+
+  * The TFJob spec is invalid (see above)
+  * The TFJob operator isn't running
+</code></pre>
+<ol>
+<li>
+<p>Check the events for the pods to ensure they are scheduled.</p>
+<ul>
+<li>
+<p>There are a number of ways to get the events; if your pod is less than <strong>1 hour old</strong>
+then you can do</p>
+<pre><code>```
+kubectl -n ${USER_NAMESPACE} describe pods ${POD_NAME}
+```
+</code></pre>
+</li>
+<li>
+<p>The bottom of the output should contain events like the following</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"></code></pre></div></li>
+</ul>
+</li>
+</ol>
+<p>Events:
+Type    Reason                 Age   From                                                  Message</p>
+<hr>
+<p>Normal  Scheduled              18s   default-scheduler                                     Successfully assigned tfjob2-ps-0 to gke-jl-kf-v0-2-2-default-pool-347936c1-1qkt
+Normal  SuccessfulMountVolume  17s   kubelet, gke-jl-kf-v0-2-2-default-pool-347936c1-1qkt  MountVolume.SetUp succeeded for volume &ldquo;default-token-h8rnv&rdquo;
+Normal  Pulled                 17s   kubelet, gke-jl-kf-v0-2-2-default-pool-347936c1-1qkt  Container image &ldquo;gcr.io/kubeflow/tf-benchmarks-cpu:v20171202-bdab599-dirty-284af3&rdquo; already present on machine
+Normal  Created                17s   kubelet, gke-jl-kf-v0-2-2-default-pool-347936c1-1qkt  Created container
+Normal  Started                16s   kubelet, gke-jl-kf-v0-2-2-default-pool-347936c1-1qkt  Started container
+```</p>
+<pre><code> * Some common problems that can prevent a container from starting are
+   * Insufficient resources to schedule the pod
+   * The pod tries to mount a volume (or secret) that doesn't exist or is unavailable
+   * The docker image doesn't exist or can't be accessed (e.g due to permission issues)
+</code></pre>
+<ol>
+<li>If the containers start; check the logs of the containers following the instructions
+in the previous section.</li>
+</ol>
+<h2 id="more-information">More information</h2>
+<ul>
+<li>Explore the <a href="/docs/reference#tfjob">TFJob reference documentation</a>.</li>
+<li>See how to <a href="/docs/use-cases/job-scheduling">run a job with gang-scheduling</a>.</li>
+</ul>
+
+	
+		<style>
+  .feedback--answer {
+    display: inline-block;
+  }
+  .feedback--answer-no {
+    margin-left: 1em;
+  }
+  .feedback--response {
+    display: none;
+    margin-top: 1em;
+  }
+  .feedback--response__visible {
+    display: block;
+  }
+</style>
+<h2 class="feedback--title">Feedback</h2>
+<p class="feedback--question">Was this page helpful?</p>
+<button class="feedback--answer feedback--answer-yes">Yes</button>
+<button class="feedback--answer feedback--answer-no">No</button>
+<p class="feedback--response feedback--response-yes">
+  Glad to hear it! Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<p class="feedback--response feedback--response-no">
+  Sorry to hear that. Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<script>
+  const yesButton = document.querySelector('.feedback--answer-yes');
+  const noButton = document.querySelector('.feedback--answer-no');
+  const yesResponse = document.querySelector('.feedback--response-yes');
+  const noResponse = document.querySelector('.feedback--response-no');
+  const disableButtons = () => {
+    yesButton.disabled = true;
+    noButton.disabled = true;
+  };
+  const sendFeedback = (value) => {
+    if (typeof ga !== 'function') return;
+    const args = {
+      command: 'send',
+      hitType: 'event',
+      category: 'Helpful',
+      action: 'click',
+      label: window.location.pathname,
+      value: value
+    };
+    ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+  };
+  yesButton.addEventListener('click', () => {
+    yesResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(1);
+  });
+  noButton.addEventListener('click', () => {
+    noResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(0);
+  });
+</script>
+
+		<br />
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">最后修改 10.03.2020: <a  href="https://github.com/huhongjun/website-kubeflow/commit/6c961064bf65f15cd2dbada826c963310ee25fc2">content i18n for zh (6c961064)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Twitter" aria-label="Twitter">
+    <a class="text-white" target="_blank" href="https://twitter.com/kubeflow">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/kubeflow/kubeflow">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://kubeflow.slack.com/join/shared_invite/enQtNDg5MTM4NTQyNjczLTdkNTVhMjg1ZTExOWI0N2QyYTQ2MTIzNTJjMWRiOTFjOGRlZWEzODc1NzMwNTMwM2EzNjY1MTFhODczNjk4MTk">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Mailing list" aria-label="Mailing list">
+    <a class="text-white" target="_blank" href="https://groups.google.com/forum/#!forum/kubeflow-discuss">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Calendar" aria-label="Calendar">
+    <a class="text-white" target="_blank" href="https://calendar.google.com/calendar/embed?src=kubeflow.org_7l5vnbn8suj2se10sen81d9428%40group.calendar.google.com&amp;ctz=America%2FLos_Angeles">
+      <i class="fa fa-calendar"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">Copyright &copy; 2018-2020 The Kubeflow Authors. <br>Documentation Distributed under CC BY 4.0</small>
+        <small class="ml-1"><a href="https://policies.google.com/privacy" target="_blank">隐私政策</a></small>
+        
+          <p class="mt-2"><a href="/zh/docs/about/">关于</a></p>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script src="/js/main.min.5131af9caf0f09b490ccd29511e63feec338dd3cf4fea64957b950d03f865074.js" integrity="sha256-UTGvnK8PCbSQzNKVEeY/7sM43Tz0/qZJV7lQ0D&#43;GUHQ=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>

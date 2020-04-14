@@ -1,0 +1,315 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Installing Pipelines</title>
+    <link>http://osmatrix.github.io/docs/pipelines/installation/</link>
+    <description>Recent content in Installing Pipelines on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/pipelines/installation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Installation Options for Kubeflow Pipelines</title>
+      <link>http://osmatrix.github.io/docs/pipelines/installation/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/pipelines/installation/overview/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Kubeflow Pipelines offers a few installation options.
+This page describes the options and the features available
+with each option:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;a href=&#34;#standalone&#34;&gt;standalone&lt;/a&gt; Kubeflow Pipelines deployment.&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines as &lt;a href=&#34;#full-kubeflow&#34;&gt;part of a full Kubeflow deployment&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Alpha&lt;/strong&gt;: &lt;a href=&#34;#marketplace&#34;&gt;GCP Hosted ML Pipelines&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;kubeflow-pipelines-standalone&#34;&gt;Kubeflow Pipelines Standalone&lt;/h2&gt;
+&lt;p&gt;Use this option to deploy Kubeflow Pipelines to an on-premises or cloud
+Kubernetes cluster, without the other components of Kubeflow.
+To deploy Kubeflow Pipelines Standalone, you use kustomize manifests only.
+This process makes it simpler to customize your deployment and to integrate
+Kubeflow Pipelines into an existing Kubernetes cluster.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Installation guide&lt;/dt&gt;
+&lt;dd&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/standalone-deployment/&#34;&gt;Kubeflow Pipelines Standalone deployment 
+guide&lt;/a&gt;&lt;/dd&gt;
+&lt;dt&gt;Interfaces&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;Kubeflow Pipelines UI&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines SDK&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Notes on specific features&lt;/dt&gt;
+&lt;dd&gt;After deployment, your Kubernetes cluster contains Kubeflow Pipelines only. 
+It does not include the other Kubeflow components. 
+For example, to use a Jupyter Notebook, you must use a local notebook or a 
+hosted notebook in a cloud service such as the &lt;a href=&#34;https://cloud.google.com/ai-platform/notebooks/docs/&#34;&gt;AI Platform 
+Notebooks&lt;/a&gt;.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;full-kubeflow-deployment&#34;&gt;Full Kubeflow deployment&lt;/h2&gt;
+&lt;p&gt;Use this option to deploy Kubeflow Pipelines to your local machine, on-premises, 
+or to a cloud, as part of a full Kubeflow installation.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Installation guide&lt;/dt&gt;
+&lt;dd&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;Kubeflow installation guide&lt;/a&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;Interfaces
+:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Kubeflow UI&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines UI within or outside the Kubeflow UI&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines SDK&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines API&lt;/li&gt;
+&lt;li&gt;Other Kubeflow APIs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;dl&gt;
+&lt;dt&gt;Notes on specific features&lt;/dt&gt;
+&lt;dd&gt;After deployment, your Kubernetes cluster includes all the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/components/&#34;&gt;Kubeflow components&lt;/a&gt;.
+For example, you can use the Jupyter notebook services 
+&lt;a href=&#34;http://osmatrix.github.io/docs/notebooks/&#34;&gt;deployed with Kubeflow&lt;/a&gt; to create one or more notebook 
+servers in your Kubeflow cluster.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;gcp-hosted-ml-pipelines&#34;&gt;GCP Hosted ML Pipelines&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Alpha release&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Use this option to deploy Kubeflow Pipelines to Google Kubernetes Engine (GKE)
+from GCP Marketplace. You can deploy Kubeflow Pipelines to an existing or new 
+GKE cluster and manage your cluster within GCP.&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Installation guide&lt;/dt&gt;
+&lt;dd&gt;&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/gcp_marketplace/guide.md&#34;&gt;Deploy Kubeflow Pipelines from Google Cloud
+Marketplace&lt;/a&gt;&lt;/dd&gt;
+&lt;dt&gt;Interfaces&lt;/dt&gt;
+&lt;dd&gt;&lt;ul&gt;
+&lt;li&gt;GCP Console for managing the Kubeflow Pipelines cluster and other GCP 
+services.&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines UI via the &lt;strong&gt;Open Pipelines Dashboard&lt;/strong&gt; link in the 
+GCP Console&lt;/li&gt;
+&lt;li&gt;Kubeflow Pipelines SDK in Cloud Notebooks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Notes on specific features&lt;/dt&gt;
+&lt;dd&gt;After deployment, your Kubernetes cluster contains Kubeflow Pipelines only. 
+It does not include the other Kubeflow components. 
+For example, to use a Jupyter Notebook, you can use &lt;a href=&#34;https://cloud.google.com/ai-platform/notebooks/docs/&#34;&gt;AI Platform 
+Notebooks&lt;/a&gt;.&lt;/dd&gt;
+&lt;/dl&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Kubeflow Pipelines Standalone Deployment</title>
+      <link>http://osmatrix.github.io/docs/pipelines/installation/standalone-deployment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/pipelines/installation/standalone-deployment/</guid>
+      <description>
+        
+        
+        &lt;p&gt;As an alternative to deploying Kubeflow Pipelines (KFP) as part of the
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/#installing-kubeflow&#34;&gt;Kubeflow deployment&lt;/a&gt;, you also have a choice
+to deploy only Kubeflow Pipelines. Follow the instructions below to deploy
+Kubeflow Pipelines standalone using the supplied kustomize manifests.&lt;/p&gt;
+&lt;p&gt;You should be familiar with &lt;a href=&#34;https://kubernetes.io/docs/home/&#34;&gt;Kubernetes&lt;/a&gt;,
+&lt;a href=&#34;https://kubernetes.io/docs/reference/kubectl/overview/&#34;&gt;kubectl&lt;/a&gt;, and &lt;a href=&#34;https://kustomize.io/&#34;&gt;kustomize&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Installation options for Kubeflow Pipelines standalone&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;before-you-get-started&#34;&gt;Before you get started&lt;/h2&gt;
+&lt;p&gt;Working with Kubeflow Pipelines requires a Kubernetes cluster as well as an installation of kubectl.&lt;/p&gt;
+&lt;h3 id=&#34;download-and-install-kubectl&#34;&gt;Download and install kubectl&lt;/h3&gt;
+&lt;p&gt;Download and install kubectl by following the &lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34;&gt;kubectl installation guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You need kubectl version 1.14 or later for native support of kustomize.&lt;/p&gt;
+&lt;h3 id=&#34;set-up-your-cluster&#34;&gt;Set up your cluster&lt;/h3&gt;
+&lt;p&gt;If you have an existing Kubernetes cluster, continue with the instructions for &lt;a href=&#34;#configure-kubectl&#34;&gt;configuring kubectl to talk to your cluster&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To create a new Kubernetes cluster, run the following:&lt;/p&gt;
+&lt;p&gt;See the GKE guide to &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster&#34;&gt;creating a cluster&lt;/a&gt; for Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;p&gt;Use the &lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/container/clusters/create&#34;&gt;gcloud container clusters create command&lt;/a&gt; to create a cluster that can run all Kubeflow Pipelines samples:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# The following parameters can be customized based on your needs.
+
+CLUSTER_NAME=&amp;quot;kubeflow-pipelines-standalone&amp;quot;
+ZONE=&amp;quot;us-central1-a&amp;quot;
+MACHINE_TYPE=&amp;quot;n1-standard-2&amp;quot; # A machine with 2 CPUs and 7.50GB memory
+SCOPES=&amp;quot;cloud-platform&amp;quot; # These scopes are needed for running some pipeline samples
+
+gcloud container clusters create $CLUSTER_NAME \
+     --zone $ZONE \
+     --machine-type $MACHINE_TYPE \
+     --scopes $SCOPES
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Using &lt;code&gt;SCOPES=&amp;quot;cloud-platform&amp;quot;&lt;/code&gt; grants all GCP permissions to the cluster. For a more secure cluster setup, refer to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/authentication/#authentication-from-kubeflow-pipelines&#34;&gt;Authenticating Pipelines to GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/compute/docs/regions-zones/#available&#34;&gt;GCP regions and zones documentation&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/&#34;&gt;gcloud command-line tool guide&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/container/clusters/create&#34;&gt;gcloud command reference&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;configure-kubectl&#34;&gt;Configure kubectl to talk to your cluster&lt;/h3&gt;
+&lt;p&gt;See the Google Kubernetes Engine (GKE) guide to
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl&#34;&gt;configuring cluster access for kubectl&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;deploying-kubeflow-pipelines&#34;&gt;Deploying Kubeflow Pipelines&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Deploy the latest version of Kubeflow Pipelines:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The following commands apply to Kubeflow Pipelines version 0.2.0 and later.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=0.2.5
+kubectl apply -k github.com/kubeflow/pipelines/manifests/kustomize/base/crds?ref=$PIPELINE_VERSION
+kubectl wait --for condition=established --timeout=60s crd/applications.app.k8s.io
+kubectl apply -k github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The Kubeflow Pipelines deployment requires approximately 3 minutes to complete.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: To deploy versions of Kubeflow Pipelines prior to version 0.2.0, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=&amp;lt;kfp-version&amp;gt;
+kubectl apply -k github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: &lt;code&gt;kubectl apply -k&lt;/code&gt; accepts local paths and paths that are formatted as &lt;a href=&#34;https://github.com/kubernetes-sigs/kustomize/blob/master/examples/remoteBuild.md#url-format&#34;&gt;hashicorp/go-getter URLs&lt;/a&gt;. While the paths in the preceding commands look like URLs, the paths are not valid URLs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Get the public URL for the Kubeflow Pipelines UI and use it to access the Kubeflow Pipelines UI:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl describe configmap inverse-proxy-config -n kubeflow | grep googleusercontent.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;upgrading-kubeflow-pipelines&#34;&gt;Upgrading Kubeflow Pipelines&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Check the &lt;a href=&#34;https://github.com/kubeflow/pipelines/releases&#34;&gt;Kubeflow Pipelines GitHub repository&lt;/a&gt; for available releases.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upgrade to a version of Kubeflow Pipelines standalone:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=&amp;lt;version-you-want-to-upgrade-to&amp;gt;
+kubectl apply -k github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;customizing-kubeflow-pipelines&#34;&gt;Customizing Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;Kubeflow Pipelines can be configured through kustomize &lt;a href=&#34;https://github.com/kubernetes-sigs/kustomize/blob/master/docs/glossary.md#overlay&#34;&gt;overlays&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To begin, first clone the &lt;a href=&#34;https://github.com/kubeflow/pipelines&#34;&gt;Kubeflow Pipelines GitHub repository&lt;/a&gt;,
+and use it as your working directory.&lt;/p&gt;
+&lt;h3 id=&#34;deploy-on-gcp-with-cloudsql-and-google-cloud-storage&#34;&gt;Deploy on GCP with CloudSQL and Google Cloud Storage&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This is recommended for production environments. For more details about customizing your environment
+for GCP, see the &lt;a href=&#34;https://github.com/kubeflow/pipelines/tree/master/manifests/kustomize/env/gcp&#34;&gt;Kubeflow Pipelines GCP manifests&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;change-deployment-namespace&#34;&gt;Change deployment namespace&lt;/h3&gt;
+&lt;p&gt;To deploy Kubeflow Pipelines standalone in namespace &lt;code&gt;&amp;lt;my-namespace&amp;gt;&lt;/code&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Set the &lt;code&gt;namespace&lt;/code&gt; field to &lt;code&gt;&amp;lt;my-namespace&amp;gt;&lt;/code&gt; in
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/kustomize/env/dev/kustomization.yaml&#34;&gt;dev/kustomization.yaml&lt;/a&gt; or
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/kustomize/env/gcp/kustomization.yaml&#34;&gt;gcp/kustomization.yaml&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Apply the changes to update the Kubeflow Pipelines deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -k manifests/kustomize/env/dev
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: If using GCP Cloud SQL and Google Cloud Storage, apply with this command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -k manifests/kustomize/env/gcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;disable-the-public-endpoint&#34;&gt;Disable the public endpoint&lt;/h3&gt;
+&lt;p&gt;By default, the KFP standalone deployment installs an &lt;a href=&#34;https://github.com/google/inverting-proxy&#34;&gt;inverting proxy agent&lt;/a&gt; that exposes a public URL. If you want to skip the installation of the inverting proxy agent, complete the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Comment out the proxy components in the base &lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/kustomize/base/kustomization.yaml&#34;&gt;kustomization.yaml&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Apply the changes to update the Kubeflow Pipelines deployment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -k manifests/kustomize/env/dev
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: If using GCP Cloud SQL and Google Cloud Storage, apply with this command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -k manifests/kustomize/env/gcp
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Verify that the Kubeflow Pipelines UI is accessible by port-forwarding:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl port-forward -n kubeflow svc/ml-pipeline-ui 8080:80
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open the Kubeflow Pipelines UI at &lt;code&gt;http://localhost:8080/&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;uninstalling-kubeflow-pipelines&#34;&gt;Uninstalling Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;To uninstall Kubeflow Pipelines, run &lt;code&gt;kubectl delete -k &amp;lt;manifest-file&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, to uninstall KFP using manifests from a GitHub repository, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=0.2.5
+kubectl delete -k github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To uninstall KFP using manifests from your local repository or file system, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl delete -k manifests/kustomize/env/dev
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: If you are using GCP Cloud SQL and Google Cloud Storage, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl delete -k manifests/kustomize/env/gcp
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;best-practices-for-maintaining-manifests&#34;&gt;Best practices for maintaining manifests&lt;/h2&gt;
+&lt;p&gt;Similar to source code, configuration files belong in source control.
+A repository manages the changes to your
+manifest files and ensures that you can repeatedly deploy, upgrade,
+and uninstall your components.&lt;/p&gt;
+&lt;h3 id=&#34;maintain-your-manifests-in-source-control&#34;&gt;Maintain your manifests in source control&lt;/h3&gt;
+&lt;p&gt;After creating or customizing your deployment manifests, save your manifests
+to a local or remote source control respository.
+For example, save the following &lt;code&gt;kustomization.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Edit the following to change the deployment to your custom namespace.
+namespace: kubeflow
+# You can add other customizations here using kustomize.
+# Edit ref in the following link to deploy a different version of Kubeflow Pipelines.
+bases:
+- github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=0.2.5
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;use-a-repository-to-deploy-upgrade-and-uninstall-kubeflow-pipelines&#34;&gt;Use a repository to deploy, upgrade, and uninstall Kubeflow Pipelines&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The following commands reference an existing repository.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Caution&lt;/strong&gt;: For upgrades, it is recommended to back up your data storage for Kubeflow Pipelines.&lt;/p&gt;
+&lt;p&gt;To deploy Kubeflow Pipelines using a repository, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=&amp;lt;kfp-version&amp;gt;
+export KFP_MANIFESTS_REPO_LINK=github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+kubectl apply -k $KFP_MANIFESTS_REPO_LINK
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To upgrade your Kubeflow Pipelines deployment from a repository, follow these steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Check &lt;a href=&#34;https://github.com/kubeflow/pipelines/releases&#34;&gt;Kubeflow Pipelines GitHub repository&lt;/a&gt; for available releases.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set the &lt;code&gt;PIPELINE_VERSION&lt;/code&gt; environment variable to a version you want to upgrade to.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upgrade Kubeflow Pipelines by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=&amp;lt;version-you-want-to-upgrade-to&amp;gt;
+export KFP_MANIFESTS_REPO_LINK=github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+kubectl apply -k $KFP_MANIFESTS_REPO_LINK
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To uninstall Kubeflow Pipelines using a repository, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export PIPELINE_VERSION=&amp;lt;kfp-version&amp;gt;
+export KFP_MANIFESTS_REPO_LINK=github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=$PIPELINE_VERSION
+kubectl delete -k $KFP_MANIFESTS_REPO_LINK
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;further-reading&#34;&gt;Further reading&lt;/h3&gt;
+&lt;p&gt;To learn about kustomize workflows with off-the-shelf configurations, see the
+&lt;a href=&#34;https://github.com/kubernetes-sigs/kustomize/blob/master/docs/workflows.md#off-the-shelf-configuration&#34;&gt;kustomize configuration workflows guide&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;p&gt;If you encounter a permission error when installing Kubeflow Pipelines standalone, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl create clusterrolebinding your-binding --clusterrole=cluster-admin --user=&amp;lt;your-user-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

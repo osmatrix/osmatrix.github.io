@@ -1,0 +1,828 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Hyperparameter Tuning</title>
+    <link>http://osmatrix.github.io/docs/components/hyperparameter-tuning/</link>
+    <description>Recent content in Hyperparameter Tuning on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/components/hyperparameter-tuning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Introduction to Katib</title>
+      <link>http://osmatrix.github.io/docs/components/hyperparameter-tuning/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/components/hyperparameter-tuning/overview/</guid>
+      <description>
+        
+        
+        &lt;!-- raw HTML omitted --&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;a href=&amp;quot;https://github.com/kubeflow/katib/issues&amp;quot;&amp;gt;feedback&amp;lt;/a&amp;gt;&amp;lt;/h4&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;about the usability of the feature.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Use Katib for automated tuning of your machine learning (ML) model&amp;rsquo;s 
+hyperparameters and architecture.&lt;/p&gt;
+&lt;p&gt;This page introduces the concepts of hyperparameter tuning, neural
+architecture search, and the Katib system as a component of Kubeflow.&lt;/p&gt;
+&lt;h2 id=&#34;hyperparameters-and-hyperparameter-tuning&#34;&gt;Hyperparameters and hyperparameter tuning&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Hyperparameters&lt;/em&gt; are the variables that control the model training process. 
+For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Learning rate.&lt;/li&gt;
+&lt;li&gt;Number of layers in a neural network.&lt;/li&gt;
+&lt;li&gt;Number of nodes in each layer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hyperparameter values are not &lt;em&gt;learned&lt;/em&gt;. In other words, in contrast to the 
+node weights and other training &lt;em&gt;parameters&lt;/em&gt;, the model training process does 
+not adjust the hyperparameter values.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Hyperparameter tuning&lt;/em&gt; is the process of optimizing the hyperparameter values
+to maximize the predictive accuracy of the model. If you don&amp;rsquo;t use Katib or a 
+similar system for hyperparameter tuning, you need run many training jobs 
+yourself, manually adjusting the hyperparameters to find the optimal values.&lt;/p&gt;
+&lt;p&gt;Automated hyperparameter tuning works by optimizing a target variable, 
+also called the &lt;em&gt;objective metric&lt;/em&gt;, that you specify in the configuration for 
+the hyperparameter tuning job. A common metric is the model&amp;rsquo;s accuracy
+in the validation pass of the training job (&lt;em&gt;validation-accuracy&lt;/em&gt;). You also 
+specify whether you want the hyperparameter tuning job to &lt;em&gt;maximize&lt;/em&gt; or 
+&lt;em&gt;minimize&lt;/em&gt; the metric.&lt;/p&gt;
+&lt;p&gt;For example, the following graph from Katib shows the level of accuracy
+for various combinations of hyperparameter values (learning rate, number of 
+layers, and optimizer):&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(To run the example that produced this graph, follow the &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/&#34;&gt;getting-started 
+guide&lt;/a&gt;.)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Katib runs several training jobs (known as &lt;em&gt;trials&lt;/em&gt;) within each
+hyperparameter tuning job (&lt;em&gt;experiment&lt;/em&gt;). Each trial tests a different set of 
+hyperparameter configurations. At the end of the experiment, Katib outputs 
+the optimized values for the hyperparameters.&lt;/p&gt;
+&lt;h2 id=&#34;neural-architecture-search&#34;&gt;Neural architecture search&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Alpha version&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In addition to hyperparameter tuning, Katib offers a &lt;em&gt;neural architecture
+search&lt;/em&gt; (NAS) feature. You can use the NAS to design 
+your artificial neural network, with a goal of maximizing the predictive 
+accuracy and performance of your model.&lt;/p&gt;
+&lt;p&gt;NAS is closely related to hyperparameter tuning. Both are subsets of automated 
+machine learning (&lt;em&gt;AutoML&lt;/em&gt;). While hyperparameter tuning
+optimizes the model&amp;rsquo;s hyperparameters, a NAS system optimizes the model&amp;rsquo;s
+structure, node weights, and hyperparameters.&lt;/p&gt;
+&lt;p&gt;NAS technology in general uses various techniques to find the optimal neural
+network design. The NAS in Katib uses the &lt;em&gt;reinforcement learning&lt;/em&gt; technique.&lt;/p&gt;
+&lt;p&gt;You can submit Katib jobs from the command line or from the UI. (Read more 
+about the Katib interfaces later on this page.) The following screenshot shows
+part of the form for submitting a NAS job from the Katib UI:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;the-katib-project&#34;&gt;The Katib project&lt;/h2&gt;
+&lt;p&gt;Katib is a Kubernetes-based system for hyperparameter tuning and neural 
+architecture search. Katib supports a number of ML frameworks, including 
+TensorFlow, MXNet, PyTorch, XGBoost, and others.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/kubeflow/katib&#34;&gt;Katib project&lt;/a&gt; is open source. 
+The &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/docs/developer-guide.md&#34;&gt;developer guide&lt;/a&gt;
+is a good starting point for developers who want to contribute to the project.&lt;/p&gt;
+&lt;h2 id=&#34;katib-interfaces&#34;&gt;Katib interfaces&lt;/h2&gt;
+&lt;p&gt;You can use the following interaces to interact with Katib:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A web UI that you can use to submit experiments and to monitor your results.
+See the &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/#katib-ui&#34;&gt;getting-started 
+guide&lt;/a&gt;
+for information on how to access the UI.
+The Katib home page within Kubeflow looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A REST API. See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/manager/v1alpha3/gen-doc/api.md&#34;&gt;API reference on 
+GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Command-line interfaces (CLIs):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Kfctl&lt;/strong&gt; is the Kubeflow CLI that you can use to install and configure 
+Kubeflow. Read about kfctl in the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/other-guides/kustomize/&#34;&gt;configuring Kubeflow&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The Kubernetes CLI, &lt;strong&gt;kubectl&lt;/strong&gt;, is useful for running commands against your
+Kubeflow cluster. Read about kubectl in the &lt;a href=&#34;https://kubernetes.io/docs/tasks/tools/install-kubectl/&#34;&gt;Kubernetes 
+documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;katib-concepts&#34;&gt;Katib concepts&lt;/h2&gt;
+&lt;p&gt;This section describes the terms used in Katib.&lt;/p&gt;
+&lt;h3 id=&#34;experiment&#34;&gt;Experiment&lt;/h3&gt;
+&lt;p&gt;An &lt;em&gt;experiment&lt;/em&gt; is a single tuning run, also called an optimization run.&lt;/p&gt;
+&lt;p&gt;You specify configuration settings to define the experiment. The following are
+the main configurations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Objective&lt;/strong&gt;: What you want to optimize. This is the objective metric, also
+called the target variable. A common metric is the model&amp;rsquo;s accuracy
+in the validation pass of the training job (&lt;em&gt;validation-accuracy&lt;/em&gt;). You also 
+specify whether you want the hyperparameter tuning job to &lt;em&gt;maximize&lt;/em&gt; or 
+&lt;em&gt;minimize&lt;/em&gt; the metric.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Search space&lt;/strong&gt;: The set of all possible hyperparameter values that the
+hyperparameter tuning job should consider for optimization, and the
+constraints for each hyperparameter. Other names for search space include 
+&lt;em&gt;feasible set&lt;/em&gt; and &lt;em&gt;solution space&lt;/em&gt;. For example, you may provide the
+names of the hyperparameters that you want to optimize. For each
+hyperparameter, you may provide a &lt;em&gt;minimum&lt;/em&gt; and &lt;em&gt;maximum&lt;/em&gt; value or a &lt;em&gt;list&lt;/em&gt; 
+of allowable values.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Search algorithm&lt;/strong&gt;: The algorithm to use when searching for the optimal
+hyperparameter values.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For details of how to define your experiment, see the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/experiment/&#34;&gt;running an 
+experiment&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;suggestion&#34;&gt;Suggestion&lt;/h3&gt;
+&lt;p&gt;A &lt;em&gt;suggestion&lt;/em&gt; is a set of hyperparameter values that the hyperparameter
+tuning process has proposed. Katib creates a trial to evaluate the suggested
+set of values.&lt;/p&gt;
+&lt;h3 id=&#34;trial&#34;&gt;Trial&lt;/h3&gt;
+&lt;p&gt;A &lt;em&gt;trial&lt;/em&gt; is one iteration of the hyperparameter tuning process. A trial
+corresponds to one worker job instance with a list of parameter assignments.
+The list of parameter assignments corresponds to a suggestion.&lt;/p&gt;
+&lt;p&gt;Each experiment runs several trials. The experiment runs the trials until it
+reaches either the objective or the configured maximum number of trials.&lt;/p&gt;
+&lt;h3 id=&#34;worker-job&#34;&gt;Worker job&lt;/h3&gt;
+&lt;p&gt;The &lt;em&gt;worker job&lt;/em&gt; is the process that runs to evaluate a trial and calculate
+its objective value.&lt;/p&gt;
+&lt;p&gt;The worker job can be one of the following types:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/&#34;&gt;Kubernetes Job&lt;/a&gt;
+(does not support distributed execution).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/guides/components/tftraining/&#34;&gt;Kubeflow TFJob&lt;/a&gt; (supports
+distributed execution).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/guides/components/pytorch/&#34;&gt;Kubeflow PyTorchJob&lt;/a&gt; (supports 
+distributed execution).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By offering the above worker job types, Katib supports multiple ML frameworks.&lt;/p&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/&#34;&gt;getting-started 
+guide&lt;/a&gt; to set up
+Katib and run some hyperparameter tuning examples.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Getting started with Katib</title>
+      <link>http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page gets you started with Katib. Follow this guide to perform any
+additional setup you may need, depending on your environment, and to run a few
+examples using the command line and the Katib user interface (UI).&lt;/p&gt;
+&lt;p&gt;For an overview of the concepts around Katib and hyperparameter tuning, read the
+&lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/overview/&#34;&gt;introduction to 
+Katib&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;katib-setup&#34;&gt;Katib setup&lt;/h2&gt;
+&lt;p&gt;This section describes some configurations that you may need to add to your
+Kubernetes cluster, depending on the way you&amp;rsquo;re using Kubeflow and Katib.&lt;/p&gt;
+&lt;h3 id=&#34;installing-katib&#34;&gt;Installing Katib&lt;/h3&gt;
+&lt;p&gt;You can skip this step if you have already installed Kubeflow. Your Kubeflow
+deployment includes Katib.&lt;/p&gt;
+&lt;p&gt;To install Katib as part of Kubeflow, follow the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/started/getting-started/&#34;&gt;Kubeflow installation guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you want to install Katib separately from Kubeflow, or to get a later version
+of Katib, run the following commands to install Katib directly from its 
+repository on GitHub and deploy Katib to your cluster:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/kubeflow/katib
+bash ./katib/scripts/v1alpha3/deploy.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;setting-up-persistent-volumes&#34;&gt;Setting up persistent volumes&lt;/h3&gt;
+&lt;p&gt;You can skip this step if you&amp;rsquo;re using Kubeflow on Google Kubernetes Engine 
+(GKE) or if your Kubernetes cluster includes a StorageClass for dynamic volume 
+provisioning. For more information, see the Kubernetes documentation on
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/&#34;&gt;dynamic provisioning&lt;/a&gt;
+and &lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/&#34;&gt;persistent volumes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re using Katib outside GKE and your cluster doesn&amp;rsquo;t include a 
+StorageClass for dynamic volume provisioning, you must create a persistent 
+volume (PV) to bind to the persistent volume claim (PVC) required by Katib.&lt;/p&gt;
+&lt;p&gt;After deploying Katib to your cluster, run the following command to create the 
+PV:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/kubeflow/katib/master/manifests/v1alpha3/pv/pv.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The above &lt;code&gt;kubectl apply&lt;/code&gt; command uses a YAML file 
+(&lt;a href=&#34;https://raw.githubusercontent.com/kubeflow/katib/master/manifests/v1alpha3/pv/pv.yaml&#34;&gt;&lt;code&gt;pv.yaml&lt;/code&gt;&lt;/a&gt;)
+that defines the properties of the PV.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;accessing-the-katib-ui&#34;&gt;Accessing the Katib UI&lt;/h2&gt;
+&lt;p&gt;You can use the Katib user interface (UI) to submit experiments and to monitor 
+your results. The Katib home page within Kubeflow looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;If you installed Katib as part of Kubeflow, you can access the 
+Katib UI from the Kubeflow UI:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the Kubeflow UI. See the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/components/central-dash/overview/&#34;&gt;accessing the central dashboard&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Katib&lt;/strong&gt; in the left-hand menu.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Alternatively, you can set port-forwarding for the Katib UI service:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl port-forward svc/katib-ui -n kubeflow 8080:80
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then you can access the Katib UI at this URL:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://localhost:8080/katib/
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;examples&#34;&gt;Examples&lt;/h2&gt;
+&lt;p&gt;This section introduces some examples that you can run to try Katib.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;example-using-random-algorithm&#34;&gt;Example using random algorithm&lt;/h3&gt;
+&lt;p&gt;You can create an experiment for Katib by defining the experiment in a YAML 
+configuration file. The YAML file defines the configurations for the experiment,
+including the hyperparameter feasible space, optimization parameter, 
+optimization goal, suggestion algorithm, and so on.&lt;/p&gt;
+&lt;p&gt;This example uses the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/examples/v1alpha3/random-example.yaml&#34;&gt;YAML file for the
+random algorithm example&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The random algorithm example uses an MXNet neural network to train an image
+classification model using the MNIST dataset. The experiment runs three 
+training jobs with various hyperparameters and saves the results.&lt;/p&gt;
+&lt;p&gt;Run the following commands to launch an experiment using the random algorithm
+example:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Download the example:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;curl https://raw.githubusercontent.com/kubeflow/katib/master/examples/v1alpha3/random-example.yaml --output random-example.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;Edit &lt;code&gt;random-example.yaml&lt;/code&gt; and change the following line to use your Kubeflow user profile namespace:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;Namespace: kubeflow
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;Deploy the example:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f random-example.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This example embeds the hyperparameters as arguments. You can embed
+hyperparameters in another way (for example, using environment variables) 
+by using the template defined in the &lt;code&gt;TrialTemplate.GoTemplate.RawTemplate&lt;/code&gt;
+section of the YAML file. The template uses the 
+&lt;a href=&#34;https://golang.org/pkg/text/template/&#34;&gt;Go template format&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This example randomly generates the following hyperparameters:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--lr&lt;/code&gt;: Learning rate. Type: double.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--num-layers&lt;/code&gt;: Number of layers in the neural network. Type: integer.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--optimizer&lt;/code&gt;: Optimizer. Type: categorical.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Check the experiment status:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow describe experiment random-example
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The output of the above command should look similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Name:         random-example
+Namespace:    &amp;lt;your user namespace&amp;gt; 
+Labels:       controller-tools.k8s.io=1.0
+Annotations:  &amp;lt;none&amp;gt;
+API Version:  kubeflow.org/v1alpha3
+Kind:         Experiment
+Metadata:
+  Creation Timestamp:  2019-12-22T22:53:25Z
+  Finalizers:
+    update-prometheus-metrics
+  Generation:        2
+  Resource Version:  720692
+  Self Link:         /apis/kubeflow.org/v1alpha3/namespaces/kubeflow/experiments/random-example
+  UID:               dc6bc15a-250d-11ea-8cae-42010a80010f
+Spec:
+  Algorithm:
+    Algorithm Name:        random
+    Algorithm Settings:    &amp;lt;nil&amp;gt;
+  Max Failed Trial Count:  3
+  Max Trial Count:         12
+  Metrics Collector Spec:
+    Collector:
+      Kind:  StdOut
+  Objective:
+    Additional Metric Names:
+      accuracy
+    Goal:                   0.99
+    Objective Metric Name:  Validation-accuracy
+    Type:                   maximize
+  Parallel Trial Count:     3
+  Parameters:
+    Feasible Space:
+      Max:           0.03
+      Min:           0.01
+    Name:            --lr
+    Parameter Type:  double
+    Feasible Space:
+      Max:           5
+      Min:           2
+    Name:            --num-layers
+    Parameter Type:  int
+    Feasible Space:
+      List:
+        sgd
+        adam
+        ftrl
+    Name:            --optimizer
+    Parameter Type:  categorical
+  Trial Template:
+    Go Template:
+      Raw Template:  apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{.Trial}}
+  namespace: {{.NameSpace}}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{.Trial}}
+        image: docker.io/kubeflowkatib/mxnet-mnist-example
+        command:
+        - &amp;quot;python&amp;quot;
+        - &amp;quot;/mxnet/example/image-classification/train_mnist.py&amp;quot;
+        - &amp;quot;--batch-size=64&amp;quot;
+        {{- with .HyperParameters}}
+        {{- range .}}
+        - &amp;quot;{{.Name}}={{.Value}}&amp;quot;
+        {{- end}}
+        {{- end}}
+      restartPolicy: Never
+Status:
+  Conditions:
+    Last Transition Time:  2019-12-22T22:53:25Z
+    Last Update Time:      2019-12-22T22:53:25Z
+    Message:               Experiment is created
+    Reason:                ExperimentCreated
+    Status:                True
+    Type:                  Created
+    Last Transition Time:  2019-12-22T22:55:10Z
+    Last Update Time:      2019-12-22T22:55:10Z
+    Message:               Experiment is running
+    Reason:                ExperimentRunning
+    Status:                True
+    Type:                  Running
+  Current Optimal Trial:
+    Observation:
+      Metrics:
+        Name:   Validation-accuracy
+        Value:  0.981091
+    Parameter Assignments:
+      Name:          --lr
+      Value:         0.025139701133432946
+      Name:          --num-layers
+      Value:         4
+      Name:          --optimizer
+      Value:         sgd
+  Start Time:        2019-12-22T22:53:25Z
+  Trials:            12
+  Trials Running:    2
+  Trials Succeeded:  10
+Events:              &amp;lt;none&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When the last value in &lt;code&gt;Status.Conditions.Type&lt;/code&gt; is &lt;code&gt;Succeeded&lt;/code&gt;, the experiment
+is complete.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;
+View the results of the experiment in the Katib UI:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open the Katib UI as described &lt;a href=&#34;#katib-ui&#34;&gt;above&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Hyperparameter Tuning&lt;/strong&gt; on the Katib home page.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open the Katib menu panel on the left, then open the &lt;strong&gt;HP&lt;/strong&gt; section and
+click &lt;strong&gt;Monitor&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click on the right-hand panel to close the menu panel. You should see
+the list of experiments:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click the name of the experiment, &lt;strong&gt;random-example&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You should see a graph showing the level of accuracy for various 
+combinations of the hyperparameter values (learning rate, number of layers, 
+and optimizer):&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Below the graph is a list of trials that ran within the experiment:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;tensorflow-example&#34;&gt;TensorFlow example&lt;/h3&gt;
+&lt;p&gt;Run the following command to launch an experiment using the Kubeflow&amp;rsquo;s 
+TensorFlow training job operator, TFJob:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/kubeflow/katib/master/examples/v1alpha3/tfjob-example.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can check the status of the experiment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow describe experiment tfjob-example
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Follow the steps as described for the &lt;em&gt;random algorithm example&lt;/em&gt; 
+&lt;a href=&#34;#view-ui&#34;&gt;above&lt;/a&gt;, to see the results of the experiment in the Katib UI.&lt;/p&gt;
+&lt;h3 id=&#34;pytorch-example&#34;&gt;PyTorch example&lt;/h3&gt;
+&lt;p&gt;Run the following command to launch an experiment using Kubeflow&amp;rsquo;s PyTorch 
+training job operator, PyTorchJob:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/kubeflow/katib/master/examples/v1alpha3/pytorchjob-example.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You can check the status of the experiment:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow describe experiment pytorchjob-example
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Follow the steps as described for the &lt;em&gt;random algorithm example&lt;/em&gt;
+&lt;a href=&#34;#view-ui&#34;&gt;above&lt;/a&gt;, to see the results of the experiment in the Katib UI.&lt;/p&gt;
+&lt;h2 id=&#34;cleanup&#34;&gt;Cleanup&lt;/h2&gt;
+&lt;p&gt;Delete the installed components:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash ./scripts/v1alpha3/undeploy.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you created a PV for Katib, delete it:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl delete -f https://raw.githubusercontent.com/kubeflow/katib/master/manifests/v1alpha3/pv/pv.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;For details of how to configure and run your experiment, see the guide to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/experiment/&#34;&gt;running an experiment&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Running an experiment</title>
+      <link>http://osmatrix.github.io/docs/components/hyperparameter-tuning/experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/components/hyperparameter-tuning/experiment/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page describes in detail how to configure and run a Katib experiment.
+The experiment can perform hyperparameter tuning or a neural architecture search 
+(NAS) (&lt;strong&gt;alpha&lt;/strong&gt;), depending on the configuration settings.&lt;/p&gt;
+&lt;p&gt;For an overview of the concepts involved, read the &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/overview/&#34;&gt;introduction to 
+Katib&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;packaging-your-training-code-in-a-container-image&#34;&gt;Packaging your training code in a container image&lt;/h2&gt;
+&lt;p&gt;Katib and Kubeflow are Kubernetes-based systems. To use Katib, you must package
+your training code in a Docker container image and make the image available
+in a registry. See the &lt;a href=&#34;https://docs.docker.com/develop/develop-images/baseimages/&#34;&gt;Docker
+documentation&lt;/a&gt; and
+the &lt;a href=&#34;https://kubernetes.io/docs/concepts/containers/images/&#34;&gt;Kubernetes 
+documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;configuring-the-experiment&#34;&gt;Configuring the experiment&lt;/h2&gt;
+&lt;p&gt;To create a hyperparameter tuning or NAS experiment in Katib, you define the
+experiment in a YAML configuration file. The YAML file defines the range of 
+potential values (the search space) for the paramaters that you want to 
+optimize, the objective metric to use when determining optimal values, the 
+search algorithm to use during optimization, and other configurations.&lt;/p&gt;
+&lt;p&gt;See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/examples/v1alpha3/random-example.yaml&#34;&gt;YAML file for the random algorithm 
+example&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The list below describes the fields in the YAML file for an experiment. The
+Katib UI offers the corresponding fields. You can choose to configure and run
+the experiment from the UI or from the command line.&lt;/p&gt;
+&lt;h3 id=&#34;configuration-spec&#34;&gt;Configuration spec&lt;/h3&gt;
+&lt;p&gt;These are the fields in the experiment configuration spec:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;parameters&lt;/strong&gt;: The range of the hyperparameters or other parameters that you 
+want to tune for your ML model. The parameters define the &lt;em&gt;search space&lt;/em&gt;,
+also known as the &lt;em&gt;feasible set&lt;/em&gt; or the &lt;em&gt;solution space&lt;/em&gt;.
+In this section of the spec, you define the name and the distribution 
+(discrete or continuous) of every hyperparameter that you need to search.
+For example, you may provide a minimum and maximum value or a list
+of allowed values for each hyperparameter.
+Katib generates hyperparameter combinations in the range based on the
+hyperparameter tuning algorithm that you specify. See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/experiments/v1alpha3/experiment_types.go#L157-L178&#34;&gt;&lt;code&gt;ParameterSpec&lt;/code&gt; 
+type&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;objective&lt;/strong&gt;: The metric that you want to optimize. 
+The objective metric is also called the &lt;em&gt;target variable&lt;/em&gt;. 
+A common metric is the model&amp;rsquo;s accuracy in the validation pass of the training
+job (&lt;em&gt;validation-accuracy&lt;/em&gt;). You also specify whether you want Katib to 
+maximize or minimize the metric.
+Katib uses the &lt;code&gt;objectiveMetricName&lt;/code&gt; and &lt;code&gt;additionalMetricNames&lt;/code&gt; to monitor
+how the hyperparameters work with the model. 
+Katib records the value of the best &lt;code&gt;objectiveMetricName&lt;/code&gt; metric (maximized 
+or minimized based on &lt;code&gt;type&lt;/code&gt;) and the corresponding hyperparameter set
+in &lt;code&gt;Experiment.status&lt;/code&gt;. If the &lt;code&gt;objectiveMetricName&lt;/code&gt; metric for a set of
+hyperparameters reaches the &lt;code&gt;goal&lt;/code&gt;, Katib stops trying more hyperparameter 
+combinations. See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/common/v1alpha3/common_types.go#L47&#34;&gt;ObjectiveSpec 
+type&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;algorithm&lt;/strong&gt;: The search algorithm that you want Katib to use to find the
+best hyperparameters or neural architecture configuration. Examples include
+random search, grid search, Bayesian optimization, and more.
+See the &lt;a href=&#34;#search-algorithms&#34;&gt;search algorithm details&lt;/a&gt; below.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;trialTemplate&lt;/strong&gt;: The template that defines the trial.
+You must package your ML training code into a Docker image, as described 
+&lt;a href=&#34;#docker-image&#34;&gt;above&lt;/a&gt;. You must configure the model&amp;rsquo;s
+hyperparameters either as command-line arguments or as environment variables,
+so that Katib can automatically set the values in each trial.&lt;/p&gt;
+&lt;p&gt;You can use one of the following job types to train your model:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/&#34;&gt;Kubernetes Job&lt;/a&gt;
+(does not support distributed execution).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/guides/components/tftraining/&#34;&gt;Kubeflow TFJob&lt;/a&gt; (supports 
+distributed execution).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/guides/components/pytorch/&#34;&gt;Kubeflow PyTorchJob&lt;/a&gt; (supports 
+distributed execution).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/experiments/v1alpha3/experiment_types.go#L180-L194&#34;&gt;TrialTemplate 
+type&lt;/a&gt;.
+The template 
+uses the &lt;a href=&#34;https://golang.org/pkg/text/template/&#34;&gt;Go template format&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can define the job in raw string format or you can use a 
+&lt;a href=&#34;https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/&#34;&gt;ConfigMap&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;parallelTrialCount&lt;/strong&gt;: The maximum number of hyperparameter sets that Katib
+should train in parallel.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;maxTrialCount&lt;/strong&gt;: The maximum number of trials to run.
+This is equivalent to the number of hyperparameter sets that Katib should
+generate to test the model.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;maxFailedTrialCount&lt;/strong&gt;: The maximum number of failed trials before Katib
+should stop the experiment.
+This is equivalent to the number of failed hyperparameter sets that Katib 
+should test.
+If the number of failed trials exceeds &lt;code&gt;maxFailedTrialCount&lt;/code&gt;, Katib stops the
+experiment with a status of &lt;code&gt;Failed&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;metricsCollectorSpec&lt;/strong&gt;: A specification of how to collect the metrics from
+each trial, such as the accuracy and loss metrics.
+See the &lt;a href=&#34;#metrics-collector&#34;&gt;details of the metrics collector&lt;/a&gt; below.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;nasConfig&lt;/strong&gt;: The configuration for a neural architecture search (NAS).
+Note: NAS is currently in &lt;strong&gt;alpha&lt;/strong&gt; with limited support.
+You can specify the configurations of the neural network design that you want
+to optimize, including the number of layers in the network, the types of
+operations, and more.
+See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/experiments/v1alpha3/experiment_types.go#L220&#34;&gt;NasConfig type&lt;/a&gt;.
+As an example, see the YAML file for the
+&lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/examples/v1alpha3/nasjob-example-RL-gpu.yaml&#34;&gt;nasjob-example-RL-gpu&lt;/a&gt;.
+The example aims to show all the possible operations. Due to the large search 
+space, the example is not likely to generate a good result.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Background information about Katib&amp;rsquo;s &lt;code&gt;Experiment&lt;/code&gt; type:&lt;/em&gt; In Kubernetes 
+terminology, Katib&amp;rsquo;s
+&lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/experiments/v1alpha3/experiment_types.go#L202&#34;&gt;&lt;code&gt;Experiment&lt;/code&gt;&lt;/a&gt;
+type is a &lt;a href=&#34;https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/&#34;&gt;custom resource 
+(CR)&lt;/a&gt;.
+The YAML file that you create for your experiment is the CR specification.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;search-algorithms-in-detail&#34;&gt;Search algorithms in detail&lt;/h3&gt;
+&lt;p&gt;Katib currently supports several search algorithms. See the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/common/v1alpha3/common_types.go#L23-L33&#34;&gt;AlgorithmSpec
+type&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a list of the search algorithms available in Katib. The links lead to
+descriptions on this page:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#grid-search&#34;&gt;Grid search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#random-search&#34;&gt;Random search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#bayesian&#34;&gt;Bayesian optimization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#hyperband&#34;&gt;HYPERBAND&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tpe-search&#34;&gt;Hyperopt TPE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nas&#34;&gt;NAS based on reinforcement learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More algorithms are under development. You can add an algorithm to Katib
+yourself. See the guide to &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/docs/new-algorithm-service.md&#34;&gt;adding a new
+algorithm&lt;/a&gt; and the &lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/docs/developer-guide.md&#34;&gt;developer 
+guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;grid-search&#34;&gt;Grid search&lt;/h4&gt;
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;grid&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Grid sampling is useful when all variables are discrete (as opposed to
+continuous) and the number of possibilities is low. A grid search 
+performs an exhaustive combinatorial search over all possibilities,
+making the search process extremely long even for medium sized problems.&lt;/p&gt;
+&lt;p&gt;Katib uses the &lt;a href=&#34;https://chocolate.readthedocs.io&#34;&gt;Chocolate&lt;/a&gt; optimization
+framework for its grid search.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;random-search&#34;&gt;Random search&lt;/h4&gt;
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;random&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Random sampling is an alternative to grid search, useful when the number of 
+discrete variables to optimize is large and the time required for each 
+evaluation is logn. When all parameters are discrete, random search performs
+sampling without replacement. Random search is therefore the best algorithm to
+use when combinatorial exploration is not possible. If the number of continuous
+variables is high, you should use quasi random sampling instead.&lt;/p&gt;
+&lt;p&gt;Katib uses the &lt;a href=&#34;http://hyperopt.github.io/hyperopt/&#34;&gt;hyperopt&lt;/a&gt; optimization
+framework for its random search.&lt;/p&gt;
+&lt;p&gt;Katib supports the following algorithm settings:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;bayesian-optimization&#34;&gt;Bayesian optimization&lt;/h4&gt;
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;skopt-bayesian-optimization&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://arxiv.org/pdf/1012.2599.pdf&#34;&gt;Bayesian optimization&lt;/a&gt; method uses
+gaussian process regression to model the search space. This technique calculates
+an estimate of the loss function and the uncertainty of that estimate at every
+point in the search space. The method is suitable when the number of 
+dimensions in the search space is low. Since the method models both 
+the expected loss and the uncertainty, the search algorithm converges in a few 
+steps, making it a good choice when the time to 
+complete the evaluation of a parameter configuration is long.&lt;/p&gt;
+&lt;p&gt;Katib uses the 
+&lt;a href=&#34;https://github.com/scikit-optimize/scikit-optimize&#34;&gt;Scikit-Optimize&lt;/a&gt; library
+for its Bayesian search. Scikit-Optimize is also known as &lt;code&gt;skopt&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Katib supports the following algorithm settings:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;hyperband&#34;&gt;HYPERBAND&lt;/h4&gt;
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;hyperband&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Katib supports the &lt;a href=&#34;https://arxiv.org/pdf/1603.06560.pdf&#34;&gt;HYPERBAND&lt;/a&gt; 
+optimization framework.
+Instead of using Bayesian optimization to select configurations, HYPERBAND
+focuses on early stopping as a strategy for optimizing resource allocation and
+thus for maximixing the number of configurations that it can evaluate.
+HYPERBAND also focuses on the speed of the search.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;hyperopt-tpe&#34;&gt;Hyperopt TPE&lt;/h4&gt;
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;tpe&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Katib uses the Tree of Parzen Estimators (TPE) algorithm in
+&lt;a href=&#34;http://hyperopt.github.io/hyperopt/&#34;&gt;hyperopt&lt;/a&gt;. This method provides a 
+&lt;a href=&#34;https://arxiv.org/pdf/1703.01785.pdf&#34;&gt;forward and reverse gradient-based&lt;/a&gt;
+search.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h4 id=&#34;nas-using-reinforcement-learning&#34;&gt;NAS using reinforcement learning&lt;/h4&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;Alpha version&lt;/h4&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The algorithm name in Katib is &lt;code&gt;nasrl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For more information, see:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Information in the Katib repository on &lt;a href=&#34;https://github.com/kubeflow/katib/tree/master/pkg/suggestion/v1alpha3/NAS_Reinforcement_Learning&#34;&gt;NAS with 
+reinforcement learning&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The description of the &lt;code&gt;nasConfig&lt;/code&gt; field in the configuration file
+earlier on this page.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h3 id=&#34;metrics-collector&#34;&gt;Metrics collector&lt;/h3&gt;
+&lt;p&gt;In the &lt;code&gt;metricsCollectorSpec&lt;/code&gt; section of the YAML configuration file, you can
+define how Katib should collect the metrics from each trial, such as the 
+accuracy and loss metrics.&lt;/p&gt;
+&lt;p&gt;Your training code can record the metrics into &lt;code&gt;stdout&lt;/code&gt; or into arbitrary output
+files. Katib collects the metrics using a &lt;em&gt;sidecar&lt;/em&gt; container. A sidecar is
+a utility container that supports the main container in the Kubernetes Pod.&lt;/p&gt;
+&lt;p&gt;To define the metrics collector for your experiment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Specify the collector type in the &lt;code&gt;collector&lt;/code&gt; field.
+Katib&amp;rsquo;s metrics collector supports the following collector types:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;StdOut&lt;/code&gt;: Katib collects the metrics from the operating system&amp;rsquo;s default
+output location (&lt;em&gt;standard output&lt;/em&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;File&lt;/code&gt;: Katib collects the metrics from an arbitrary file, which
+you specify in the &lt;code&gt;source&lt;/code&gt; field.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TensorFlowEvent&lt;/code&gt;: Katib collects the metrics from a directory path
+containing a 
+&lt;a href=&#34;https://www.tensorflow.org/api_docs/python/tf/Event&#34;&gt;tf.Event&lt;/a&gt;. You
+should specify the path in the &lt;code&gt;source&lt;/code&gt; field.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Custom&lt;/code&gt;: Specify this value if you need to use custom way to collect
+metrics. You must define your custom metrics collector container
+in the &lt;code&gt;collector.customCollector&lt;/code&gt; field.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;None&lt;/code&gt;: Specify this value if you don&amp;rsquo;t need to use Katib&amp;rsquo;s metrics
+collector. For example, your training code may handle the persistent
+storage of its own metrics.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Specify the metrics output location in the &lt;code&gt;source&lt;/code&gt; field. See the 
+&lt;a href=&#34;https://github.com/kubeflow/katib/blob/master/pkg/apis/controller/common/v1alpha3/common_types.go#L81-L150&#34;&gt;MetricsCollectorSpec type&lt;/a&gt; for default values.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Write code in your training container to print metrics in the format
+specified in the &lt;code&gt;metricsCollectorSpec.source.filter.metricsFormat&lt;/code&gt;
+field. The default format is &lt;code&gt;([\w|-]+)\s*=\s*((-?\d+)(\.\d+)?)&lt;/code&gt;.
+Each element is a regular expression with two subexpressions. The first
+matched expression is taken as the metric name. The second matched
+expression is taken as the metric value.&lt;/p&gt;
+&lt;p&gt;For example, using the default metrics format, if the name of your objective metric
+is &lt;code&gt;loss&lt;/code&gt; and the metrics are &lt;code&gt;recall&lt;/code&gt; and &lt;code&gt;precision&lt;/code&gt;, your training code should
+print the following output:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;epoch 1:
+loss=0.3
+recall=0.5
+precision=0.4
+
+epoch 2:
+loss=0.2
+recall=0.55
+precision=0.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;running-the-experiment&#34;&gt;Running the experiment&lt;/h2&gt;
+&lt;p&gt;You can run a Katib experiment from the command line or from the Katib UI.&lt;/p&gt;
+&lt;h3 id=&#34;running-the-experiment-from-the-command-line&#34;&gt;Running the experiment from the command line&lt;/h3&gt;
+&lt;p&gt;You can use &lt;a href=&#34;https://kubernetes.io/docs/reference/kubectl/overview/&#34;&gt;kubectl&lt;/a&gt;
+to launch an experiment from the command line:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f &amp;lt;your-path/your-experiment-config.yaml&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For example, run the following command to launch an experiment using the
+random algorithm example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl apply -f https://raw.githubusercontent.com/kubeflow/katib/master/examples/v1alpha3/random-example.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Check the experiment status:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow describe experiment &amp;lt;your-experiment-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For example, to check the status of the random algorithm example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl -n kubeflow describe experiment random-example
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;running-the-experiment-from-the-katib-ui&#34;&gt;Running the experiment from the Katib UI&lt;/h3&gt;
+&lt;p&gt;Instead of using the command line, you can submit an experiment from the Katib 
+UI. The following steps assume you want to run a hyperparameter tuning 
+experiment. If you want to run a neural architecture search, access the &lt;strong&gt;NAS&lt;/strong&gt; 
+section of the UI (instead of the &lt;strong&gt;HP&lt;/strong&gt; section) and then follow a similar 
+sequence of steps.&lt;/p&gt;
+&lt;p&gt;To run a hyperparameter tuning experiment from the Katib UI:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the getting-started guide to &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/#katib-ui&#34;&gt;access the Katib
+UI&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &lt;strong&gt;Hyperparameter Tuning&lt;/strong&gt; on the Katib home page.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open the Katib menu panel on the left, then open the &lt;strong&gt;HP&lt;/strong&gt; section and
+click &lt;strong&gt;Submit&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click on the right-hand panel to close the menu panel. You should see
+tabs offering you the following options:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;YAML file:&lt;/strong&gt; Choose this option to supply an entire YAML file containing
+the configuration for the experiment.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;img src=&amp;quot;/docs/images/katib-deploy-yaml.png&amp;quot; 
+  alt=&amp;quot;UI tab to paste a YAML configuration file&amp;quot;
+  class=&amp;quot;mt-3 mb-3 border border-info rounded&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Parameters:&lt;/strong&gt; Choose this option to enter the configuration values
+into a form.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;img src=&amp;quot;/docs/images/katib-deploy-form.png&amp;quot; 
+  alt=&amp;quot;UI form to deploy a Katib experiment&amp;quot;
+  class=&amp;quot;mt-3 mb-3 border border-info rounded&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;View the results of the experiment in the Katib UI:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Open the Katib menu panel on the left, then open the &lt;strong&gt;HP&lt;/strong&gt; section and
+click &lt;strong&gt;Monitor&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click on the right-hand panel to close the menu panel. You should see
+the list of experiments:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click the name of your experiment. For example, click &lt;strong&gt;random-example&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You should see a graph showing the level of accuracy for various 
+combinations of the hyperparameter values. For example, the graph below
+shows learning rate, number of layers, and optimizer:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Below the graph is a list of trials that ran within the experiment.
+Click a trial name to see the trial data.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;See how to run the random algorithm and other &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/hyperparameter/#random-algorithm&#34;&gt;Katib
+examples&lt;/a&gt;
+in the getting-started guide.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For an overview of the concepts involved in hyperparameter tuning and
+neural architecture search, read the &lt;a href=&#34;http://osmatrix.github.io/docs/components/hyperparameter-tuning/overview/&#34;&gt;introduction to 
+Katib&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

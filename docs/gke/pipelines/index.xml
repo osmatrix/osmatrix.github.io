@@ -1,0 +1,537 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Pipelines on GCP</title>
+    <link>http://osmatrix.github.io/docs/gke/pipelines/</link>
+    <description>Recent content in Pipelines on GCP on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/gke/pipelines/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Authenticating Pipelines to GCP</title>
+      <link>http://osmatrix.github.io/docs/gke/pipelines/authentication-pipelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/pipelines/authentication-pipelines/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page describes authentication for Kubeflow Pipelines to GCP.&lt;/p&gt;
+&lt;h2 id=&#34;before-you-begin&#34;&gt;Before you begin&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview/&#34;&gt;Installation Options for Kubeflow Pipelines&lt;/a&gt; introduces options to install Pipelines. Be aware that authentication support and cluster setup instructions will vary depending on the option you installed Kubeflow Pipelines with.&lt;/p&gt;
+&lt;h2 id=&#34;securing-the-cluster-with-fine-grained-gcp-permission-control&#34;&gt;Securing the cluster with fine-grained GCP permission control&lt;/h2&gt;
+&lt;h3 id=&#34;workload-identity&#34;&gt;Workload Identity&lt;/h3&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+
+&lt;!-- raw HTML omitted --&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Workload identity is the recommended way for your GKE applications to consume services provided by Google APIs. You accomplish this by configuring a &lt;a href=&#34;https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/&#34;&gt;Kubernetes service account&lt;/a&gt; to act as a &lt;a href=&#34;https://cloud.google.com/iam/docs/service-accounts&#34;&gt;Google service account&lt;/a&gt;. Any Pods running as the Kubernetes service account then use the Google service account to authenticate to cloud services.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Referenced from &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity&#34;&gt;Workload Identity Documentation&lt;/a&gt;. Please read this doc for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Detailed introduction about workload identity.&lt;/li&gt;
+&lt;li&gt;Instructions to enable it on your cluster.&lt;/li&gt;
+&lt;li&gt;Whether its limitations affect your adoption.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;terminology&#34;&gt;Terminology&lt;/h4&gt;
+&lt;p&gt;This document distinguishes between &lt;a href=&#34;https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/&#34;&gt;Kubernetes service accounts&lt;/a&gt; (KSAs) and &lt;a href=&#34;https://cloud.google.com/iam/docs/service-accounts&#34;&gt;Google service accounts&lt;/a&gt; (GSAs). KSAs are Kubernetes resources, while GSAs are specific to Google Cloud. Other documentation usually refers to both of them as just &amp;ldquo;service accounts&amp;rdquo;.&lt;/p&gt;
+&lt;h4 id=&#34;authoring-pipelines-to-use-workload-identity&#34;&gt;Authoring pipelines to use workload identity&lt;/h4&gt;
+&lt;p&gt;Pipelines don&amp;rsquo;t need any change to authenticate to GCP, it will use the GSA bound to &lt;code&gt;pipeline-runner&lt;/code&gt; KSA transparently.&lt;/p&gt;
+&lt;p&gt;However, existing pipelines that use &lt;a href=&#34;https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.extensions.html#kfp.gcp.use_gcp_secret&#34;&gt;use_gcp_secret kfp sdk operator&lt;/a&gt; need to remove &lt;code&gt;use_gcp_secret&lt;/code&gt; usage to use the bound GSA.
+You can also continue to use &lt;code&gt;use_gcp_secret&lt;/code&gt; in a cluster with workload identity enabled, but pipeline steps with &lt;code&gt;use_gcp_secret&lt;/code&gt; will use the GSA corresponding to the secret provided.&lt;/p&gt;
+&lt;h4 id=&#34;cluster-setup-to-use-workload-identity-for-pipelines-standalone&#34;&gt;Cluster setup to use workload identity for Pipelines Standalone&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;After you enabled workload identity&lt;/strong&gt;, you need to bind workload identities for KSAs used by &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview/#kubeflow-pipelines-standalone&#34;&gt;Pipelines Standalone&lt;/a&gt;.
+The following helper bash scripts bind workload identities for KSAs provided by Pipelines Standalone:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/kustomize/gcp-workload-identity-setup.sh&#34;&gt;gcp-workload-identity-setup.sh&lt;/a&gt; helps you create GSAs and bind them to KSAs used by pipelines workloads. This script provides an interactive command line dialog with explanation messages.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/manifests/kustomize/wi-utils.sh&#34;&gt;wi-utils.sh&lt;/a&gt; provides minimal utility bash functions that let you customize your setup. The minimal utilities make it easy to read and use programmatically.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pipelines use &lt;code&gt;pipeline-runner&lt;/code&gt; KSA, you can configure IAM permissions of the GSA bound to this KSA to allow pipelines use GCP APIs.&lt;/p&gt;
+&lt;p&gt;Pipelines UI uses &lt;code&gt;ml-pipeline-ui&lt;/code&gt; KSA. If you need to view visualizations stored in Google Cloud Storage (GCS) from pipelines UI, you should add Storage Object Viewer permission to its bound GSA.&lt;/p&gt;
+&lt;h3 id=&#34;google-service-account-keys-stored-as-kubernetes-secrets&#34;&gt;Google service account keys stored as Kubernetes secrets&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;For &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview/#kubeflow-pipelines-standalone&#34;&gt;Pipelines Standalone&lt;/a&gt;, it is recommended to use workload identity for easier management, but you can also choose to use GSA keys.&lt;/li&gt;
+&lt;li&gt;For &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview#full-kubeflow-deployment&#34;&gt;Kubeflow full deployment&lt;/a&gt; and &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview#gcp-hosted-ml-pipelines&#34;&gt;GCP hosted ML pipelines&lt;/a&gt;, using GSA keys is the only supported option now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;authoring-pipelines-to-use-gsa-keys&#34;&gt;Authoring pipelines to use GSA keys&lt;/h4&gt;
+&lt;p&gt;Each pipeline step describes a 
+container that is run independently. If you want to grant access for a single step to use
+one of your service accounts, you can use 
+&lt;a href=&#34;https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.extensions.html#kfp.gcp.use_gcp_secret&#34;&gt;&lt;code&gt;kfp.gcp.use_gcp_secret()&lt;/code&gt;&lt;/a&gt;.
+Examples for how to use this function can be found in the 
+&lt;a href=&#34;https://github.com/kubeflow/examples/blob/871895c54402f68685c8e227c954d86a81c0575f/pipelines/mnist-pipelines/mnist_pipeline.py#L97&#34;&gt;Kubeflow examples repo&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;cluster-setup-to-use-use_gcp_secret-for-full-kubeflow&#34;&gt;Cluster setup to use use_gcp_secret for Full Kubeflow&lt;/h4&gt;
+&lt;p&gt;You don&amp;rsquo;t need to do anything. Full Kubeflow deployment has already deployed the &lt;code&gt;user-gcp-sa&lt;/code&gt; secret for you.&lt;/p&gt;
+&lt;h4 id=&#34;cluster-setup-to-use-use_gcp_secret-for-pipelines-standalone-and-hosted-gcp-ml-pipelines&#34;&gt;Cluster setup to use use_gcp_secret for Pipelines Standalone and Hosted GCP ML Pipelines&lt;/h4&gt;
+&lt;p&gt;Pipelines Standalone and Hosted GCP ML Pipelines require you to manually set up the &lt;code&gt;user-gcp-sa&lt;/code&gt; secret used by &lt;code&gt;use_gcp_secret&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Instructions to set up the secret:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;First download the GCE VM service account token (refer to &lt;a href=&#34;https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys&#34;&gt;GCP documentation&lt;/a&gt; for more information):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud iam service-accounts keys create application_default_credentials.json \
+  --iam-account [SA-NAME]@[PROJECT-ID].iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kubectl create secret -n [your-namespace] generic user-gcp-sa \
+  --from-file=user-gcp-sa.json=application_default_credentials.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Upgrading and Reinstalling</title>
+      <link>http://osmatrix.github.io/docs/gke/pipelines/upgrade/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/pipelines/upgrade/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Starting from Kubeflow v0.5, Kubeflow Pipelines persists the
+pipeline data in permanent storage volumes. Kubeflow Pipelines therefore
+supports the following capabilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reinstall:&lt;/strong&gt; You can delete a cluster and create a new cluster, specifying
+the existing storage volumes to retrieve the original data in the new cluster.
+This guide tells you how to reinstall Kubeflow Pipelines as part of a
+full Kubeflow deployment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Upgrade (limited support):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The full Kubeflow deployment currently supports upgrading in &lt;strong&gt;Alpha&lt;/strong&gt;
+status with limited support. Check the following sources for progress
+updates:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kubeflow/kubeflow/issues/3727&#34;&gt;Issue kubeflow/kubeflow #3727&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://osmatrix.github.io/docs/upgrading/upgrade/&#34;&gt;Kubeflow upgrade guide&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;before-you-start&#34;&gt;Before you start&lt;/h2&gt;
+&lt;p&gt;This guide tells you how to reinstall Kubeflow Pipelines as part of a
+full Kubeflow deployment on Google Kubernetes Engine (GKE). See the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;Kubeflow deployment guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Instead of the full Kubeflow deployment, you can use Kubeflow Pipelines 
+Standalone or GCP Hosted ML Pipelines (Alpha), which support different options
+for upgrading and reinstalling. See the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/installation/overview/&#34;&gt;Kubeflow Pipelines installation
+options&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;kubeflow-pipelines-data-storage&#34;&gt;Kubeflow Pipelines data storage&lt;/h2&gt;
+&lt;p&gt;Kubeflow Pipelines creates and manages the following data related to your 
+machine learning pipeline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Metadata:&lt;/strong&gt; Experiments, jobs, runs, etc. Kubeflow Pipelines 
+stores the pipeline metadata in a MySQL database.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Artifacts:&lt;/strong&gt; Pipeline packages, metrics, views, etc. Kubeflow Pipelines 
+stores the artifacts in a &lt;a href=&#34;https://docs.minio.io/&#34;&gt;Minio server&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kubeflow Pipelines uses the Kubernetes
+&lt;a href=&#34;https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes&#34;&gt;PersistentVolume&lt;/a&gt;
+(PV) subsystem to provision the MySQL database and the Minio server.
+On GCP, Kubeflow Pipelines creates a Google Compute Engine 
+&lt;a href=&#34;https://cloud.google.com/persistent-disk/&#34;&gt;Persistent Disk&lt;/a&gt; (PD)
+and mounts it as a PV.&lt;/p&gt;
+&lt;p&gt;After &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;, you can see two entries in
+the &lt;a href=&#34;https://console.cloud.google.com/dm/deployments&#34;&gt;GCP Deployment Manager&lt;/a&gt;,
+one for the cluster deployment and one for the storage deployment:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;The entry with the suffix &lt;code&gt;-storage&lt;/code&gt; creates one PD for the metadata store and
+one for the artifact store:&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;reinstalling-kubeflow-pipelines&#34;&gt;Reinstalling Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;You can delete a Kubeflow cluster and create a new one, specifying
+your existing storage to retrieve the original data in the new cluster.&lt;/p&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You must use command-line deployment. 
+You cannot reinstall Kubeflow Pipelines using the web interface.&lt;/li&gt;
+&lt;li&gt;When you do &lt;code&gt;kfctl apply&lt;/code&gt; or &lt;code&gt;kfctl build&lt;/code&gt;, you should use a different 
+deployment name from your existing deployment name. Otherwise, kfctl will
+delete your data in the existing PDs. This guide defines the deployment name
+in the ${KF_NAME} environment variable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To reinstall Kubeflow Pipelines:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Follow the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;command-line deployment 
+instructions&lt;/a&gt;, but &lt;strong&gt;note the following
+changes in the procedure&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set a different &lt;code&gt;${KF_NAME}&lt;/code&gt; name from your existing &lt;code&gt;${KF_NAME}&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Before&lt;/strong&gt; running the &lt;code&gt;kfctl apply&lt;/code&gt; command:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/gcp_config/storage-kubeflow.yaml&lt;/code&gt; and set the following
+flag to skip creating new storage:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+createPipelinePersistentStorage: false
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/minio/overlays/minioPd/params.env&lt;/code&gt; and specify 
+the PD that your existing deployment uses for the Minio server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+minioPd=[NAME-OF-ARTIFACT-STORAGE-DISK]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit &lt;code&gt;${KF_DIR}/kustomize/mysql/overlays/mysqlPd/params.env&lt;/code&gt; and specify 
+the PD that your existing deployment uses for the MySQL database:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;...
+mysqlPd=[NAME-OF-METADATA-STORAGE-DISK]
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run the &lt;code&gt;kfctl apply&lt;/code&gt; command to deploy Kubeflow as usual:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;kfctl apply -V -f ${CONFIG_FILE}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You should now have a new Kubeflow deployment that uses the same pipelines data 
+storage as your previous deployment. Follow the steps in the deployment guide
+to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/#check-your-deployment&#34;&gt;check your deployment&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Enabling GPU and TPU</title>
+      <link>http://osmatrix.github.io/docs/gke/pipelines/enable-gpu-and-tpu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/pipelines/enable-gpu-and-tpu/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This page describes how to enable GPU or TPU for a pipeline on GKE by using the Pipelines 
+DSL language.&lt;/p&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;To enable GPU and TPU on your Kubeflow cluster, follow the instructions on how to 
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/customizing-gke#common-customizations&#34;&gt;customize&lt;/a&gt; the GKE cluster for Kubeflow before
+setting up the cluster.&lt;/p&gt;
+&lt;h2 id=&#34;configure-containerop-to-consume-gpus&#34;&gt;Configure ContainerOp to consume GPUs&lt;/h2&gt;
+&lt;p&gt;After enabling the GPU, the Kubeflow setup script installs a default GPU pool with type nvidia-tesla-k80 with auto-scaling enabled.
+The following code consumes 2 GPUs in a ContainerOp.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;kfp.dsl&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;
+&lt;span style=&#34;color:#000&#34;&gt;gpu_op&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ContainerOp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;gpu-op&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;...&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;set_gpu_limit&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The code above will be compiled into Kubernetes Pod spec:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;container&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;...&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;resources&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;limits&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nvidia.com/gpu&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If the cluster has multiple node pools with different GPU types, you can specify the GPU type by the following code.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;kfp.dsl&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;
+&lt;span style=&#34;color:#000&#34;&gt;gpu_op&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ContainerOp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;gpu-op&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;...&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;set_gpu_limit&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#000&#34;&gt;gpu_op&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;add_node_selector_constraint&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;cloud.google.com/gke-accelerator&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;nvidia-tesla-p4&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The code above will be compiled into Kubernetes Pod spec:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;container&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;...&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;resources&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;limits&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nvidia.com/gpu&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;nodeSelector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;cloud.google.com/gke-accelerator&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;nvidia-tesla-p4&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Check the &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/gpus&#34;&gt;GKE GPU guide&lt;/a&gt; to learn more about GPU settings.&lt;/p&gt;
+&lt;h2 id=&#34;configure-containerop-to-consume-tpus&#34;&gt;Configure ContainerOp to consume TPUs&lt;/h2&gt;
+&lt;p&gt;Use the following code to configure ContainerOp to consume TPUs on GKE:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;kfp.dsl&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;kfp.gcp&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gcp&lt;/span&gt;
+&lt;span style=&#34;color:#000&#34;&gt;tpu_op&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dsl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ContainerOp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;tpu-op&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;...&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;apply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;gcp&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;use_tpu&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#000&#34;&gt;tpu_cores&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;tpu_resource&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;v2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;tf_version&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;1.12&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The above code uses 8 v2 TPUs with TF version to be 1.12. The code above will be compiled into Kubernetes Pod spec:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;container&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;...&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;resources&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;limits&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;cloud-tpus.google.com/v2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;8&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;metadata&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;annotations&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;      &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;tf-version.cloud-tpus.google.com&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;1.12&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;See the &lt;a href=&#34;https://cloud.google.com/tpu/docs/kubernetes-engine-setup&#34;&gt;GKE TPU Guide&lt;/a&gt; to learn more about TPU settings.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Using Preemptible VMs and GPUs on GCP</title>
+      <link>http://osmatrix.github.io/docs/gke/pipelines/preemptible/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/gke/pipelines/preemptible/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This document describes how to configure preemptible virtual machines
+(&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms&#34;&gt;preemptible VMs&lt;/a&gt;)
+and GPUs on preemptible VM instances
+(&lt;a href=&#34;https://cloud.google.com/compute/docs/instances/preemptible#preemptible_with_gpu&#34;&gt;preemptible GPUs&lt;/a&gt;)
+for your workflows running on Kubeflow Pipelines on Google Cloud Platform (GCP).&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Preemptible VMs are &lt;a href=&#34;https://cloud.google.com/compute/docs/instances/&#34;&gt;Compute Engine VM 
+instances&lt;/a&gt; that last a maximum 
+of 24 hours and provide no availability guarantees. The 
+&lt;a href=&#34;https://cloud.google.com/compute/pricing&#34;&gt;pricing&lt;/a&gt; of preemptible VMs is
+lower than that of standard Compute Engine VMs.&lt;/p&gt;
+&lt;p&gt;GPUs attached to preemptible instances 
+(&lt;a href=&#34;https://cloud.google.com/compute/docs/instances/preemptible#preemptible_with_gpu&#34;&gt;preemptible GPUs&lt;/a&gt;) 
+work like normal GPUs but persist only for the life of the instance.&lt;/p&gt;
+&lt;p&gt;Using preemptible VMs and GPUs can reduce costs on GCP.
+In addition to using preemptible VMs, your Google Kubernetes Engine (GKE)
+cluster can autoscale based on current workloads.&lt;/p&gt;
+&lt;p&gt;This guide assumes that you have already deployed Kubeflow Pipelines. If not,
+follow the guide to &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deploying Kubeflow on GCP&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;using-preemptible-vms-with-kubeflow-pipelines&#34;&gt;Using preemptible VMs with Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;In summary, the steps to schedule a pipeline to run on &lt;a href=&#34;https://cloud.google.com/compute/docs/instances/preemptible&#34;&gt;preemptible
+VMs&lt;/a&gt; are as
+follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools&#34;&gt;node pool&lt;/a&gt;
+in your cluster that contains preemptible VMs.&lt;/li&gt;
+&lt;li&gt;Configure your pipelines to run on the preemptible VMs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following sections contain more detail about the above steps.&lt;/p&gt;
+&lt;h3 id=&#34;1-create-a-node-pool-with-preemptible-vms&#34;&gt;1. Create a node pool with preemptible VMs&lt;/h3&gt;
+&lt;p&gt;Use the &lt;code&gt;gcloud&lt;/code&gt; command to
+&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/container/node-pools/create&#34;&gt;create a node pool&lt;/a&gt;.
+The following example includes placeholders to illustrate the important
+configurations:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud container node-pools create PREEMPTIBLE_CPU_POOL \
+    --cluster=CLUSTER_NAME \
+    --enable-autoscaling --max-nodes=MAX_NODES --min-nodes=MIN_NODES \
+    --preemptible \
+    --node-taints=preemptible=true:NoSchedule \
+    --service-account=DEPLOYMENT_NAME-vm@PROJECT_NAME.iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PREEMPTIBLE_CPU_POOL&lt;/code&gt; is the name of the node pool.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CLUSTER_NAME&lt;/code&gt; is the name of the GKE cluster.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MAX_NODES&lt;/code&gt; and &lt;code&gt;MIN_NODES&lt;/code&gt; are the maximum and minimum number of nodes
+for the &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-autoscaler&#34;&gt;GKE 
+autoscaling&lt;/a&gt;
+functionality.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DEPLOYMENT_NAME&lt;/code&gt; is the name of your Kubeflow deployment. If you used
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;the CLI to deploy Kubeflow&lt;/a&gt;,
+this name is the value of the &lt;code&gt;${KF_NAME}&lt;/code&gt; environment variable. If you used
+the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui/&#34;&gt;deployment UI&lt;/a&gt;,
+this name is the value you specified as the deployment name.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PROJECT_NAME&lt;/code&gt; is the name of your GCP project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Below is an example of the command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud container node-pools create preemptible-cpu-pool \
+    --cluster=user-4-18 \
+    --enable-autoscaling --max-nodes=4 --min-nodes=0 \
+    --preemptible \
+    --node-taints=preemptible=true:NoSchedule \
+    --service-account=user-4-18-vm@ml-pipeline-project.iam.gserviceaccount.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2-schedule-your-pipeline-to-run-on-the-preemptible-vms&#34;&gt;2. Schedule your pipeline to run on the preemptible VMs&lt;/h3&gt;
+&lt;p&gt;After configuring a node pool with preemptible VMs, you must configure your
+pipelines to run on the preemptible VMs.&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/&#34;&gt;DSL code&lt;/a&gt; for
+your pipeline, add the following to the &lt;code&gt;ContainerOp&lt;/code&gt; instance:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.apply(gcp.use_preemptible_nodepool())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above function works for both methods of generating the &lt;code&gt;ContainerOp&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;ContainerOp&lt;/code&gt; generated from 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/sdk/python/kfp/components/_python_op.py&#34;&gt;&lt;code&gt;kfp.components.func_to_container_op&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;ContainerOp&lt;/code&gt; generated from the task factory function, which is
+loaded by &lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/sdk/python/kfp/components/_components.py&#34;&gt;&lt;code&gt;components.load_component_from_url&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Call &lt;code&gt;.set_retry(#NUM_RETRY)&lt;/code&gt; on your &lt;code&gt;ContainerOp&lt;/code&gt; to retry 
+the task after the task is preempted.&lt;/li&gt;
+&lt;li&gt;If you modified the
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/node-taints&#34;&gt;node taint&lt;/a&gt;
+when creating the node pool, pass the same node toleration to the
+&lt;code&gt;use_preemptible_nodepool()&lt;/code&gt; function.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;use_preemptible_nodepool()&lt;/code&gt; also accepts a parameter &lt;code&gt;hard_constraint&lt;/code&gt;. When the &lt;code&gt;hard_constraint&lt;/code&gt; is
+&lt;code&gt;True&lt;/code&gt;, the system will strictly schedule the task in preemptible VMs. When the &lt;code&gt;hard_constraint&lt;/code&gt; is 
+&lt;code&gt;False&lt;/code&gt;, the system will try to schedule the task in preemptible VMs. If it cannot find the preemptible VMs,
+or the preemptible VMs are busy, the system will schedule the task in normal VMs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import kfp.dsl as dsl
+import kfp.gcp as gcp
+
+class FlipCoinOp(dsl.ContainerOp):
+  &amp;quot;&amp;quot;&amp;quot;Flip a coin and output heads or tails randomly.&amp;quot;&amp;quot;&amp;quot;
+
+  def __init__(self):
+    super(FlipCoinOp, self).__init__(
+      name=&#39;Flip&#39;,
+      image=&#39;python:alpine3.6&#39;,
+      command=[&#39;sh&#39;, &#39;-c&#39;],
+      arguments=[&#39;python -c &amp;quot;import random; result = \&#39;heads\&#39; if random.randint(0,1) == 0 &#39;
+                 &#39;else \&#39;tails\&#39;; print(result)&amp;quot; | tee /tmp/output&#39;],
+      file_outputs={&#39;output&#39;: &#39;/tmp/output&#39;})
+
+@dsl.pipeline(
+  name=&#39;pipeline flip coin&#39;,
+  description=&#39;shows how to use dsl.Condition.&#39;
+)
+
+def flipcoin():
+  flip = FlipCoinOp().apply(gcp.use_preemptible_nodepool())
+
+if __name__ == &#39;__main__&#39;:
+  import kfp.compiler as compiler
+  compiler.Compiler().compile(flipcoin, __file__ + &#39;.zip&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;using-preemptible-gpus-with-kubeflow-pipelines&#34;&gt;Using preemptible GPUs with Kubeflow Pipelines&lt;/h2&gt;
+&lt;p&gt;This guide assumes that you have already deployed Kubeflow Pipelines. In
+summary, the steps to schedule a pipeline to run with
+&lt;a href=&#34;https://cloud.google.com/compute/docs/instances/preemptible#preemptible_with_gpu&#34;&gt;preemptible GPUs&lt;/a&gt;
+are as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Make sure you have enough GPU quota.&lt;/li&gt;
+&lt;li&gt;Create a node pool in your GKE cluster that contains preemptible VMs with
+preemptible GPUs.&lt;/li&gt;
+&lt;li&gt;Configure your pipelines to run on the preemptible VMs with preemptible
+GPUs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following sections contain more detail about the above steps.&lt;/p&gt;
+&lt;h3 id=&#34;1-make-sure-you-have-enough-gpu-quota&#34;&gt;1. Make sure you have enough GPU quota&lt;/h3&gt;
+&lt;p&gt;Add GPU quota to your GCP project. The &lt;a href=&#34;https://cloud.google.com/compute/docs/gpus/#introduction&#34;&gt;GCP
+documentation&lt;/a&gt; lists
+the availability of GPUs across regions. To check the available quota for
+resources in your project, go to the
+&lt;a href=&#34;https://console.cloud.google.com/iam-admin/quotas&#34;&gt;Quotas&lt;/a&gt; page in the GCP
+Console.&lt;/p&gt;
+&lt;h3 id=&#34;2-create-a--node-pool-of-preemptible-vms-with-preemptible-gpus&#34;&gt;2. Create a  node pool of preemptible VMs with preemptible GPUs&lt;/h3&gt;
+&lt;p&gt;Use the &lt;code&gt;gcloud&lt;/code&gt; command to
+&lt;a href=&#34;https://cloud.google.com/sdk/gcloud/reference/container/node-pools/create&#34;&gt;create a node pool&lt;/a&gt;.
+The following example includes placeholders to illustrate the important
+configurations:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud container node-pools create PREEMPTIBLE_GPU_POOL \
+    --cluster=CLUSTER_NAME \
+    --enable-autoscaling --max-nodes=MAX_NODES --min-nodes=MIN_NODES \
+    --preemptible \
+    --node-taints=preemptible=true:NoSchedule \
+    --service-account=DEPLOYMENT_NAME-vm@PROJECT_NAME.iam.gserviceaccount.com \
+    --accelerator=type=GPU_TYPE,count=GPU_COUNT
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PREEMPTIBLE_GPU_POOL&lt;/code&gt; is the name of the node pool.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CLUSTER_NAME&lt;/code&gt; is the name of the GKE cluster.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MAX_NODES&lt;/code&gt; and &lt;code&gt;MIN_NODES&lt;/code&gt; are the maximum and minimum number of nodes
+for the
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-autoscaler&#34;&gt;GKE autoscaling&lt;/a&gt;
+functionality.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DEPLOYMENT_NAME&lt;/code&gt; is the name of your Kubeflow deployment. If you used
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-cli/&#34;&gt;the CLI to deploy Kubeflow&lt;/a&gt;,
+this name is the value of the &lt;code&gt;${KF_NAME}&lt;/code&gt; environment variable. If you used
+the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/deploy-ui/&#34;&gt;deployment UI&lt;/a&gt;,
+this name is the value you specified as the deployment name.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PROJECT_NAME&lt;/code&gt; is the name of your GCP project.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GPU_TYPE&lt;/code&gt; is the &lt;a href=&#34;https://cloud.google.com/compute/docs/gpus/&#34;&gt;type of
+GPU&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GPU_COUNT&lt;/code&gt; is the number of GPUs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Below is an example of the command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gcloud container node-pools create preemptible-gpu-pool \
+    --cluster=user-4-18 \
+    --enable-autoscaling --max-nodes=4 --min-nodes=0 \
+    --preemptible \
+    --node-taints=preemptible=true:NoSchedule \
+    --service-account=user-4-18-vm@ml-pipeline-project.iam.gserviceaccount.com \
+    --accelerator=type=nvidia-tesla-t4,count=2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;3-schedule-your-pipeline-to-run-on-the-preemptible-vms-with-preemptible-gpus&#34;&gt;3. Schedule your pipeline to run on the preemptible VMs with preemptible GPUs&lt;/h3&gt;
+&lt;p&gt;In the &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/sdk-overview/&#34;&gt;DSL code&lt;/a&gt; for
+your pipeline, add the following to the &lt;code&gt;ContainerOp&lt;/code&gt; instance:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.apply(gcp.use_preemptible_nodepool()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above function works for both methods of generating the &lt;code&gt;ContainerOp&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;ContainerOp&lt;/code&gt; generated from 
+&lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/sdk/python/kfp/components/_python_op.py&#34;&gt;&lt;code&gt;kfp.components.func_to_container_op&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;ContainerOp&lt;/code&gt; generated from the task factory function, which is
+loaded by &lt;a href=&#34;https://github.com/kubeflow/pipelines/blob/master/sdk/python/kfp/components/_components.py&#34;&gt;&lt;code&gt;components.load_component_from_url&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Call &lt;code&gt;.set_gpu_limit(#NUM_GPUs, GPU_VENDOR)&lt;/code&gt; on your 
+&lt;code&gt;ContainerOp&lt;/code&gt; to specify the GPU limit (for example, &lt;code&gt;1&lt;/code&gt;) and vendor (for 
+example, &lt;code&gt;&#39;nvidia&#39;&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;.set_retry(#NUM_RETRY)&lt;/code&gt; on your &lt;code&gt;ContainerOp&lt;/code&gt; to retry 
+the task after the task is preempted.&lt;/li&gt;
+&lt;li&gt;If you modified the
+&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/how-to/node-taints&#34;&gt;node taint&lt;/a&gt;
+when creating the node pool, pass the same node toleration to the
+&lt;code&gt;use_preemptible_nodepool()&lt;/code&gt; function.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;use_preemptible_nodepool()&lt;/code&gt; also accepts a parameter &lt;code&gt;hard_constraint&lt;/code&gt;. When the &lt;code&gt;hard_constraint&lt;/code&gt; is
+&lt;code&gt;True&lt;/code&gt;, the system will strictly schedule the task in preemptible VMs. When the &lt;code&gt;hard_constraint&lt;/code&gt; is 
+&lt;code&gt;False&lt;/code&gt;, the system will try to schedule the task in preemptible VMs. If it cannot find the preemptible VMs,
+or the preemptible VMs are busy, the system will schedule the task in normal VMs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import kfp.dsl as dsl
+import kfp.gcp as gcp
+
+class FlipCoinOp(dsl.ContainerOp):
+  &amp;quot;&amp;quot;&amp;quot;Flip a coin and output heads or tails randomly.&amp;quot;&amp;quot;&amp;quot;
+
+  def __init__(self):
+    super(FlipCoinOp, self).__init__(
+      name=&#39;Flip&#39;,
+      image=&#39;python:alpine3.6&#39;,
+      command=[&#39;sh&#39;, &#39;-c&#39;],
+      arguments=[&#39;python -c &amp;quot;import random; result = \&#39;heads\&#39; if random.randint(0,1) == 0 &#39;
+                 &#39;else \&#39;tails\&#39;; print(result)&amp;quot; | tee /tmp/output&#39;],
+      file_outputs={&#39;output&#39;: &#39;/tmp/output&#39;})
+
+@dsl.pipeline(
+  name=&#39;pipeline flip coin&#39;,
+  description=&#39;shows how to use dsl.Condition.&#39;
+)
+
+def flipcoin():
+  flip = FlipCoinOp().set_gpu_limit(1, &#39;nvidia&#39;).apply(gcp.use_preemptible_nodepool())
+if __name__ == &#39;__main__&#39;:
+  import kfp.compiler as compiler
+  compiler.Compiler().compile(flipcoin, __file__ + &#39;.zip&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;comparison-with-cloud-ai-platform-training-service&#34;&gt;Comparison with Cloud AI Platform Training service&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/ml-engine/docs/&#34;&gt;Cloud AI Platform Training&lt;/a&gt; is a GCP
+machine learning (ML) training service that supports distributed training and
+hyperparameter tuning, and requires no complex GKE configuration. Cloud AI
+Platform Training charges the Compute Engine costs only for the runtime of the
+job.&lt;/p&gt;
+&lt;p&gt;The table below compares Cloud AI Platform Training with Kubeflow Pipelines
+running preemptible VMs or GPUs:&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;next-steps&#34;&gt;Next steps&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Explore further options for &lt;a href=&#34;http://osmatrix.github.io/docs/gke/&#34;&gt;customizing Kubeflow on GCP&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;See how to &lt;a href=&#34;http://osmatrix.github.io/docs/pipelines/sdk/&#34;&gt;build pipelines with the SDK&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

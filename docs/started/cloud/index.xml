@@ -1,0 +1,80 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubeflow – Cloud Installation</title>
+    <link>http://osmatrix.github.io/docs/started/cloud/</link>
+    <description>Recent content in Cloud Installation on Kubeflow</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="http://osmatrix.github.io/docs/started/cloud/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: AWS for Kubeflow</title>
+      <link>http://osmatrix.github.io/docs/started/cloud/getting-started-aws/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/cloud/getting-started-aws/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Please refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/aws/deploy&#34;&gt;deployment section&lt;/a&gt; in the
+&lt;a href=&#34;http://osmatrix.github.io/docs/aws/&#34;&gt;AWS docs&lt;/a&gt; for information on setting up your AWS environment and deploying Kubeflow on Amazon Elastic Kubernetes Service (Amazon EKS).&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Azure for Kubeflow</title>
+      <link>http://osmatrix.github.io/docs/started/cloud/getting-started-azure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/cloud/getting-started-azure/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Please refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/azure/deploy&#34;&gt;deployment section&lt;/a&gt; in the 
+&lt;a href=&#34;http://osmatrix.github.io/docs/azure/&#34;&gt;Azure docs&lt;/a&gt; for information on setting up your Azure environment and deploying Kubeflow on an existing Azure Resource Group or Cluster for AKS (Azure Kubernetes Service).&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Google Cloud for Kubeflow</title>
+      <link>http://osmatrix.github.io/docs/started/cloud/getting-started-gke/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/cloud/getting-started-gke/</guid>
+      <description>
+        
+        
+        &lt;p&gt;For details on setting up your GCP
+environment and deploying Kubeflow on Kubernetes Engine (GKE),
+refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/gke/deploy/&#34;&gt;deployment section&lt;/a&gt; of the
+&lt;a href=&#34;http://osmatrix.github.io/docs/gke/&#34;&gt;Kubeflow GCP documentation&lt;/a&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: IBM Cloud for Kubeflow</title>
+      <link>http://osmatrix.github.io/docs/started/cloud/getting-started-icp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://osmatrix.github.io/docs/started/cloud/getting-started-icp/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Please refer to the &lt;a href=&#34;http://osmatrix.github.io/docs/ibm/install-kubeflow&#34;&gt;installation section&lt;/a&gt; in the
+&lt;a href=&#34;http://osmatrix.github.io/docs/ibm/&#34;&gt;IBM docs&lt;/a&gt; for information on setting up your IKS environment and deploying Kubeflow on IBM Cloud Kubernetes Service (IKS).&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

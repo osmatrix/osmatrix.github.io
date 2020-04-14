@@ -1,0 +1,2983 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.69.0" />
+
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x196.png" sizes="96x196">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png"sizes="192x192">
+
+<script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "WebSite",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "http:\/\/osmatrix.github.io"
+      },
+      "articleSection" : "docs",
+      "name" : "Contributing to Kubeflow",
+      "headline" : "Contributing to Kubeflow",
+      "description" : "How to start contributing to Kubeflow",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "0001",
+      "datePublished": "0001-01-01 00:00:00 \x2b0000 UTC",
+      "dateModified" : "0001-01-01 00:00:00 \x2b0000 UTC",
+      "url" : "http:\/\/osmatrix.github.io\/docs\/about\/contributing\/",
+      "wordCount" : "2263",
+      "keywords" : [ "Kubeflow" ]
+  }
+  </script>
+<title>Contributing to Kubeflow | Kubeflow</title><meta property="og:title" content="Contributing to Kubeflow" />
+<meta property="og:description" content="How to start contributing to Kubeflow" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://osmatrix.github.io/docs/about/contributing/" />
+<meta property="article:modified_time" content="2020-03-10T17:38:23+08:00" /><meta property="og:site_name" content="Kubeflow" />
+<meta itemprop="name" content="Contributing to Kubeflow">
+<meta itemprop="description" content="How to start contributing to Kubeflow">
+<meta itemprop="dateModified" content="2020-03-10T17:38:23&#43;08:00" />
+<meta itemprop="wordCount" content="2263">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Contributing to Kubeflow"/>
+<meta name="twitter:description" content="How to start contributing to Kubeflow"/>
+
+
+
+
+
+<link rel="preload" href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" as="style">
+<link href="/scss/main.min.c22cd4b0bf53abcbb5d36b3825312951cd2a6d3f6a749fd752e4cd25aa7425e8.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+    <title>Contributing to Kubeflow | Kubeflow</title>
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+	<a class="navbar-brand" href="/">
+		<span class="navbar-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 276.93 274.55"><g data-name="Layer 2"><g data-name="Layer 1"><path d="M95.9 62.15l4.1 102.1 73.75-94.12a6.79 6.79.0 019.6-1.11l46 36.92-15-65.61z" fill="#4279f4"/><path fill="#0028aa" d="M102.55 182.98h65.42l-40.17-32.23-25.25 32.23z"/><path fill="#014bd1" d="M180.18 83.92l-44 56.14 46.88 37.61 44.47-55.76-47.35-37.99z"/><path fill="#bedcff" d="M83.56 52.3l.01-.01 38.69-48.52-62.39 30.05-15.41 67.51 39.1-49.03z"/><path fill="#6ca1ff" d="M45.32 122.05l41.44 51.96-3.95-98.98-37.49 47.02z"/><path fill="#a1c3ff" d="M202.31 28.73 142.65.0l-37.13 46.56 96.79-17.83z"/><path d="M1.6 272v-44.78h5.74v23.41l20.48-23.41h6.4l-17.39 19.7 19 25.07H29.1l-15.92-20.8-5.84 6.65V272zm40.02-9.79V240h5.43v22.39a4.67 4.67.0 002.35 4.19 11 11 0 0011 0 4.69 4.69.0 002.33-4.19V240h5.43v22.19a9.08 9.08.0 01-4.1 7.87 16.2 16.2.0 01-18.37.0 9.07 9.07.0 01-4.07-7.85zM77.46 272v-48h5.43v16.81a29.29 29.29.0 019.32-1.73 13.1 13.1.0 016.2 1.41 10.71 10.71.0 014.18 3.74 18.07 18.07.0 012.23 5.06 21.26 21.26.0 01.73 5.58q0 8.43-4.38 12.79T87.35 272zm5.43-4.87h4.55q6.77.0 9.72-2.95t3-9.51a14.21 14.21.0 00-2-7.52 6.55 6.55.0 00-6-3.22 24.73 24.73.0 00-9.25 1.54zm29.47-11.19q0-7.71 4.09-12.3a13.75 13.75.0 0110.8-4.59q13.35.0 13.36 18.86h-22.82a12.3 12.3.0 002.9 7.07q2.59 3.11 7.9 3.1a24.92 24.92.0 0010.55-2v5a27.74 27.74.0 01-9.86 1.87 19.83 19.83.0 01-7.7-1.37 13.31 13.31.0 01-5.28-3.76 16.21 16.21.0 01-3-5.38 20.84 20.84.0 01-.94-6.5zm5.62-2.12h17.26a14.91 14.91.0 00-2.37-7.12 6.44 6.44.0 00-5.62-2.78 8.2 8.2.0 00-6.21 2.72 12.07 12.07.0 00-3.04 7.18z" fill="#4279f4" stroke="#4279f4" stroke-miterlimit="10" stroke-width="3.2"/><path d="M147.32 244.89V240h5v-7.59a8.14 8.14.0 012.31-6.05 7.79 7.79.0 015.69-2.28h7.86V229h-5c-2.21.0-3.67.45-4.37 1.34s-1.06 2.55-1.06 5V240h8.46v4.87h-8.46V272h-5.44v-27.1zM175.26 272v-48h5.43v48zm19.15-3.95a17.86 17.86.0 1112.33 4.9 16.57 16.57.0 01-12.33-4.9zm3.84-20.65a13.16 13.16.0 000 17.2 12.07 12.07.0 0017 0 13.09 13.09.0 000-17.2 12.07 12.07.0 00-17 0zm30.2-7.4h5.75l7.3 25.32 7.43-25.32h5.36l7.34 25.34L269 240h5.74l-10.04 32h-6.12l-6.83-24.58L245 272h-6.47z" fill="#0028aa" stroke="#0028aa" stroke-miterlimit="10" stroke-width="3.2"/></g></g></svg> </span><span class="brand-name text-uppercase font-weight-bold">Kubeflow</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/docs/about/kubeflow/" ><span>What is Kubeflow?</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="/docs/" ><span>Documentation</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://medium.com/kubeflow" target="_blank" ><span>Blog</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				<a class="nav-link" href="https://github.com/kubeflow/" target="_blank" ><span>GitHub</span></a>
+			</li>
+			
+			
+      <li class="nav-item dropdown d-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	v1.0
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="https://master.kubeflow.org">master</a>
+	
+	<a class="dropdown-item" href="https://v0-2.kubeflow.org">v0.2</a>
+	
+	<a class="dropdown-item" href="https://v0-3.kubeflow.org">v0.3</a>
+	
+	<a class="dropdown-item" href="https://v0-4.kubeflow.org">v0.4</a>
+	
+	<a class="dropdown-item" href="https://v0-5.kubeflow.org">v0.5</a>
+	
+	<a class="dropdown-item" href="https://v0-6.kubeflow.org">v0.6</a>
+	
+	<a class="dropdown-item" href="https://v0-7.kubeflow.org">v0.7</a>
+	
+</div>
+
+			</li>
+			
+			
+			<li class="nav-item dropdown d-none d-lg-block">
+				
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/zh/docs/about/contributing/">简体中文</a>
+	
+</div>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block">
+ <input type="search" class="form-control td-search-input" placeholder="&#xf002 Search this site…" aria-label="Search this site…" autocomplete="off">
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+
+
+
+
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
+    
+    <div class="nav-item dropdown d-block d-lg-none">
+      
+
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	English
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/zh/docs/about/contributing/">简体中文</a>
+	
+</div>
+    </div>
+    
+    
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Documentation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docs">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/about/" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">About</a>
+  </li>
+  <ul>
+    <li class="collapse show" id="docsabout">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutkubeflow" href="/docs/about/kubeflow/">Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutuse-cases" href="/docs/about/use-cases/">Use Cases</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page  active" id="m-docsaboutcontributing" href="/docs/about/contributing/">Contributing to Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutcommunity" href="/docs/about/community/">Community</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutevents" href="/docs/about/events/">Events Calendar</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutdocs" href="/docs/about/docs/">Docs</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsaboutstyle-guide" href="/docs/about/style-guide/">Style Guide for the Kubeflow Docs</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Getting Started</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstarted">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedkubeflow-overview" href="/docs/started/kubeflow-overview/">Kubeflow Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedgetting-started" href="/docs/started/getting-started/">Installing Kubeflow</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/cloud/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Cloud Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedcloud">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-aws" href="/docs/started/cloud/getting-started-aws/">AWS for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-azure" href="/docs/started/cloud/getting-started-azure/">Azure for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-gke" href="/docs/started/cloud/getting-started-gke/">Google Cloud for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedcloudgetting-started-icp" href="/docs/started/cloud/getting-started-icp/">IBM Cloud for Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/k8s/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubernetes Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedk8s">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8soverview" href="/docs/started/k8s/overview/">Overview of Deployment on Existing Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-k8s-istio" href="/docs/started/k8s/kfctl-k8s-istio/">Kubeflow Deployment with kfctl_k8s_istio</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-existing-arrikto" href="/docs/started/k8s/kfctl-existing-arrikto/">Multi-user, auth-enabled Kubeflow with kfctl_existing_arrikto</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedk8skfctl-istio-dex" href="/docs/started/k8s/kfctl-istio-dex/">Multi-user, auth-enabled Kubeflow with kfctl_istio_dex</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/started/workstation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Workstation Installation</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsstartedworkstation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-linux" href="/docs/started/workstation/getting-started-linux/">Kubeflow on Linux</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-macos" href="/docs/started/workstation/getting-started-macos/">Kubeflow on macOS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationgetting-started-windows" href="/docs/started/workstation/getting-started-windows/">Kubeflow on Windows</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsstartedworkstationminikf-gcp" href="/docs/started/workstation/minikf-gcp/">Deploy using MiniKF on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Components of Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponents">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/central-dash/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Central Dashboard</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentscentral-dash">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentscentral-dashoverview" href="/docs/components/central-dash/overview/">Central Dashboard</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentscentral-dashregistration-flow" href="/docs/components/central-dash/registration-flow/">Registration Flow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmetadata" href="/docs/components/metadata/">Metadata</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsjupyter" href="/docs/components/jupyter/">Jupyter Notebooks</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/training/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Frameworks for Training</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentstraining">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingchainer" href="/docs/components/training/chainer/">Chainer Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingmpi" href="/docs/components/training/mpi/">MPI Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingmxnet" href="/docs/components/training/mxnet/">MXNet Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingpytorch" href="/docs/components/training/pytorch/">PyTorch Training</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentstrainingtftraining" href="/docs/components/training/tftraining/">TensorFlow Training (TFJob)</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/hyperparameter-tuning/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Hyperparameter Tuning</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentshyperparameter-tuning">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuningoverview" href="/docs/components/hyperparameter-tuning/overview/">Introduction to Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuninghyperparameter" href="/docs/components/hyperparameter-tuning/hyperparameter/">Getting started with Katib</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentshyperparameter-tuningexperiment" href="/docs/components/hyperparameter-tuning/experiment/">Running an experiment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentspipelinespipelines" href="/docs/components/pipelines/pipelines/">Pipelines</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/serving/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tools for Serving</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsserving">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingoverview" href="/docs/components/serving/overview/">Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingkfserving" href="/docs/components/serving/kfserving/">KFServing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingseldon" href="/docs/components/serving/seldon/">Seldon Core Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtrtinferenceserver" href="/docs/components/serving/trtinferenceserver/">NVIDIA TensorRT Inference Server</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtfserving_new" href="/docs/components/serving/tfserving_new/">TensorFlow Serving</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsservingtfbatchpredict" href="/docs/components/serving/tfbatchpredict/">TensorFlow Batch Prediction</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/multi-tenancy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Multi-Tenancy in Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsmulti-tenancy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancyoverview" href="/docs/components/multi-tenancy/overview/">Introduction to Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancydesign" href="/docs/components/multi-tenancy/design/">Design for Multi-user Isolation</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmulti-tenancygetting-started" href="/docs/components/multi-tenancy/getting-started/">Getting Started with Multi-user Isolation</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/components/misc/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Miscellaneous</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docscomponentsmisc">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docscomponentsmiscnuclio" href="/docs/components/misc/nuclio/">Nuclio functions</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/notebooks/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Jupyter Notebooks</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsnotebooks">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookswhy-use-jupyter-notebook" href="/docs/notebooks/why-use-jupyter-notebook/">Overview of Jupyter Notebooks in Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssetup" href="/docs/notebooks/setup/">Set Up Your Notebooks</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookscustom-notebook" href="/docs/notebooks/custom-notebook/">Create a Custom Jupyter Image</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssubmit-kubernetes" href="/docs/notebooks/submit-kubernetes/">Submit Kubernetes Resources</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookssubmit-docker-image" href="/docs/notebooks/submit-docker-image/">Build a Docker Image on GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsnotebookstroubleshoot" href="/docs/notebooks/troubleshoot/">Troubleshooting Guide</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinespipelines-quickstart" href="/docs/pipelines/pipelines-quickstart/">Pipelines Quickstart</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/installation/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Installing Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesinstallation">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesinstallationoverview" href="/docs/pipelines/installation/overview/">Installation Options for Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesinstallationstandalone-deployment" href="/docs/pipelines/installation/standalone-deployment/">Kubeflow Pipelines Standalone Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/overview/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Understanding Pipelines</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesoverview">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewpipelines-overview" href="/docs/pipelines/overview/pipelines-overview/">Overview of Kubeflow Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewinterfaces" href="/docs/pipelines/overview/interfaces/">Introduction to the Pipelines Interfaces</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/overview/concepts/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Concepts</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesoverviewconcepts">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptspipeline" href="/docs/pipelines/overview/concepts/pipeline/">Pipeline</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptscomponent" href="/docs/pipelines/overview/concepts/component/">Component</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsgraph" href="/docs/pipelines/overview/concepts/graph/">Graph</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsexperiment" href="/docs/pipelines/overview/concepts/experiment/">Experiment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsrun" href="/docs/pipelines/overview/concepts/run/">Run and Recurring Run</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsrun-trigger" href="/docs/pipelines/overview/concepts/run-trigger/">Run Trigger</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsstep" href="/docs/pipelines/overview/concepts/step/">Step</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesoverviewconceptsoutput-artifact" href="/docs/pipelines/overview/concepts/output-artifact/">Output Artifact</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/sdk/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Building Pipelines with the SDK</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinessdk">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdksdk-overview" href="/docs/pipelines/sdk/sdk-overview/">Introduction to the Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkinstall-sdk" href="/docs/pipelines/sdk/install-sdk/">Install the Kubeflow Pipelines SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkbuild-component" href="/docs/pipelines/sdk/build-component/">Build Components and Pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkcomponent-development" href="/docs/pipelines/sdk/component-development/">Create Reusable Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdklightweight-python-components" href="/docs/pipelines/sdk/lightweight-python-components/">Build Lightweight Python Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkbest-practices" href="/docs/pipelines/sdk/best-practices/">Best Practices for Designing Components</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkparameters" href="/docs/pipelines/sdk/parameters/">Pipeline Parameters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkpython-based-visualizations" href="/docs/pipelines/sdk/python-based-visualizations/">Python Based Visualizations</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkoutput-viewer" href="/docs/pipelines/sdk/output-viewer/">Visualize Results in the Pipelines UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkpipelines-metrics" href="/docs/pipelines/sdk/pipelines-metrics/">Pipeline Metrics</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkstatic-type-checking" href="/docs/pipelines/sdk/static-type-checking/">DSL Static Type Checking</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkdsl-recursion" href="/docs/pipelines/sdk/dsl-recursion/">DSL Recursion</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkenviroment_variables" href="/docs/pipelines/sdk/enviroment_variables/">Using environment variables in pipelines</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkgcp" href="/docs/pipelines/sdk/gcp/">GCP-specific Uses of the SDK</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinessdkmanipulate-resources" href="/docs/pipelines/sdk/manipulate-resources/">Manipulate Kubernetes Resources as Part of a Pipeline</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesupgrade" href="/docs/pipelines/upgrade/">Upgrading and Reinstalling</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Samples and Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinestutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialsapi-pipelines" href="/docs/pipelines/tutorials/api-pipelines/">Experiment with the Kubeflow Pipelines API</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialsbuild-pipeline" href="/docs/pipelines/tutorials/build-pipeline/">Experiment with the Pipelines Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestutorialscloud-tutorials" href="/docs/pipelines/tutorials/cloud-tutorials/">Run a Cloud-specific Pipelines Tutorial</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinestroubleshooting" href="/docs/pipelines/troubleshooting/">Troubleshooting</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/pipelines/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docspipelinesreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferencecomponent-spec" href="/docs/pipelines/reference/component-spec/">Component Specification</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferenceapikubeflow-pipeline-api-spec" href="/docs/pipelines/reference/api/kubeflow-pipeline-api-spec/">Pipelines API Reference</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docspipelinesreferencesdk" href="/docs/pipelines/reference/sdk/"> Pipelines SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairing">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingfairing-overview" href="/docs/fairing/fairing-overview/">Overview of Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinginstall-fairing" href="/docs/fairing/install-fairing/">Install Kubeflow Fairing</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingconfigure-fairing" href="/docs/fairing/configure-fairing/">Configure Kubeflow Fairing</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingazure">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/gcp/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Fairing on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairinggcp">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcpconfigure-gcp" href="/docs/fairing/gcp/configure-gcp/">Configure Kubeflow Fairing with Access to GCP</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/gcp/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">GCP Samples and Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairinggcptutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcptutorialsgcp-local-notebook" href="/docs/fairing/gcp/tutorials/gcp-local-notebook/">Train and Deploy on GCP from a Local Notebook</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairinggcptutorialsgcp-kubeflow-notebook" href="/docs/fairing/gcp/tutorials/gcp-kubeflow-notebook/">Train and Deploy on GCP from a Kubeflow Notebook</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/tutorials/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tutorials</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingtutorials">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingtutorialsother-tutorials" href="/docs/fairing/tutorials/other-tutorials/">Other Samples and Tutorials</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/fairing/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsfairingreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsfairingreferencesdk" href="/docs/fairing/reference/sdk/"> Kubeflow Fairing SDK Reference</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/aws/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on AWS</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsaws">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/aws/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsawsdeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsdeployinstall-kubeflow" href="/docs/aws/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsdeployuninstall-kubeflow" href="/docs/aws/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawscustomizing-aws" href="/docs/aws/customizing-aws/">Customizing Kubeflow on AWS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsiam-for-sa" href="/docs/aws/iam-for-sa/">AWS IAM Role for Service Account</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawslogging" href="/docs/aws/logging/">Logging</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsprivate-access" href="/docs/aws/private-access/">Private Access</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsauthentication" href="/docs/aws/authentication/">Authentication and Authorization</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawscustom-domain" href="/docs/aws/custom-domain/">Custom Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsstorage" href="/docs/aws/storage/">Storage Options</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawstroubleshooting-aws" href="/docs/aws/troubleshooting-aws/">Troubleshooting Deployments on Amazon EKS</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsfeatures" href="/docs/aws/features/">Kubeflow on AWS Features</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsawsaws-e2e" href="/docs/aws/aws-e2e/">End-to-end Kubeflow on AWS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/azure/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on Azure</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsazure">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/azure/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deployment</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsazuredeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployinstall-kubeflow" href="/docs/azure/deploy/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployexisting-cluster" href="/docs/azure/deploy/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuredeployuninstall-kubeflow" href="/docs/azure/deploy/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazureazureendtoend" href="/docs/azure/azureendtoend/">End-to-End Pipeline Example on Azure</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazureauthentication" href="/docs/azure/authentication/">Access Control for Azure Deployment</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsazuretroubleshooting-azure" href="/docs/azure/troubleshooting-azure/">Troubleshooting Deployments on Azure AKS</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgke">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/deploy/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Deploying Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgkedeploy">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployproject-setup" href="/docs/gke/deploy/project-setup/">Set up a GCP Project</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployoauth-setup" href="/docs/gke/deploy/oauth-setup/">Set up OAuth for Cloud IAP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydeploy-ui" href="/docs/gke/deploy/deploy-ui/">Deploy using UI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydeploy-cli" href="/docs/gke/deploy/deploy-cli/">Deploy using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploymonitor-iap-setup" href="/docs/gke/deploy/monitor-iap-setup/">Monitor Cloud IAP Setup</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydelete-cli" href="/docs/gke/deploy/delete-cli/">Delete using CLI</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeploydelete-ui" href="/docs/gke/deploy/delete-ui/">Delete using GCP Console</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkedeployreasons" href="/docs/gke/deploy/reasons/">Features of Kubeflow on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeanthos" href="/docs/gke/anthos/">Kubeflow On-premises on Anthos GKE</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/gke/pipelines/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Pipelines on GCP</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsgkepipelines">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesauthentication-pipelines" href="/docs/gke/pipelines/authentication-pipelines/">Authenticating Pipelines to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesupgrade" href="/docs/gke/pipelines/upgrade/">Upgrading and Reinstalling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinesenable-gpu-and-tpu" href="/docs/gke/pipelines/enable-gpu-and-tpu/">Enabling GPU and TPU</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkepipelinespreemptible" href="/docs/gke/pipelines/preemptible/">Using Preemptible VMs and GPUs on GCP</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecustomizing-gke" href="/docs/gke/customizing-gke/">Customizing Kubeflow on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecustom-domain" href="/docs/gke/custom-domain/">Using Your Own Domain</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeauthentication" href="/docs/gke/authentication/">Authenticating Kubeflow to GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkecloud-filestore" href="/docs/gke/cloud-filestore/">Using Cloud Filestore</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkeprivate-clusters" href="/docs/gke/private-clusters/">Securing Your Clusters</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgketroubleshooting-gke" href="/docs/gke/troubleshooting-gke/">Troubleshooting Deployments on GKE</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkegcp-e2e" href="/docs/gke/gcp-e2e/">Tutorial: End-to-end Kubeflow on GCP</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsgkemonitoring" href="/docs/gke/monitoring/">Logging and monitoring</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/ibm/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on IBM Cloud</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsibm">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibminstall-kubeflow" href="/docs/ibm/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibmexisting-cluster" href="/docs/ibm/existing-cluster/">Initial cluster setup for existing cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsibmuninstall-kubeflow" href="/docs/ibm/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/openshift/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Kubeflow on OpenShift</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsopenshift">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsopenshiftinstall-kubeflow" href="/docs/openshift/install-kubeflow/">Install Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsopenshiftuninstall-kubeflow" href="/docs/openshift/uninstall-kubeflow/">Uninstall Kubeflow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/examples/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Tutorials, Samples, and Shared Resources</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsexamples">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexampleskubeflow-samples" href="/docs/examples/kubeflow-samples/">Kubeflow Samples</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplescodelabs-tutorials" href="/docs/examples/codelabs-tutorials/">Codelabs, Workshops, and Tutorials</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesblog-posts" href="/docs/examples/blog-posts/">Blog Posts</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesvideos" href="/docs/examples/videos/">Videos</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsexamplesshared-resources" href="/docs/examples/shared-resources/">Shared Resources and Components</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/other-guides/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Further Setup and Troubleshooting</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsother-guides">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/other-guides/virtual-dev/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Virtual Developer Environments</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsother-guidesvirtual-dev">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesvirtual-devgetting-started-multipass" href="/docs/other-guides/virtual-dev/getting-started-multipass/">Microk8s for Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesvirtual-devgetting-started-minikf" href="/docs/other-guides/virtual-dev/getting-started-minikf/">MiniKF</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guideskustomize" href="/docs/other-guides/kustomize/">Configuring Kubeflow with kfctl and kustomize</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guideskubeflow-on-multinode-cluster" href="/docs/other-guides/kubeflow-on-multinode-cluster/">Kubeflow On-prem in a Multi-node Kubernetes Cluster</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesusage-reporting" href="/docs/other-guides/usage-reporting/">Usage Reporting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesistio-in-kubeflow" href="/docs/other-guides/istio-in-kubeflow/">Istio Usage in Kubeflow</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesjob-scheduling" href="/docs/other-guides/job-scheduling/">Job Scheduling</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidestroubleshooting" href="/docs/other-guides/troubleshooting/">Troubleshooting</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidesfreq-ask-questions" href="/docs/other-guides/freq-ask-questions/">Frequently Asked Questions</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsother-guidessupport" href="/docs/other-guides/support/">Support</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/upgrading/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Upgrading Kubeflow</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsupgrading">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsupgradingupgrade" href="/docs/upgrading/upgrade/">Upgrading a Kubeflow Deployment</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreference">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceoverview" href="/docs/reference/overview/">Reference Overview</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceversion-policy" href="/docs/reference/version-policy/">Kubeflow Versioning Policies</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferenceimages" href="/docs/reference/images/">Dockerfile Locations</a>
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/katib/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencekatib">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/katib/v1alpha3/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Katib v1alpha3</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencekatibv1alpha3">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencekatibv1alpha3katib" href="/docs/reference/katib/v1alpha3/katib/">Katib</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/notebook/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencenotebook">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/notebook/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">Notebook CRD V1 Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencenotebookv1">
+      
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencepytorchjobv1pytorch" href="/docs/reference/pytorchjob/v1/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/pytorchjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">PyTorchJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencepytorchjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencepytorchjobv1beta2pytorch" href="/docs/reference/pytorchjob/v1beta2/pytorch/">PyTorchJob</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob Reference</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjob">
+      
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/v1/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjobv1">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1common" href="/docs/reference/tfjob/v1/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1tensorflow" href="/docs/reference/tfjob/v1/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+      
+      
+
+
+
+
+
+
+<ul class="td-sidebar-nav__section pr-md-3">
+  <li class="td-sidebar-nav__section-title">
+    <a  href="/docs/reference/tfjob/v1beta2/" class="align-left pl-0 pr-2 collapsed td-sidebar-link td-sidebar-link__section">TFJob v1beta2</a>
+  </li>
+  <ul>
+    <li class="collapse " id="docsreferencetfjobv1beta2">
+      
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1beta2common" href="/docs/reference/tfjob/v1beta2/common/">TFJob Common</a>
+      
+      
+      
+      
+      
+      <a class="td-sidebar-link td-sidebar-link__page " id="m-docsreferencetfjobv1beta2tensorflow" href="/docs/reference/tfjob/v1beta2/tensorflow/">TFJob TensorFlow</a>
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+      
+      
+    </li>
+  </ul>
+</ul>
+
+  </nav>
+</div>
+
+
+
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+            
+
+
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
+
+
+
+
+
+<a href="https://github.com/huhongjun/website-kubeflow/edit/master/content/en/docs%5cabout%5ccontributing.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
+<a href="https://github.com/huhongjun/website-kubeflow/issues/new?title=Contributing%20to%20Kubeflow&amp;body=https://www.kubeflow.org/docs/about/contributing/" target="_blank"><i class="fab fa-github fa-fw"></i> Create documentation issue</a>
+</div>
+
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#getting-started-as-a-kubeflow-contributor">Getting started as a Kubeflow contributor</a>
+      <ul>
+        <li><a href="#sign-the-cla">Sign the CLA</a></li>
+        <li><a href="#follow-the-code-of-conduct">Follow the code of conduct</a></li>
+        <li><a href="#consider-participating-in-kubeflow-user-research">Consider participating in Kubeflow user research</a></li>
+      </ul>
+    </li>
+    <li><a href="#joining-the-community">Joining the community</a>
+      <ul>
+        <li><a href="#joining-the-kubeflow-github-org">Joining the Kubeflow GitHub Org</a></li>
+        <li><a href="#companiesorganizations">Companies/organizations</a></li>
+        <li><a href="#community-discussions">Community discussions</a></li>
+      </ul>
+    </li>
+    <li><a href="#your-first-contribution">Your first contribution</a>
+      <ul>
+        <li><a href="#find-something-to-work-on">Find something to work on</a></li>
+        <li><a href="#starter-issues">Starter issues</a></li>
+      </ul>
+    </li>
+    <li><a href="#owners-files-and-pr-workflow">Owners files and PR workflow</a>
+      <ul>
+        <li><a href="#overview-of-owners-files">Overview of OWNERS files</a></li>
+        <li><a href="#owners--a-nameowners-1a">OWNERS  <!-- raw HTML omitted --><!-- raw HTML omitted --></a></li>
+        <li><a href="#the-code-review-process">The code review process</a></li>
+        <li><a href="#quirks-of-the-process">Quirks of the process</a></li>
+      </ul>
+    </li>
+    <li><a href="#automation-using-owners-files">Automation using OWNERS files</a>
+      <ul>
+        <li><a href="#prowhttpsgitk8siotest-infraprow"><a href="https://git.k8s.io/test-infra/prow"><code>prow</code></a></a></li>
+      </ul>
+    </li>
+    <li><a href="#maintaining-owners-files">Maintaining OWNERS files</a></li>
+  </ul>
+</nav>
+
+
+
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+
+
+            <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+	<ol class="breadcrumb spb-1">
+		
+
+
+
+
+
+
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/docs/">Documentation</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item" >
+	<a href="http://osmatrix.github.io/docs/about/">About</a>
+</li>
+
+
+
+
+<li class="breadcrumb-item active" aria-current="page">
+	<a href="http://osmatrix.github.io/docs/about/contributing/">Contributing to Kubeflow</a>
+</li>
+
+	</ol>
+</nav	>
+
+            
+<div class="td-content">
+	<h1>Contributing to Kubeflow</h1>
+	<div class="lead">How to start contributing to Kubeflow</div>
+	<p>Welcome to the Kubeflow project!</p>
+<h2 id="getting-started-as-a-kubeflow-contributor">Getting started as a Kubeflow contributor</h2>
+<p>This document is the single source of truth for how to contribute to the code base.
+We&rsquo;d love to accept your patches and contributions to this project. There are
+just a few small guidelines you need to follow.</p>
+<h3 id="sign-the-cla">Sign the CLA</h3>
+<p>Contributions to this project must be accompanied by a Contributor License Agreement (CLA). 
+You (or your employer) retain the copyright to your contribution.
+This gives us permission to use and redistribute your contributions as
+part of the project. Head over to <a href="https://cla.developers.google.com/">https://cla.developers.google.com/</a> to see
+your current agreements on file or to sign a new one.</p>
+<p>You generally only need to submit a CLA once, so if you&rsquo;ve already submitted one
+(even if it was for a different project), you probably don&rsquo;t need to do it
+again.</p>
+<h3 id="follow-the-code-of-conduct">Follow the code of conduct</h3>
+<p>Please make sure to read and observe our <a href="https://github.com/kubeflow/community/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a> and <a href="https://github.com/kubeflow/community/blob/master/INCLUSIVITY.md">inclusivity document</a>.</p>
+<h3 id="consider-participating-in-kubeflow-user-research">Consider participating in Kubeflow user research</h3>
+<p>Maggie Lynn, a user experience researcher, is conducting user studies to inform future developments for Kubeflow. These typically involve a one hour study session conducted online with a thank you gift for providing your feedback. As a member of the Kubeflow community, your feedback and expertise are extremely valuable to us, so if you have time in the next month, please consider participating. To gather your interest, availability, and some basic information about you, please fill out this form where you’ll find out more details about this research opportunity: <a href="https://goo.gl/forms/sv5sRo3UfsgeUEjK2">https://goo.gl/forms/sv5sRo3UfsgeUEjK2</a></p>
+<h2 id="joining-the-community">Joining the community</h2>
+<p>Follow these instructions if you want to</p>
+<ul>
+<li>Become a member of the Kubeflow GitHub org (see below)</li>
+<li>Become part of the Kubeflow build cop or release teams</li>
+<li>Be recognized as an individual or organization contributing to Kubeflow</li>
+</ul>
+<h3 id="joining-the-kubeflow-github-org">Joining the Kubeflow GitHub Org</h3>
+<p>Before asking to join the community, we ask that you first make a small number of contributions
+to demonstrate your intent to continue contributing to Kubeflow.</p>
+<p>There are are a number of ways to contribute to Kubeflow</p>
+<ul>
+<li>Submit PRs</li>
+<li>File issues reporting bugs or providing feedback</li>
+<li>Answer questions on Slack or GitHub issues</li>
+</ul>
+<p>You can use this <a href="http://devstats.kubeflow.org/d/9/developers-summary">table</a> to see how many contributions
+you&rsquo;ve made</p>
+<ul>
+<li><strong>Note</strong>: This only counts GitHub related ways of contributing</li>
+</ul>
+<p>When you are ready to join</p>
+<ul>
+<li>Send a PR adding yourself as a member in <a href="https://github.com/kubeflow/internal-acls/blob/master/github-orgs/kubeflow/org.yaml#L19">org.yaml</a></li>
+<li>After the PR is merged an admin will send you an invitation
+<ul>
+<li>This is a manual process that&rsquo;s generally run a couple times a week</li>
+<li>If a week passes without receiving an invitation reach out on <a href="https://kubeflow.slack.com/messages/C8Q0QJYNB/convo/CABQ2BWHW-1544147308.002500/">kubeflow#community</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="companiesorganizations">Companies/organizations</h3>
+<p>If you would like your company or organization to be acknowledged for contributing to
+Kubeflow or participating in the community (being a user counts) please send a PR
+adding the relevant info to
+<a href="https://github.com/kubeflow/community/blob/master/member_organizations.yaml">member_organizations.yaml</a>.</p>
+<p>If you want your employee&rsquo;s GitHub contributions to be attributed to your company please ask them to set
+the company field in their GitHub profile.</p>
+<h3 id="community-discussions">Community discussions</h3>
+<p>There are many ways to contribute! Join one of our communication channels, 
+attend a community meeting, get to know the community. Read the details in
+our <a href="/docs/about/community">community guide</a>.</p>
+<h2 id="your-first-contribution">Your first contribution</h2>
+<h3 id="find-something-to-work-on">Find something to work on</h3>
+<p>Help is always welcome! For example, documentation (like the text you are reading
+now) can always use improvement. There&rsquo;s always code that can be clarified and
+variables or functions that can be renamed or commented. There&rsquo;s always a need
+for more test coverage. You get the idea - if you ever see something you think
+should be fixed, you should own it. Here is how you get started.</p>
+<h3 id="starter-issues">Starter issues</h3>
+<p>To find Kubeflow issues that make good entry points:</p>
+<ul>
+<li>Start with issues labeled <strong>good first issue</strong>. For example, see the good
+first issues in the <a href="https://github.com/kubeflow/website/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">kubeflow/website 
+repository</a>
+for doc updates, and in the <a href="https://github.com/kubeflow/kubeflow/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">kubeflow/kubeflow 
+repository</a>
+for updates to the core Kubeflow code.</li>
+<li>For issues that require deeper knowledge of one or more technical aspects, 
+look at issues labeled <strong>help wanted</strong>. For example, see these issues in the
+<a href="https://github.com/kubeflow/kubeflow/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22">kubeflow/kubeflow
+repository</a></li>
+<li>Examine the issues in any of the 
+<a href="https://github.com/kubeflow">Kubeflow repositories</a>.</li>
+</ul>
+<h2 id="owners-files-and-pr-workflow">Owners files and PR workflow</h2>
+<p>Our PR workflow is nearly identical to Kubernetes&rsquo;. Most of these instructions are a
+modified version of Kubernetes&rsquo; <a href="https://github.com/kubernetes/community/blob/master/contributors/guide/README.md">contributors</a>
+and <a href="https://github.com/kubernetes/community/blob/master/contributors/guide/owners.md#code-review-using-owners-files">owners</a>
+guides.</p>
+<h3 id="overview-of-owners-files">Overview of OWNERS files</h3>
+<p>OWNERS files are used to designate responsibility over different parts of the Kubeflow codebase.
+Today, we use them to assign the <strong>reviewer</strong> and <strong>approver</strong> roles used in our two-phase code
+review process. Our OWNERS files were inspired by <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/code_reviews.md">Chromium OWNERS
+files</a>, which in turn
+inspired <a href="https://help.github.com/articles/about-codeowners/">GitHub&rsquo;s CODEOWNERS files</a>.</p>
+<p>The velocity of a project that uses code review is limited by the number of people capable of
+reviewing code. The quality of a person&rsquo;s code review is limited by their familiarity with the code
+under review. Our goal is to address both of these concerns through the prudent use and maintenance
+of OWNERS files</p>
+<h3 id="owners--a-nameowners-1a">OWNERS  <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+<p>Each directory that contains a unit of independent code or content may also contain an OWNERS file.
+This file applies to everything within the directory, including the OWNERS file itself, sibling
+files, and child directories.</p>
+<p>OWNERS files are in YAML format and support the following keys:</p>
+<ul>
+<li><code>approvers</code>: a list of GitHub usernames or aliases that can <code>/approve</code> a PR</li>
+<li><code>labels</code>: a list of GitHub labels to automatically apply to a PR</li>
+<li><code>options</code>: a map of options for how to interpret this OWNERS file, currently only one:
+<ul>
+<li><code>no_parent_owners</code>: defaults to <code>false</code> if not present; if <code>true</code>, exclude parent OWNERS files.
+Allows the use case where <code>a/deep/nested/OWNERS</code> file prevents <code>a/OWNERS</code> file from having any
+effect on <code>a/deep/nested/bit/of/code</code></li>
+</ul>
+</li>
+<li><code>reviewers</code>: a list of GitHub usernames or aliases that are good candidates to <code>/lgtm</code> a PR</li>
+</ul>
+<p>All users are expected to be assignable. In GitHub terms, this means they are either collaborators
+of the repo, or members of the organization to which the repo belongs.</p>
+<p>A typical OWNERS file looks like:</p>
+<pre><code>approvers:
+  - alice
+  - bob     # this is a comment
+reviewers:
+  - alice
+  - carol   # this is another comment
+  - sig-foo # this is an alias
+</code></pre><h4 id="owners_aliases">OWNERS_ALIASES</h4>
+<p>Each repo may contain at its root an OWNERS_ALIAS file.</p>
+<p>OWNERS_ALIAS files are in YAML format and support the following keys:</p>
+<ul>
+<li><code>aliases</code>: a mapping of alias name to a list of GitHub usernames</li>
+</ul>
+<p>We use aliases for groups instead of GitHub Teams, because changes to GitHub Teams are not
+publicly auditable.</p>
+<p>A sample OWNERS_ALIASES file looks like:</p>
+<pre><code>aliases:
+  sig-foo:
+    - david
+    - erin
+  sig-bar:
+    - bob
+    - frank
+</code></pre><p>GitHub usernames and aliases listed in OWNERS files are case-insensitive.</p>
+<h3 id="the-code-review-process">The code review process</h3>
+<ul>
+<li>
+<p>The <strong>author</strong> submits a PR</p>
+</li>
+<li>
+<p>Phase 0: Automation suggests <strong>reviewers</strong> and <strong>approvers</strong> for the PR</p>
+<ul>
+<li>Determine the set of OWNERS files nearest to the code being changed</li>
+<li>Choose at least two suggested <strong>reviewers</strong>, trying to find a unique reviewer for every leaf
+OWNERS file, and request their reviews on the PR</li>
+<li>Choose suggested <strong>approvers</strong>, one from each OWNERS file, and list them in a comment on the PR</li>
+</ul>
+</li>
+<li>
+<p>Phase 1: Humans review the PR</p>
+<ul>
+<li><strong>Reviewers</strong> look for general code quality, correctness, sane software engineering, style, etc.</li>
+<li>Anyone in the organization can act as a <strong>reviewer</strong> with the exception of the individual who
+opened the PR</li>
+<li>If the code changes look good to them, a <strong>reviewer</strong> types <code>/lgtm</code> in a PR comment or review;
+if they change their mind, they <code>/lgtm cancel</code></li>
+<li>Once a <strong>reviewer</strong> has <code>/lgtm</code>'ed, <a href="https://prow.k8s.io">prow</a>
+(<a href="https://github.com/k8s-ci-robot/">@k8s-ci-robot</a>) applies an <code>lgtm</code> label to the PR</li>
+</ul>
+</li>
+<li>
+<p>Phase 2: Humans approve the PR</p>
+<ul>
+<li>The PR <strong>author</strong> <code>/assign</code>'s all suggested <strong>approvers</strong> to the PR, and optionally notifies
+them (eg: &ldquo;pinging @foo for approval&rdquo;)</li>
+<li>Only people listed in the relevant OWNERS files, either directly or through an alias, can act
+as <strong>approvers</strong>, including the individual who opened the PR</li>
+<li><strong>Approvers</strong> look for holistic acceptance criteria, including dependencies with other features,
+forwards/backwards compatibility, API and flag definitions, etc</li>
+<li>If the code changes look good to them, an <strong>approver</strong> types <code>/approve</code> in a PR comment or
+review; if they change their mind, they <code>/approve cancel</code></li>
+<li><a href="https://prow.k8s.io">prow</a> (<a href="https://github.com/k8s-ci-robot/">@k8s-ci-robot</a>) updates its
+comment in the PR to indicate which <strong>approvers</strong> still need to approve</li>
+<li>Once all <strong>approvers</strong> (one from each of the previously identified OWNERS files) have approved,
+<a href="https://prow.k8s.io">prow</a> (<a href="https://github.com/k8s-ci-robot/">@k8s-ci-robot</a>) applies an
+<code>approved</code> label</li>
+</ul>
+</li>
+<li>
+<p>Phase 3: Automation merges the PR:</p>
+<ul>
+<li>
+<p>If all of the following are true:</p>
+<ul>
+<li>All required labels are present (eg: <code>lgtm</code>, <code>approved</code>)</li>
+<li>Any blocking labels are missing (eg: there is no <code>do-not-merge/hold</code>, <code>needs-rebase</code>)</li>
+</ul>
+</li>
+<li>
+<p>And if any of the following are true:</p>
+<ul>
+<li>there are no presubmit prow jobs configured for this repo</li>
+<li>there are presubmit prow jobs configured for this repo, and they all pass after automatically
+being re-run one last time</li>
+</ul>
+</li>
+<li>
+<p>Then the PR will automatically be merged</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="quirks-of-the-process">Quirks of the process</h3>
+<p>There are a number of behaviors we&rsquo;ve observed that while <em>possible</em> are discouraged, as they go
+against the intent of this review process.  Some of these could be prevented in the future, but this
+is the state of today.</p>
+<ul>
+<li>An <strong>approver</strong>&lsquo;s <code>/lgtm</code> is simultaneously interpreted as an <code>/approve</code>
+<ul>
+<li>While a convenient shortcut for some, it can be surprising that the same command is interpreted
+in one of two ways depending on who the commenter is</li>
+<li>Instead, explicitly write out <code>/lgtm</code> and <code>/approve</code> to help observers, or save the <code>/lgtm</code> for
+a <strong>reviewer</strong></li>
+<li>This goes against the idea of having at least two sets of eyes on a PR, and may be a sign that
+there are too few <strong>reviewers</strong> (who aren&rsquo;t also <strong>approver</strong>)</li>
+</ul>
+</li>
+<li>Technically, anyone who is a member of the Kubeflow GitHub organization can drive-by <code>/lgtm</code> a
+PR
+<ul>
+<li>Drive-by reviews from non-members are encouraged as a way of demonstrating experience and
+intent to become a collaborator or reviewer</li>
+<li>Drive-by <code>/lgtm</code>'s from members may be a sign that our OWNERS files are too small, or that the
+existing <strong>reviewers</strong> are too unresponsive</li>
+<li>This goes against the idea of specifying <strong>reviewers</strong> in the first place, to ensure that
+<strong>author</strong> is getting actionable feedback from people knowledgeable with the code</li>
+</ul>
+</li>
+<li><strong>Reviewers</strong>, and <strong>approvers</strong> are unresponsive
+<ul>
+<li>This causes a lot of frustration for <strong>authors</strong> who often have little visibility into why their
+PR is being ignored</li>
+<li>Many <strong>reviewers</strong> and <strong>approvers</strong> are so overloaded by GitHub notifications that @mention&rsquo;ing
+is unlikely to get a quick response</li>
+<li>If an <strong>author</strong> <code>/assign</code>'s a PR, <strong>reviewers</strong> and <strong>approvers</strong> will be made aware of it on
+their <a href="https://k8s-gubernator.appspot.com/pr">PR dashboard</a></li>
+<li>An <strong>author</strong> can work around this by manually reading the relevant OWNERS files,
+<code>/unassign</code>'ing unresponsive individuals, and <code>/assign</code>'ing others</li>
+<li>This is a sign that our OWNERS files are stale; pruning the <strong>reviewers</strong> and <strong>approvers</strong> lists
+would help with this</li>
+</ul>
+</li>
+<li><strong>Authors</strong> are unresponsive
+<ul>
+<li>This costs a tremendous amount of attention as context for an individual PR is lost over time</li>
+<li>This hurts the project in general as its general noise level increases over time</li>
+<li>Instead, close PR&rsquo;s that are untouched after too long (we currently have a bot do this after 90
+days)</li>
+</ul>
+</li>
+</ul>
+<h2 id="automation-using-owners-files">Automation using OWNERS files</h2>
+<h3 id="prowhttpsgitk8siotest-infraprow"><a href="https://git.k8s.io/test-infra/prow"><code>prow</code></a></h3>
+<p>Prow receives events from GitHub, and reacts to them. It is effectively stateless. The following
+pieces of prow are used to implement the code review process above.</p>
+<ul>
+<li><a href="https://git.k8s.io/test-infra/prow/cmd/tide">cmd: tide</a>
+<ul>
+<li>per-repo configuration:
+<ul>
+<li><code>labels</code>: list of labels required to be present for merge (eg: <code>lgtm</code>)</li>
+<li><code>missingLabels</code>: list of labels required to be missing for merge (eg: <code>do-not-merge/hold</code>)</li>
+<li><code>reviewApprovedRequired</code>: defaults to <code>false</code>; when true, require that there must be at least
+one <a href="https://help.github.com/articles/about-pull-request-reviews/">approved pull request review</a>
+present for merge</li>
+<li><code>merge_method</code>: defaults to <code>merge</code>; when <code>squash</code> or <code>rebase</code>, use that merge method instead
+when clicking a PR&rsquo;s merge button</li>
+</ul>
+</li>
+<li>merges PR&rsquo;s once they meet the appropriate criteria as configured above</li>
+<li>if there are any presubmit prow jobs for the repo the PR is against, they will be re-run one
+final time just prior to merge</li>
+</ul>
+</li>
+<li><a href="https://git.k8s.io/test-infra/prow/plugins/assign">plugin: assign</a>
+<ul>
+<li>assigns GitHub users in response to <code>/assign</code> comments on a PR</li>
+<li>unassigns GitHub users in response to <code>/unassign</code> comments on a PR</li>
+</ul>
+</li>
+<li><a href="https://git.k8s.io/test-infra/prow/plugins/assign">plugin: approve</a>
+<ul>
+<li>per-repo configuration:
+<ul>
+<li><code>issue_required</code>: defaults to <code>false</code>; when <code>true</code>, require that the PR description link to
+an issue, or that at least one <strong>approver</strong> issues a <code>/approve no-isse</code></li>
+<li><code>implicit_self_approve</code>: defaults to <code>false</code>; when <code>true</code>, if the PR author is in relevant
+OWNERS files, act as if they have implicitly <code>/approve</code>'d</li>
+</ul>
+</li>
+<li>adds the  <code>approved</code> label once an <strong>approver</strong> for each of the required
+OWNERS files has <code>/approve</code>'d</li>
+<li>comments as required OWNERS files are satisfied</li>
+<li>removes outdated approval status comments</li>
+</ul>
+</li>
+<li><a href="https://git.k8s.io/test-infra/prow/plugins/assign">plugin: blunderbuss</a>
+<ul>
+<li>determines <strong>reviewers</strong> and requests their reviews on PR&rsquo;s</li>
+</ul>
+</li>
+<li><a href="https://git.k8s.io/test-infra/prow/plugins/lgtm">plugin: lgtm</a>
+<ul>
+<li>adds the <code>lgtm</code> label when a <strong>reviewer</strong> comments <code>/lgtm</code> on a PR</li>
+<li>the <strong>PR author</strong> may not <code>/lgtm</code> their own PR</li>
+</ul>
+</li>
+<li><a href="https://git.k8s.io/test-infra/prow/repoowners/repoowners.go">pkg: k8s.io/test-infra/prow/repoowners</a>
+<ul>
+<li>parses OWNERS and OWNERS_ALIAS files</li>
+<li>if the <code>no_parent_owners</code> option is encountered, parent owners are excluded from having
+any influence over files adjacent to or underneath of the current OWNERS file</li>
+</ul>
+</li>
+</ul>
+<h2 id="maintaining-owners-files">Maintaining OWNERS files</h2>
+<p>OWNERS files should be regularly maintained.</p>
+<p>We encourage people to self-nominate or self-remove from OWNERS files via PR&rsquo;s. Ideally in the future
+we could use metrics-driven automation to assist in this process.</p>
+<p>We should strive to:</p>
+<ul>
+<li>grow the number of OWNERS files</li>
+<li>add new people to OWNERS files</li>
+<li>ensure OWNERS files only contain org members and repo collaborators</li>
+<li>ensure OWNERS files only contain people are actively contributing to or reviewing the code they own</li>
+<li>remove inactive people from OWNERS files</li>
+</ul>
+<p>Bad examples of OWNERS usage:</p>
+<ul>
+<li>directories that lack OWNERS files, resulting in too many hitting root OWNERS</li>
+<li>OWNERS files that have a single person as both approver and reviewer</li>
+<li>OWNERS files that haven&rsquo;t been touched in over 6 months</li>
+<li>OWNERS files that have non-collaborators present</li>
+</ul>
+<p>Good examples of OWNERS usage:</p>
+<ul>
+<li>there are more <code>reviewers</code> than <code>approvers</code></li>
+<li>the <code>approvers</code> are not in the <code>reviewers</code> section</li>
+<li>OWNERS files that are regularly updated (at least once per release)</li>
+</ul>
+
+	
+		<style>
+  .feedback--answer {
+    display: inline-block;
+  }
+  .feedback--answer-no {
+    margin-left: 1em;
+  }
+  .feedback--response {
+    display: none;
+    margin-top: 1em;
+  }
+  .feedback--response__visible {
+    display: block;
+  }
+</style>
+<h2 class="feedback--title">Feedback</h2>
+<p class="feedback--question">Was this page helpful?</p>
+<button class="feedback--answer feedback--answer-yes">Yes</button>
+<button class="feedback--answer feedback--answer-no">No</button>
+<p class="feedback--response feedback--response-yes">
+  Glad to hear it! Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<p class="feedback--response feedback--response-no">
+  Sorry to hear that. Please <a href="https://github.com/kubeflow/website/issues/new">tell us how we can improve</a>.
+</p>
+<script>
+  const yesButton = document.querySelector('.feedback--answer-yes');
+  const noButton = document.querySelector('.feedback--answer-no');
+  const yesResponse = document.querySelector('.feedback--response-yes');
+  const noResponse = document.querySelector('.feedback--response-no');
+  const disableButtons = () => {
+    yesButton.disabled = true;
+    noButton.disabled = true;
+  };
+  const sendFeedback = (value) => {
+    if (typeof ga !== 'function') return;
+    const args = {
+      command: 'send',
+      hitType: 'event',
+      category: 'Helpful',
+      action: 'click',
+      label: window.location.pathname,
+      value: value
+    };
+    ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+  };
+  yesButton.addEventListener('click', () => {
+    yesResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(1);
+  });
+  noButton.addEventListener('click', () => {
+    noResponse.classList.add('feedback--response__visible');
+    disableButtons();
+    sendFeedback(0);
+  });
+</script>
+
+		<br />
+	
+	
+	<div class="text-muted mt-5 pt-3 border-top">Last modified March 10, 2020: <a  href="https://github.com/huhongjun/website-kubeflow/commit/6c961064bf65f15cd2dbada826c963310ee25fc2">content i18n for zh (6c961064)</a>
+</div>
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Twitter" aria-label="Twitter">
+    <a class="text-white" target="_blank" href="https://twitter.com/kubeflow">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" href="https://github.com/kubeflow/kubeflow">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" href="https://kubeflow.slack.com/join/shared_invite/enQtNDg5MTM4NTQyNjczLTdkNTVhMjg1ZTExOWI0N2QyYTQ2MTIzNTJjMWRiOTFjOGRlZWEzODc1NzMwNTMwM2EzNjY1MTFhODczNjk4MTk">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Mailing list" aria-label="Mailing list">
+    <a class="text-white" target="_blank" href="https://groups.google.com/forum/#!forum/kubeflow-discuss">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Calendar" aria-label="Calendar">
+    <a class="text-white" target="_blank" href="https://calendar.google.com/calendar/embed?src=kubeflow.org_7l5vnbn8suj2se10sen81d9428%40group.calendar.google.com&amp;ctz=America%2FLos_Angeles">
+      <i class="fa fa-calendar"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">Copyright &copy; 2018-2020 The Kubeflow Authors. <br>Documentation Distributed under CC BY 4.0</small>
+        <small class="ml-1"><a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a></small>
+        
+          <p class="mt-2"><a href="/docs/about/">About</a></p>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+
+
+<script src="/js/main.min.5131af9caf0f09b490ccd29511e63feec338dd3cf4fea64957b950d03f865074.js" integrity="sha256-UTGvnK8PCbSQzNKVEeY/7sM43Tz0/qZJV7lQ0D&#43;GUHQ=" crossorigin="anonymous"></script>
+
+
+
+  </body>
+</html>
